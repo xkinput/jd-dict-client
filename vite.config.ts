@@ -10,7 +10,7 @@ export default defineConfig({
       '~/': `${path.resolve(__dirname, 'src')}/`,
     },
   },
-  plugins: [unocss(),react()],
+  plugins: [ unocss(),react() ],
   server: {
     watch: {
       usePolling: true,

@@ -1,0 +1,28 @@
+query FindManyPhrase(
+  $where: PhraseWhereInput
+  $orderBy: [PhraseOrderByWithRelationAndSearchRelevanceInput]
+  $cursor: PhraseWhereUniqueInput
+  $take: Int
+  $skip: Int
+) {
+  findManyPhrase(
+    where: $where
+    orderBy: $orderBy
+    cursor: $cursor
+    take: $take
+    skip: $skip
+  ) {
+    id
+    updateAt
+    word
+    code
+    type
+    user {
+      name
+      nickname
+    }
+    _count {
+      comments
+    }
+  }
+}

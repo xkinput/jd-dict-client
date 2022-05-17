@@ -1,15 +1,11 @@
-import { useState } from 'react'
-import  PropTest from './PropTest'
-
+import { unstable_HistoryRouter as HistoryRouter, Router } from 'react-router-dom'
+import { routerHistory, Routes } from './router'
 
 function App() {
-  const [data, setData] = useState({
-    name: 'John Doe',
-  })
   return (
-    <div className="text-center">
-      <PropTest value={data}></PropTest>
-    </div>
+    <HistoryRouter history={routerHistory}>
+      <Routes />
+    </HistoryRouter>
   )
 }
 
