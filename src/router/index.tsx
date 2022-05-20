@@ -5,8 +5,9 @@ import UseTransition from '~/pages/learn/useTransition'
 import { Index } from '~/pages'
 import { DictAdd } from '~/pages/dict/add'
 import { DictEdit } from '~/pages/dict/edit'
+import * as Layouts from '~/layouts'
 
-const routes: RouteObjectExt<string>[] = [
+const routes: RouteObjectExt<keyof typeof Layouts>[] = [
   {
     path: '/',
     element: <Index />,

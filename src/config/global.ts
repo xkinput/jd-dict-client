@@ -1,1 +1,1 @@
-export const APP_NAME = 'ReactRouterLayout'
+export const APP_NAME = 'JD_DICT'

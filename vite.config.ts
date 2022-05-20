@@ -12,6 +12,7 @@ export default defineConfig({
   },
   plugins: [ unocss(),react() ],
   server: {
+    port: 3005,
     watch: {
       usePolling: true,
     },

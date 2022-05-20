@@ -9,6 +9,9 @@ import './index.css'
 import 'uno.css'
 import 'virtual:unocss-devtools'
 import { client } from './plugins/apollo'
+import { Provider } from 'react-redux'
+import { store } from './store'
+import { ToastContainer } from './utils/log'
 
 const container = document.getElementById('app')
 const root = createRoot(container!)
@@ -16,9 +19,12 @@ const root = createRoot(container!)
 root.render(
   <StrictMode>
     <ChakraProvider>
-      <ApolloProvider client={client}>
-        <App/>
-      </ApolloProvider>
+      <Provider store={store}>
+        <ApolloProvider client={client}>
+          <App/>
+          <ToastContainer/>
+        </ApolloProvider>
+      </Provider>
     </ChakraProvider>
   </StrictMode>
 )

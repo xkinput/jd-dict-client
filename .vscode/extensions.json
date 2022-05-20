@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "apollographql.vscode-apollo",
+    "graphql.vscode-graphql",
+    "antfu.vite",
+    "antfu.unocss"
+  ]
+}

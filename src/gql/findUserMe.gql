@@ -1,0 +1,8 @@
+query FindUserMe {
+  findUserMe {
+    id
+    name
+    nickname
+    status
+  }
+}
