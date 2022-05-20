@@ -3,7 +3,7 @@ import { FC, ReactNode, useState } from 'react'
 import * as Yup from 'yup'
 import { Field, Form, Formik } from 'formik'
 import { mutateLog } from '~/utils/log'
-import { findUserMe, signInUser } from '~/store/user/actions'
+import { findUserMe, signInUser } from '~/store/user/thunks'
 import { useRootDispatch } from '~/store'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 

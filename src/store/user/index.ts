@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { User } from '~/generated/gql'
-import { findUserMe, logoutUser, signInUser } from './actions'
+import { findUserMe, logoutUser, signInUser } from './thunks'
 
 export interface UserState {
   info?: Pick<User, 'id' | 'name' | 'nickname'>,

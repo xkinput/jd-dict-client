@@ -4,7 +4,7 @@ import { Header, HeaderOnClickType } from '~/components/Header'
 import { SignIn } from '~/components/user/SignIn'
 import { SignUp } from '~/components/user/SignUp'
 import { useRootDispatch } from '~/store'
-import { logoutUser } from '~/store/user/actions'
+import { logoutUser } from '~/store/user/thunks'
 
 interface Props {
   children?: ReactNode
