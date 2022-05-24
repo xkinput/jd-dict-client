@@ -27,10 +27,14 @@ export const SignIn: FC<Props> = ({ onSigned, onChange }) => {
     })}
     onSubmit={async (values, { setSubmitting }) => {
       try {
-        let res = await dispatch(signInUser(values))
+        let signInRes = await dispatch(signInUser(values))
 
-        if (!res.payload) throw new Error('未获取到登录令牌，请重试')
-        await dispatch(findUserMe())
+        if (signInRes.meta.requestStatus === 'rejected') return
+
+        let findMeRes = await dispatch(findUserMe())
+
+        if (findMeRes.meta.requestStatus === 'rejected') return
+        
         setSubmitting(false)
         onSigned()
       } catch(e) {

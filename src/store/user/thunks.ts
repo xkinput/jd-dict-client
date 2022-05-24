@@ -1,3 +1,4 @@
+import { store } from '~/store'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { SignInDocument, SignInMutation, UserSignInInput, FindUserMeDocument, FindUserMeQuery } from '~/generated/gql'
 import { client } from '~/plugins/apollo'
@@ -31,7 +32,7 @@ export const signInUser = createAsyncThunk<string, UserSignInInput>(
 )
 
 export const findUserMe = createAsyncThunk('user/fineUserMe', 
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, fulfillWithValue  }) => {
     try {
       let { data } = await client.query<FindUserMeQuery>({
         query: FindUserMeDocument
@@ -42,6 +43,7 @@ export const findUserMe = createAsyncThunk('user/fineUserMe',
       mutateLog(e, {
         prefixTitle: '登录失败：'
       })
+      store.dispatch(logoutUser())
       throw rejectWithValue(e)
     }
   })
