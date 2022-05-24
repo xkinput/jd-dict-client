@@ -17,12 +17,15 @@ query FindManyPhrase(
     word
     code
     type
+    status
     user {
+      id
       name
       nickname
     }
     _count {
       comments
+      pullRequests
     }
   }
 }

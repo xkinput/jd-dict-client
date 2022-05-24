@@ -12,6 +12,7 @@ import { client } from './plugins/apollo'
 import { Provider } from 'react-redux'
 import { store } from './store'
 import { ToastContainer } from './utils/log'
+import { IconContext } from 'react-icons'
 
 const container = document.getElementById('app')
 const root = createRoot(container!)

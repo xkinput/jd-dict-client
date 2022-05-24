@@ -21,7 +21,11 @@ export const CreatePhrase: FC<Props> = () => {
 
         }}
       >
-
+        {formik => (
+          <>
+            asdf
+          </>
+        )}
       </Formik>
     </>
   )

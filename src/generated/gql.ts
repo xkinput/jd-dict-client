@@ -31,666 +31,6 @@ export type Scalars = {
   Upload: any;
 };
 
-/**
- * 词条-操作
- * 记录如何去调整一个词条
- */
-export type Action = {
-  __typename?: 'Action';
-  _count: ActionCountOutputType;
-  code: Scalars['String'];
-  createAt: Scalars['DateTime'];
-  id: Scalars['Int'];
-  phrase: Phrase;
-  phraseId: Scalars['Int'];
-  pullRequests: Array<PullRequest>;
-  type: ActionType;
-  updateAt: Scalars['DateTime'];
-  user: User;
-  userId: Scalars['Int'];
-  word: Scalars['String'];
-};
-
-
-/**
- * 词条-操作
- * 记录如何去调整一个词条
- */
-export type ActionPullRequestsArgs = {
-  cursor?: InputMaybe<PullRequestWhereUniqueInput>;
-  distinct?: InputMaybe<PullRequestScalarFieldEnum>;
-  orderBy?: InputMaybe<PullRequestOrderByWithRelationAndSearchRelevanceInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<PullRequestWhereInput>;
-};
-
-export type ActionAvgAggregateOutputType = {
-  __typename?: 'ActionAvgAggregateOutputType';
-  id?: Maybe<Scalars['Float']>;
-  phraseId?: Maybe<Scalars['Float']>;
-  userId?: Maybe<Scalars['Float']>;
-};
-
-export type ActionAvgOrderByAggregateInput = {
-  id?: InputMaybe<SortOrder>;
-  phraseId?: InputMaybe<SortOrder>;
-  userId?: InputMaybe<SortOrder>;
-};
-
-export type ActionCountAggregateOutputType = {
-  __typename?: 'ActionCountAggregateOutputType';
-  _all: Scalars['Int'];
-  code: Scalars['Int'];
-  createAt: Scalars['Int'];
-  id: Scalars['Int'];
-  phraseId: Scalars['Int'];
-  type: Scalars['Int'];
-  updateAt: Scalars['Int'];
-  userId: Scalars['Int'];
-  word: Scalars['Int'];
-};
-
-export type ActionCountOrderByAggregateInput = {
-  code?: InputMaybe<SortOrder>;
-  createAt?: InputMaybe<SortOrder>;
-  id?: InputMaybe<SortOrder>;
-  phraseId?: InputMaybe<SortOrder>;
-  type?: InputMaybe<SortOrder>;
-  updateAt?: InputMaybe<SortOrder>;
-  userId?: InputMaybe<SortOrder>;
-  word?: InputMaybe<SortOrder>;
-};
-
-export type ActionCountOutputType = {
-  __typename?: 'ActionCountOutputType';
-  pullRequests: Scalars['Int'];
-};
-
-export type ActionCreateInput = {
-  code: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  phrase: PhraseCreateNestedOneWithoutActionsInput;
-  pullRequests?: InputMaybe<PullRequestCreateNestedManyWithoutActionInput>;
-  type: ActionType;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-  user: UserCreateNestedOneWithoutActionsInput;
-  word: Scalars['String'];
-};
-
-export type ActionCreateManyInput = {
-  code: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['Int']>;
-  phraseId: Scalars['Int'];
-  type: ActionType;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-  userId: Scalars['Int'];
-  word: Scalars['String'];
-};
-
-export type ActionCreateManyPhraseInput = {
-  code: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['Int']>;
-  type: ActionType;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-  userId: Scalars['Int'];
-  word: Scalars['String'];
-};
-
-export type ActionCreateManyPhraseInputEnvelope = {
-  data: ActionCreateManyPhraseInput;
-  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type ActionCreateManyUserInput = {
-  code: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['Int']>;
-  phraseId: Scalars['Int'];
-  type: ActionType;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-  word: Scalars['String'];
-};
-
-export type ActionCreateManyUserInputEnvelope = {
-  data: ActionCreateManyUserInput;
-  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type ActionCreateNestedManyWithoutPhraseInput = {
-  connect?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<ActionCreateOrConnectWithoutPhraseInput>>>;
-  create?: InputMaybe<Array<InputMaybe<ActionCreateWithoutPhraseInput>>>;
-  createMany?: InputMaybe<ActionCreateManyPhraseInputEnvelope>;
-};
-
-export type ActionCreateNestedManyWithoutUserInput = {
-  connect?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<ActionCreateOrConnectWithoutUserInput>>>;
-  create?: InputMaybe<Array<InputMaybe<ActionCreateWithoutUserInput>>>;
-  createMany?: InputMaybe<ActionCreateManyUserInputEnvelope>;
-};
-
-export type ActionCreateNestedOneWithoutPullRequestsInput = {
-  connect?: InputMaybe<ActionWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<ActionCreateOrConnectWithoutPullRequestsInput>;
-  create?: InputMaybe<ActionUncheckedCreateWithoutPullRequestsInput>;
-};
-
-export type ActionCreateOrConnectWithoutPhraseInput = {
-  create: ActionUncheckedCreateWithoutPhraseInput;
-  where: ActionWhereUniqueInput;
-};
-
-export type ActionCreateOrConnectWithoutPullRequestsInput = {
-  create: ActionUncheckedCreateWithoutPullRequestsInput;
-  where: ActionWhereUniqueInput;
-};
-
-export type ActionCreateOrConnectWithoutUserInput = {
-  create: ActionUncheckedCreateWithoutUserInput;
-  where: ActionWhereUniqueInput;
-};
-
-export type ActionCreateWithoutPhraseInput = {
-  code: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  pullRequests?: InputMaybe<PullRequestCreateNestedManyWithoutActionInput>;
-  type: ActionType;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-  user: UserCreateNestedOneWithoutActionsInput;
-  word: Scalars['String'];
-};
-
-export type ActionCreateWithoutPullRequestsInput = {
-  code: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  phrase: PhraseCreateNestedOneWithoutActionsInput;
-  type: ActionType;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-  user: UserCreateNestedOneWithoutActionsInput;
-  word: Scalars['String'];
-};
-
-export type ActionCreateWithoutUserInput = {
-  code: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  phrase: PhraseCreateNestedOneWithoutActionsInput;
-  pullRequests?: InputMaybe<PullRequestCreateNestedManyWithoutActionInput>;
-  type: ActionType;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-  word: Scalars['String'];
-};
-
-export type ActionListRelationFilter = {
-  every?: InputMaybe<ActionWhereInput>;
-  none?: InputMaybe<ActionWhereInput>;
-  some?: InputMaybe<ActionWhereInput>;
-};
-
-export type ActionMaxAggregateOutputType = {
-  __typename?: 'ActionMaxAggregateOutputType';
-  code?: Maybe<Scalars['String']>;
-  createAt?: Maybe<Scalars['DateTime']>;
-  id?: Maybe<Scalars['Int']>;
-  phraseId?: Maybe<Scalars['Int']>;
-  type?: Maybe<ActionType>;
-  updateAt?: Maybe<Scalars['DateTime']>;
-  userId?: Maybe<Scalars['Int']>;
-  word?: Maybe<Scalars['String']>;
-};
-
-export type ActionMaxOrderByAggregateInput = {
-  code?: InputMaybe<SortOrder>;
-  createAt?: InputMaybe<SortOrder>;
-  id?: InputMaybe<SortOrder>;
-  phraseId?: InputMaybe<SortOrder>;
-  type?: InputMaybe<SortOrder>;
-  updateAt?: InputMaybe<SortOrder>;
-  userId?: InputMaybe<SortOrder>;
-  word?: InputMaybe<SortOrder>;
-};
-
-export type ActionMinAggregateOutputType = {
-  __typename?: 'ActionMinAggregateOutputType';
-  code?: Maybe<Scalars['String']>;
-  createAt?: Maybe<Scalars['DateTime']>;
-  id?: Maybe<Scalars['Int']>;
-  phraseId?: Maybe<Scalars['Int']>;
-  type?: Maybe<ActionType>;
-  updateAt?: Maybe<Scalars['DateTime']>;
-  userId?: Maybe<Scalars['Int']>;
-  word?: Maybe<Scalars['String']>;
-};
-
-export type ActionMinOrderByAggregateInput = {
-  code?: InputMaybe<SortOrder>;
-  createAt?: InputMaybe<SortOrder>;
-  id?: InputMaybe<SortOrder>;
-  phraseId?: InputMaybe<SortOrder>;
-  type?: InputMaybe<SortOrder>;
-  updateAt?: InputMaybe<SortOrder>;
-  userId?: InputMaybe<SortOrder>;
-  word?: InputMaybe<SortOrder>;
-};
-
-export type ActionOrderByRelationAggregateInput = {
-  _count?: InputMaybe<SortOrder>;
-};
-
-export enum ActionOrderByRelevanceFieldEnum {
-  Code = 'code',
-  Word = 'word'
-}
-
-export type ActionOrderByRelevanceInput = {
-  fields: ActionOrderByRelevanceFieldEnum;
-  search: Scalars['String'];
-  sort: SortOrder;
-};
-
-export type ActionOrderByWithAggregationInput = {
-  _avg?: InputMaybe<ActionAvgOrderByAggregateInput>;
-  _count?: InputMaybe<ActionCountOrderByAggregateInput>;
-  _max?: InputMaybe<ActionMaxOrderByAggregateInput>;
-  _min?: InputMaybe<ActionMinOrderByAggregateInput>;
-  _sum?: InputMaybe<ActionSumOrderByAggregateInput>;
-  code?: InputMaybe<SortOrder>;
-  createAt?: InputMaybe<SortOrder>;
-  id?: InputMaybe<SortOrder>;
-  phraseId?: InputMaybe<SortOrder>;
-  type?: InputMaybe<SortOrder>;
-  updateAt?: InputMaybe<SortOrder>;
-  userId?: InputMaybe<SortOrder>;
-  word?: InputMaybe<SortOrder>;
-};
-
-export type ActionOrderByWithRelationAndSearchRelevanceInput = {
-  _relevance?: InputMaybe<ActionOrderByRelevanceInput>;
-  code?: InputMaybe<SortOrder>;
-  createAt?: InputMaybe<SortOrder>;
-  id?: InputMaybe<SortOrder>;
-  phrase?: InputMaybe<PhraseOrderByWithRelationAndSearchRelevanceInput>;
-  phraseId?: InputMaybe<SortOrder>;
-  pullRequests?: InputMaybe<PullRequestOrderByRelationAggregateInput>;
-  type?: InputMaybe<SortOrder>;
-  updateAt?: InputMaybe<SortOrder>;
-  user?: InputMaybe<UserOrderByWithRelationAndSearchRelevanceInput>;
-  userId?: InputMaybe<SortOrder>;
-  word?: InputMaybe<SortOrder>;
-};
-
-export type ActionRelationFilter = {
-  is?: InputMaybe<ActionWhereInput>;
-  isNot?: InputMaybe<ActionWhereInput>;
-};
-
-export enum ActionScalarFieldEnum {
-  Code = 'code',
-  CreateAt = 'createAt',
-  Id = 'id',
-  PhraseId = 'phraseId',
-  Type = 'type',
-  UpdateAt = 'updateAt',
-  UserId = 'userId',
-  Word = 'word'
-}
-
-export type ActionScalarWhereInput = {
-  AND?: InputMaybe<Array<InputMaybe<ActionScalarWhereInput>>>;
-  NOT?: InputMaybe<Array<InputMaybe<ActionScalarWhereInput>>>;
-  OR?: InputMaybe<Array<InputMaybe<ActionScalarWhereInput>>>;
-  code?: InputMaybe<StringFilter>;
-  createAt?: InputMaybe<DateTimeFilter>;
-  id?: InputMaybe<IntFilter>;
-  phraseId?: InputMaybe<IntFilter>;
-  type?: InputMaybe<EnumActionTypeFilter>;
-  updateAt?: InputMaybe<DateTimeFilter>;
-  userId?: InputMaybe<IntFilter>;
-  word?: InputMaybe<StringFilter>;
-};
-
-export type ActionScalarWhereWithAggregatesInput = {
-  AND?: InputMaybe<Array<InputMaybe<ActionScalarWhereWithAggregatesInput>>>;
-  NOT?: InputMaybe<Array<InputMaybe<ActionScalarWhereWithAggregatesInput>>>;
-  OR?: InputMaybe<Array<InputMaybe<ActionScalarWhereWithAggregatesInput>>>;
-  code?: InputMaybe<StringWithAggregatesFilter>;
-  createAt?: InputMaybe<DateTimeWithAggregatesFilter>;
-  id?: InputMaybe<IntWithAggregatesFilter>;
-  phraseId?: InputMaybe<IntWithAggregatesFilter>;
-  type?: InputMaybe<EnumActionTypeWithAggregatesFilter>;
-  updateAt?: InputMaybe<DateTimeWithAggregatesFilter>;
-  userId?: InputMaybe<IntWithAggregatesFilter>;
-  word?: InputMaybe<StringWithAggregatesFilter>;
-};
-
-export type ActionSumAggregateOutputType = {
-  __typename?: 'ActionSumAggregateOutputType';
-  id?: Maybe<Scalars['Int']>;
-  phraseId?: Maybe<Scalars['Int']>;
-  userId?: Maybe<Scalars['Int']>;
-};
-
-export type ActionSumOrderByAggregateInput = {
-  id?: InputMaybe<SortOrder>;
-  phraseId?: InputMaybe<SortOrder>;
-  userId?: InputMaybe<SortOrder>;
-};
-
-export enum ActionType {
-  Change = 'Change',
-  Create = 'Create',
-  Delete = 'Delete',
-  Move = 'Move'
-}
-
-export type ActionUncheckedCreateInput = {
-  code: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['Int']>;
-  phraseId: Scalars['Int'];
-  pullRequests?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutActionInput>;
-  type: ActionType;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-  userId: Scalars['Int'];
-  word: Scalars['String'];
-};
-
-export type ActionUncheckedCreateNestedManyWithoutPhraseInput = {
-  connect?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<ActionCreateOrConnectWithoutPhraseInput>>>;
-  create?: InputMaybe<Array<InputMaybe<ActionCreateWithoutPhraseInput>>>;
-  createMany?: InputMaybe<ActionCreateManyPhraseInputEnvelope>;
-};
-
-export type ActionUncheckedCreateNestedManyWithoutUserInput = {
-  connect?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<ActionCreateOrConnectWithoutUserInput>>>;
-  create?: InputMaybe<Array<InputMaybe<ActionCreateWithoutUserInput>>>;
-  createMany?: InputMaybe<ActionCreateManyUserInputEnvelope>;
-};
-
-export type ActionUncheckedCreateWithoutPhraseInput = {
-  code: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['Int']>;
-  pullRequests?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutActionInput>;
-  type: ActionType;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-  userId: Scalars['Int'];
-  word: Scalars['String'];
-};
-
-export type ActionUncheckedCreateWithoutPullRequestsInput = {
-  code: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['Int']>;
-  phraseId: Scalars['Int'];
-  type: ActionType;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-  userId: Scalars['Int'];
-  word: Scalars['String'];
-};
-
-export type ActionUncheckedCreateWithoutUserInput = {
-  code: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['Int']>;
-  phraseId: Scalars['Int'];
-  pullRequests?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutActionInput>;
-  type: ActionType;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-  word: Scalars['String'];
-};
-
-export type ActionUncheckedUpdateInput = {
-  code?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  id?: InputMaybe<IntFieldUpdateOperationsInput>;
-  phraseId?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pullRequests?: InputMaybe<PullRequestUncheckedUpdateManyWithoutActionInput>;
-  type?: InputMaybe<EnumActionTypeFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  userId?: InputMaybe<IntFieldUpdateOperationsInput>;
-  word?: InputMaybe<StringFieldUpdateOperationsInput>;
-};
-
-export type ActionUncheckedUpdateManyInput = {
-  code?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  id?: InputMaybe<IntFieldUpdateOperationsInput>;
-  phraseId?: InputMaybe<IntFieldUpdateOperationsInput>;
-  type?: InputMaybe<EnumActionTypeFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  userId?: InputMaybe<IntFieldUpdateOperationsInput>;
-  word?: InputMaybe<StringFieldUpdateOperationsInput>;
-};
-
-export type ActionUncheckedUpdateManyWithoutActionsInput = {
-  code?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  id?: InputMaybe<IntFieldUpdateOperationsInput>;
-  phraseId?: InputMaybe<IntFieldUpdateOperationsInput>;
-  type?: InputMaybe<EnumActionTypeFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  word?: InputMaybe<StringFieldUpdateOperationsInput>;
-};
-
-export type ActionUncheckedUpdateManyWithoutPhraseInput = {
-  connect?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<ActionCreateOrConnectWithoutPhraseInput>>>;
-  create?: InputMaybe<Array<InputMaybe<ActionCreateWithoutPhraseInput>>>;
-  createMany?: InputMaybe<ActionCreateManyPhraseInputEnvelope>;
-  delete?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  deleteMany?: InputMaybe<Array<InputMaybe<ActionScalarWhereInput>>>;
-  disconnect?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  set?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  update?: InputMaybe<Array<InputMaybe<ActionUpdateWithWhereUniqueWithoutPhraseInput>>>;
-  updateMany?: InputMaybe<Array<InputMaybe<ActionUpdateManyWithWhereWithoutPhraseInput>>>;
-  upsert?: InputMaybe<Array<InputMaybe<ActionUpsertWithWhereUniqueWithoutPhraseInput>>>;
-};
-
-export type ActionUncheckedUpdateManyWithoutUserInput = {
-  connect?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<ActionCreateOrConnectWithoutUserInput>>>;
-  create?: InputMaybe<Array<InputMaybe<ActionCreateWithoutUserInput>>>;
-  createMany?: InputMaybe<ActionCreateManyUserInputEnvelope>;
-  delete?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  deleteMany?: InputMaybe<Array<InputMaybe<ActionScalarWhereInput>>>;
-  disconnect?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  set?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  update?: InputMaybe<Array<InputMaybe<ActionUpdateWithWhereUniqueWithoutUserInput>>>;
-  updateMany?: InputMaybe<Array<InputMaybe<ActionUpdateManyWithWhereWithoutUserInput>>>;
-  upsert?: InputMaybe<Array<InputMaybe<ActionUpsertWithWhereUniqueWithoutUserInput>>>;
-};
-
-export type ActionUncheckedUpdateWithoutPhraseInput = {
-  code?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  id?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pullRequests?: InputMaybe<PullRequestUncheckedUpdateManyWithoutActionInput>;
-  type?: InputMaybe<EnumActionTypeFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  userId?: InputMaybe<IntFieldUpdateOperationsInput>;
-  word?: InputMaybe<StringFieldUpdateOperationsInput>;
-};
-
-export type ActionUncheckedUpdateWithoutPullRequestsInput = {
-  code?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  id?: InputMaybe<IntFieldUpdateOperationsInput>;
-  phraseId?: InputMaybe<IntFieldUpdateOperationsInput>;
-  type?: InputMaybe<EnumActionTypeFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  userId?: InputMaybe<IntFieldUpdateOperationsInput>;
-  word?: InputMaybe<StringFieldUpdateOperationsInput>;
-};
-
-export type ActionUncheckedUpdateWithoutUserInput = {
-  code?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  id?: InputMaybe<IntFieldUpdateOperationsInput>;
-  phraseId?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pullRequests?: InputMaybe<PullRequestUncheckedUpdateManyWithoutActionInput>;
-  type?: InputMaybe<EnumActionTypeFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  word?: InputMaybe<StringFieldUpdateOperationsInput>;
-};
-
-export type ActionUpdateInput = {
-  code?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  phrase?: InputMaybe<PhraseUpdateOneRequiredWithoutActionsInput>;
-  pullRequests?: InputMaybe<PullRequestUpdateManyWithoutActionInput>;
-  type?: InputMaybe<EnumActionTypeFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  user?: InputMaybe<UserUpdateOneRequiredWithoutActionsInput>;
-  word?: InputMaybe<StringFieldUpdateOperationsInput>;
-};
-
-export type ActionUpdateManyMutationInput = {
-  code?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  type?: InputMaybe<EnumActionTypeFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  word?: InputMaybe<StringFieldUpdateOperationsInput>;
-};
-
-export type ActionUpdateManyWithWhereWithoutPhraseInput = {
-  data: ActionUncheckedUpdateManyWithoutActionsInput;
-  where: ActionScalarWhereInput;
-};
-
-export type ActionUpdateManyWithWhereWithoutUserInput = {
-  data: ActionUncheckedUpdateManyWithoutActionsInput;
-  where: ActionScalarWhereInput;
-};
-
-export type ActionUpdateManyWithoutPhraseInput = {
-  connect?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<ActionCreateOrConnectWithoutPhraseInput>>>;
-  create?: InputMaybe<Array<InputMaybe<ActionCreateWithoutPhraseInput>>>;
-  createMany?: InputMaybe<ActionCreateManyPhraseInputEnvelope>;
-  delete?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  deleteMany?: InputMaybe<Array<InputMaybe<ActionScalarWhereInput>>>;
-  disconnect?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  set?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  update?: InputMaybe<Array<InputMaybe<ActionUpdateWithWhereUniqueWithoutPhraseInput>>>;
-  updateMany?: InputMaybe<Array<InputMaybe<ActionUpdateManyWithWhereWithoutPhraseInput>>>;
-  upsert?: InputMaybe<Array<InputMaybe<ActionUpsertWithWhereUniqueWithoutPhraseInput>>>;
-};
-
-export type ActionUpdateManyWithoutUserInput = {
-  connect?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<ActionCreateOrConnectWithoutUserInput>>>;
-  create?: InputMaybe<Array<InputMaybe<ActionCreateWithoutUserInput>>>;
-  createMany?: InputMaybe<ActionCreateManyUserInputEnvelope>;
-  delete?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  deleteMany?: InputMaybe<Array<InputMaybe<ActionScalarWhereInput>>>;
-  disconnect?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  set?: InputMaybe<Array<InputMaybe<ActionWhereUniqueInput>>>;
-  update?: InputMaybe<Array<InputMaybe<ActionUpdateWithWhereUniqueWithoutUserInput>>>;
-  updateMany?: InputMaybe<Array<InputMaybe<ActionUpdateManyWithWhereWithoutUserInput>>>;
-  upsert?: InputMaybe<Array<InputMaybe<ActionUpsertWithWhereUniqueWithoutUserInput>>>;
-};
-
-export type ActionUpdateOneRequiredWithoutPullRequestsInput = {
-  connect?: InputMaybe<ActionWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<ActionCreateOrConnectWithoutPullRequestsInput>;
-  create?: InputMaybe<ActionUncheckedCreateWithoutPullRequestsInput>;
-  update?: InputMaybe<ActionUncheckedUpdateWithoutPullRequestsInput>;
-  upsert?: InputMaybe<ActionUpsertWithoutPullRequestsInput>;
-};
-
-export type ActionUpdateWithWhereUniqueWithoutPhraseInput = {
-  data: ActionUncheckedUpdateWithoutPhraseInput;
-  where: ActionWhereUniqueInput;
-};
-
-export type ActionUpdateWithWhereUniqueWithoutUserInput = {
-  data: ActionUncheckedUpdateWithoutUserInput;
-  where: ActionWhereUniqueInput;
-};
-
-export type ActionUpdateWithoutPhraseInput = {
-  code?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  pullRequests?: InputMaybe<PullRequestUpdateManyWithoutActionInput>;
-  type?: InputMaybe<EnumActionTypeFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  user?: InputMaybe<UserUpdateOneRequiredWithoutActionsInput>;
-  word?: InputMaybe<StringFieldUpdateOperationsInput>;
-};
-
-export type ActionUpdateWithoutPullRequestsInput = {
-  code?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  phrase?: InputMaybe<PhraseUpdateOneRequiredWithoutActionsInput>;
-  type?: InputMaybe<EnumActionTypeFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  user?: InputMaybe<UserUpdateOneRequiredWithoutActionsInput>;
-  word?: InputMaybe<StringFieldUpdateOperationsInput>;
-};
-
-export type ActionUpdateWithoutUserInput = {
-  code?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  phrase?: InputMaybe<PhraseUpdateOneRequiredWithoutActionsInput>;
-  pullRequests?: InputMaybe<PullRequestUpdateManyWithoutActionInput>;
-  type?: InputMaybe<EnumActionTypeFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  word?: InputMaybe<StringFieldUpdateOperationsInput>;
-};
-
-export type ActionUpsertWithWhereUniqueWithoutPhraseInput = {
-  create: ActionUncheckedCreateWithoutPhraseInput;
-  update: ActionUncheckedUpdateWithoutPhraseInput;
-  where: ActionWhereUniqueInput;
-};
-
-export type ActionUpsertWithWhereUniqueWithoutUserInput = {
-  create: ActionUncheckedCreateWithoutUserInput;
-  update: ActionUncheckedUpdateWithoutUserInput;
-  where: ActionWhereUniqueInput;
-};
-
-export type ActionUpsertWithoutPullRequestsInput = {
-  create: ActionUncheckedCreateWithoutPullRequestsInput;
-  update: ActionUncheckedUpdateWithoutPullRequestsInput;
-};
-
-export type ActionWhereInput = {
-  AND?: InputMaybe<Array<InputMaybe<ActionWhereInput>>>;
-  NOT?: InputMaybe<Array<InputMaybe<ActionWhereInput>>>;
-  OR?: InputMaybe<Array<InputMaybe<ActionWhereInput>>>;
-  code?: InputMaybe<StringFilter>;
-  createAt?: InputMaybe<DateTimeFilter>;
-  id?: InputMaybe<IntFilter>;
-  phrase?: InputMaybe<PhraseWhereInput>;
-  phraseId?: InputMaybe<IntFilter>;
-  pullRequests?: InputMaybe<PullRequestListRelationFilter>;
-  type?: InputMaybe<EnumActionTypeFilter>;
-  updateAt?: InputMaybe<DateTimeFilter>;
-  user?: InputMaybe<UserWhereInput>;
-  userId?: InputMaybe<IntFilter>;
-  word?: InputMaybe<StringFilter>;
-};
-
-export type ActionWhereUniqueInput = {
-  id?: InputMaybe<Scalars['Int']>;
-};
-
-export type AggregateAction = {
-  __typename?: 'AggregateAction';
-  _avg?: Maybe<ActionAvgAggregateOutputType>;
-  _count?: Maybe<ActionCountAggregateOutputType>;
-  _max?: Maybe<ActionMaxAggregateOutputType>;
-  _min?: Maybe<ActionMinAggregateOutputType>;
-  _sum?: Maybe<ActionSumAggregateOutputType>;
-};
-
 export type AggregateCasbinRule = {
   __typename?: 'AggregateCasbinRule';
   _avg?: Maybe<CasbinRuleAvgAggregateOutputType>;
@@ -707,6 +47,15 @@ export type AggregateComment = {
   _max?: Maybe<CommentMaxAggregateOutputType>;
   _min?: Maybe<CommentMinAggregateOutputType>;
   _sum?: Maybe<CommentSumAggregateOutputType>;
+};
+
+export type AggregateIssue = {
+  __typename?: 'AggregateIssue';
+  _avg?: Maybe<IssueAvgAggregateOutputType>;
+  _count?: Maybe<IssueCountAggregateOutputType>;
+  _max?: Maybe<IssueMaxAggregateOutputType>;
+  _min?: Maybe<IssueMinAggregateOutputType>;
+  _sum?: Maybe<IssueSumAggregateOutputType>;
 };
 
 export type AggregateNotice = {
@@ -793,6 +142,23 @@ export type AggregateWechat = {
 export type BatchPayload = {
   __typename?: 'BatchPayload';
   count: Scalars['Int'];
+};
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type BoolFilter = {
+  equals?: InputMaybe<Scalars['Boolean']>;
+  not?: InputMaybe<NestedBoolFilter>;
+};
+
+export type BoolWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedBoolFilter>;
+  _min?: InputMaybe<NestedBoolFilter>;
+  equals?: InputMaybe<Scalars['Boolean']>;
+  not?: InputMaybe<NestedBoolWithAggregatesFilter>;
 };
 
 /** Casbin权限记录 */
@@ -1067,10 +433,10 @@ export type Comment = {
   content: Scalars['String'];
   createAt: Scalars['DateTime'];
   id: Scalars['Int'];
+  issue?: Maybe<Issue>;
+  issueId?: Maybe<Scalars['Int']>;
   phrase?: Maybe<Phrase>;
   phraseId?: Maybe<Scalars['Int']>;
-  pullRequest?: Maybe<PullRequest>;
-  pullRequestId?: Maybe<Scalars['Int']>;
   updateAt: Scalars['DateTime'];
 };
 
@@ -1089,15 +455,15 @@ export type CommentAvgAggregateOutputType = {
   __typename?: 'CommentAvgAggregateOutputType';
   commentId?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
+  issueId?: Maybe<Scalars['Float']>;
   phraseId?: Maybe<Scalars['Float']>;
-  pullRequestId?: Maybe<Scalars['Float']>;
 };
 
 export type CommentAvgOrderByAggregateInput = {
   commentId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  issueId?: InputMaybe<SortOrder>;
   phraseId?: InputMaybe<SortOrder>;
-  pullRequestId?: InputMaybe<SortOrder>;
 };
 
 export type CommentCountAggregateOutputType = {
@@ -1107,8 +473,8 @@ export type CommentCountAggregateOutputType = {
   content: Scalars['Int'];
   createAt: Scalars['Int'];
   id: Scalars['Int'];
+  issueId: Scalars['Int'];
   phraseId: Scalars['Int'];
-  pullRequestId: Scalars['Int'];
   updateAt: Scalars['Int'];
 };
 
@@ -1117,8 +483,8 @@ export type CommentCountOrderByAggregateInput = {
   content?: InputMaybe<SortOrder>;
   createAt?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  issueId?: InputMaybe<SortOrder>;
   phraseId?: InputMaybe<SortOrder>;
-  pullRequestId?: InputMaybe<SortOrder>;
   updateAt?: InputMaybe<SortOrder>;
 };
 
@@ -1132,8 +498,8 @@ export type CommentCreateInput = {
   comments?: InputMaybe<CommentCreateNestedManyWithoutCommentInput>;
   content: Scalars['String'];
   createAt?: InputMaybe<Scalars['DateTime']>;
+  issue?: InputMaybe<IssueCreateNestedOneWithoutCommentsInput>;
   phrase?: InputMaybe<PhraseCreateNestedOneWithoutCommentsInput>;
-  pullRequest?: InputMaybe<PullRequestCreateNestedOneWithoutCommentsInput>;
   updateAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -1141,8 +507,8 @@ export type CommentCreateManyCommentInput = {
   content: Scalars['String'];
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
+  issueId?: InputMaybe<Scalars['Int']>;
   phraseId?: InputMaybe<Scalars['Int']>;
-  pullRequestId?: InputMaybe<Scalars['Int']>;
   updateAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -1156,9 +522,23 @@ export type CommentCreateManyInput = {
   content: Scalars['String'];
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
+  issueId?: InputMaybe<Scalars['Int']>;
   phraseId?: InputMaybe<Scalars['Int']>;
-  pullRequestId?: InputMaybe<Scalars['Int']>;
   updateAt?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type CommentCreateManyIssueInput = {
+  commentId?: InputMaybe<Scalars['Int']>;
+  content: Scalars['String'];
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['Int']>;
+  phraseId?: InputMaybe<Scalars['Int']>;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type CommentCreateManyIssueInputEnvelope = {
+  data: CommentCreateManyIssueInput;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type CommentCreateManyPhraseInput = {
@@ -1166,26 +546,12 @@ export type CommentCreateManyPhraseInput = {
   content: Scalars['String'];
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
-  pullRequestId?: InputMaybe<Scalars['Int']>;
+  issueId?: InputMaybe<Scalars['Int']>;
   updateAt?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type CommentCreateManyPhraseInputEnvelope = {
   data: CommentCreateManyPhraseInput;
-  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type CommentCreateManyPullRequestInput = {
-  commentId?: InputMaybe<Scalars['Int']>;
-  content: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['Int']>;
-  phraseId?: InputMaybe<Scalars['Int']>;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-};
-
-export type CommentCreateManyPullRequestInputEnvelope = {
-  data: CommentCreateManyPullRequestInput;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -1196,18 +562,18 @@ export type CommentCreateNestedManyWithoutCommentInput = {
   createMany?: InputMaybe<CommentCreateManyCommentInputEnvelope>;
 };
 
+export type CommentCreateNestedManyWithoutIssueInput = {
+  connect?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<CommentCreateOrConnectWithoutIssueInput>>>;
+  create?: InputMaybe<Array<InputMaybe<CommentCreateWithoutIssueInput>>>;
+  createMany?: InputMaybe<CommentCreateManyIssueInputEnvelope>;
+};
+
 export type CommentCreateNestedManyWithoutPhraseInput = {
   connect?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
   connectOrCreate?: InputMaybe<Array<InputMaybe<CommentCreateOrConnectWithoutPhraseInput>>>;
   create?: InputMaybe<Array<InputMaybe<CommentCreateWithoutPhraseInput>>>;
   createMany?: InputMaybe<CommentCreateManyPhraseInputEnvelope>;
-};
-
-export type CommentCreateNestedManyWithoutPullRequestInput = {
-  connect?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<CommentCreateOrConnectWithoutPullRequestInput>>>;
-  create?: InputMaybe<Array<InputMaybe<CommentCreateWithoutPullRequestInput>>>;
-  createMany?: InputMaybe<CommentCreateManyPullRequestInputEnvelope>;
 };
 
 export type CommentCreateNestedOneWithoutCommentsInput = {
@@ -1226,13 +592,13 @@ export type CommentCreateOrConnectWithoutCommentsInput = {
   where: CommentWhereUniqueInput;
 };
 
-export type CommentCreateOrConnectWithoutPhraseInput = {
-  create: CommentUncheckedCreateWithoutPhraseInput;
+export type CommentCreateOrConnectWithoutIssueInput = {
+  create: CommentUncheckedCreateWithoutIssueInput;
   where: CommentWhereUniqueInput;
 };
 
-export type CommentCreateOrConnectWithoutPullRequestInput = {
-  create: CommentUncheckedCreateWithoutPullRequestInput;
+export type CommentCreateOrConnectWithoutPhraseInput = {
+  create: CommentUncheckedCreateWithoutPhraseInput;
   where: CommentWhereUniqueInput;
 };
 
@@ -1240,8 +606,8 @@ export type CommentCreateWithoutCommentInput = {
   comments?: InputMaybe<CommentCreateNestedManyWithoutCommentInput>;
   content: Scalars['String'];
   createAt?: InputMaybe<Scalars['DateTime']>;
+  issue?: InputMaybe<IssueCreateNestedOneWithoutCommentsInput>;
   phrase?: InputMaybe<PhraseCreateNestedOneWithoutCommentsInput>;
-  pullRequest?: InputMaybe<PullRequestCreateNestedOneWithoutCommentsInput>;
   updateAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -1249,8 +615,17 @@ export type CommentCreateWithoutCommentsInput = {
   comment?: InputMaybe<CommentCreateNestedOneWithoutCommentsInput>;
   content: Scalars['String'];
   createAt?: InputMaybe<Scalars['DateTime']>;
+  issue?: InputMaybe<IssueCreateNestedOneWithoutCommentsInput>;
   phrase?: InputMaybe<PhraseCreateNestedOneWithoutCommentsInput>;
-  pullRequest?: InputMaybe<PullRequestCreateNestedOneWithoutCommentsInput>;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type CommentCreateWithoutIssueInput = {
+  comment?: InputMaybe<CommentCreateNestedOneWithoutCommentsInput>;
+  comments?: InputMaybe<CommentCreateNestedManyWithoutCommentInput>;
+  content: Scalars['String'];
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  phrase?: InputMaybe<PhraseCreateNestedOneWithoutCommentsInput>;
   updateAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -1259,16 +634,7 @@ export type CommentCreateWithoutPhraseInput = {
   comments?: InputMaybe<CommentCreateNestedManyWithoutCommentInput>;
   content: Scalars['String'];
   createAt?: InputMaybe<Scalars['DateTime']>;
-  pullRequest?: InputMaybe<PullRequestCreateNestedOneWithoutCommentsInput>;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-};
-
-export type CommentCreateWithoutPullRequestInput = {
-  comment?: InputMaybe<CommentCreateNestedOneWithoutCommentsInput>;
-  comments?: InputMaybe<CommentCreateNestedManyWithoutCommentInput>;
-  content: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  phrase?: InputMaybe<PhraseCreateNestedOneWithoutCommentsInput>;
+  issue?: InputMaybe<IssueCreateNestedOneWithoutCommentsInput>;
   updateAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -1284,8 +650,8 @@ export type CommentMaxAggregateOutputType = {
   content?: Maybe<Scalars['String']>;
   createAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['Int']>;
+  issueId?: Maybe<Scalars['Int']>;
   phraseId?: Maybe<Scalars['Int']>;
-  pullRequestId?: Maybe<Scalars['Int']>;
   updateAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -1294,8 +660,8 @@ export type CommentMaxOrderByAggregateInput = {
   content?: InputMaybe<SortOrder>;
   createAt?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  issueId?: InputMaybe<SortOrder>;
   phraseId?: InputMaybe<SortOrder>;
-  pullRequestId?: InputMaybe<SortOrder>;
   updateAt?: InputMaybe<SortOrder>;
 };
 
@@ -1305,8 +671,8 @@ export type CommentMinAggregateOutputType = {
   content?: Maybe<Scalars['String']>;
   createAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['Int']>;
+  issueId?: Maybe<Scalars['Int']>;
   phraseId?: Maybe<Scalars['Int']>;
-  pullRequestId?: Maybe<Scalars['Int']>;
   updateAt?: Maybe<Scalars['DateTime']>;
 };
 
@@ -1315,8 +681,8 @@ export type CommentMinOrderByAggregateInput = {
   content?: InputMaybe<SortOrder>;
   createAt?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  issueId?: InputMaybe<SortOrder>;
   phraseId?: InputMaybe<SortOrder>;
-  pullRequestId?: InputMaybe<SortOrder>;
   updateAt?: InputMaybe<SortOrder>;
 };
 
@@ -1344,8 +710,8 @@ export type CommentOrderByWithAggregationInput = {
   content?: InputMaybe<SortOrder>;
   createAt?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  issueId?: InputMaybe<SortOrder>;
   phraseId?: InputMaybe<SortOrder>;
-  pullRequestId?: InputMaybe<SortOrder>;
   updateAt?: InputMaybe<SortOrder>;
 };
 
@@ -1357,10 +723,10 @@ export type CommentOrderByWithRelationAndSearchRelevanceInput = {
   content?: InputMaybe<SortOrder>;
   createAt?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  issue?: InputMaybe<IssueOrderByWithRelationAndSearchRelevanceInput>;
+  issueId?: InputMaybe<SortOrder>;
   phrase?: InputMaybe<PhraseOrderByWithRelationAndSearchRelevanceInput>;
   phraseId?: InputMaybe<SortOrder>;
-  pullRequest?: InputMaybe<PullRequestOrderByWithRelationAndSearchRelevanceInput>;
-  pullRequestId?: InputMaybe<SortOrder>;
   updateAt?: InputMaybe<SortOrder>;
 };
 
@@ -1374,8 +740,8 @@ export enum CommentScalarFieldEnum {
   Content = 'content',
   CreateAt = 'createAt',
   Id = 'id',
+  IssueId = 'issueId',
   PhraseId = 'phraseId',
-  PullRequestId = 'pullRequestId',
   UpdateAt = 'updateAt'
 }
 
@@ -1387,8 +753,8 @@ export type CommentScalarWhereInput = {
   content?: InputMaybe<StringFilter>;
   createAt?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<IntFilter>;
+  issueId?: InputMaybe<IntNullableFilter>;
   phraseId?: InputMaybe<IntNullableFilter>;
-  pullRequestId?: InputMaybe<IntNullableFilter>;
   updateAt?: InputMaybe<DateTimeFilter>;
 };
 
@@ -1400,8 +766,8 @@ export type CommentScalarWhereWithAggregatesInput = {
   content?: InputMaybe<StringWithAggregatesFilter>;
   createAt?: InputMaybe<DateTimeWithAggregatesFilter>;
   id?: InputMaybe<IntWithAggregatesFilter>;
+  issueId?: InputMaybe<IntNullableWithAggregatesFilter>;
   phraseId?: InputMaybe<IntNullableWithAggregatesFilter>;
-  pullRequestId?: InputMaybe<IntNullableWithAggregatesFilter>;
   updateAt?: InputMaybe<DateTimeWithAggregatesFilter>;
 };
 
@@ -1409,15 +775,15 @@ export type CommentSumAggregateOutputType = {
   __typename?: 'CommentSumAggregateOutputType';
   commentId?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
+  issueId?: Maybe<Scalars['Int']>;
   phraseId?: Maybe<Scalars['Int']>;
-  pullRequestId?: Maybe<Scalars['Int']>;
 };
 
 export type CommentSumOrderByAggregateInput = {
   commentId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  issueId?: InputMaybe<SortOrder>;
   phraseId?: InputMaybe<SortOrder>;
-  pullRequestId?: InputMaybe<SortOrder>;
 };
 
 export type CommentUncheckedCreateInput = {
@@ -1426,8 +792,8 @@ export type CommentUncheckedCreateInput = {
   content: Scalars['String'];
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
+  issueId?: InputMaybe<Scalars['Int']>;
   phraseId?: InputMaybe<Scalars['Int']>;
-  pullRequestId?: InputMaybe<Scalars['Int']>;
   updateAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -1438,6 +804,13 @@ export type CommentUncheckedCreateNestedManyWithoutCommentInput = {
   createMany?: InputMaybe<CommentCreateManyCommentInputEnvelope>;
 };
 
+export type CommentUncheckedCreateNestedManyWithoutIssueInput = {
+  connect?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<CommentCreateOrConnectWithoutIssueInput>>>;
+  create?: InputMaybe<Array<InputMaybe<CommentCreateWithoutIssueInput>>>;
+  createMany?: InputMaybe<CommentCreateManyIssueInputEnvelope>;
+};
+
 export type CommentUncheckedCreateNestedManyWithoutPhraseInput = {
   connect?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
   connectOrCreate?: InputMaybe<Array<InputMaybe<CommentCreateOrConnectWithoutPhraseInput>>>;
@@ -1445,20 +818,13 @@ export type CommentUncheckedCreateNestedManyWithoutPhraseInput = {
   createMany?: InputMaybe<CommentCreateManyPhraseInputEnvelope>;
 };
 
-export type CommentUncheckedCreateNestedManyWithoutPullRequestInput = {
-  connect?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<CommentCreateOrConnectWithoutPullRequestInput>>>;
-  create?: InputMaybe<Array<InputMaybe<CommentCreateWithoutPullRequestInput>>>;
-  createMany?: InputMaybe<CommentCreateManyPullRequestInputEnvelope>;
-};
-
 export type CommentUncheckedCreateWithoutCommentInput = {
   comments?: InputMaybe<CommentUncheckedCreateNestedManyWithoutCommentInput>;
   content: Scalars['String'];
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
+  issueId?: InputMaybe<Scalars['Int']>;
   phraseId?: InputMaybe<Scalars['Int']>;
-  pullRequestId?: InputMaybe<Scalars['Int']>;
   updateAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -1467,8 +833,18 @@ export type CommentUncheckedCreateWithoutCommentsInput = {
   content: Scalars['String'];
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
+  issueId?: InputMaybe<Scalars['Int']>;
   phraseId?: InputMaybe<Scalars['Int']>;
-  pullRequestId?: InputMaybe<Scalars['Int']>;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type CommentUncheckedCreateWithoutIssueInput = {
+  commentId?: InputMaybe<Scalars['Int']>;
+  comments?: InputMaybe<CommentUncheckedCreateNestedManyWithoutCommentInput>;
+  content: Scalars['String'];
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['Int']>;
+  phraseId?: InputMaybe<Scalars['Int']>;
   updateAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -1478,17 +854,7 @@ export type CommentUncheckedCreateWithoutPhraseInput = {
   content: Scalars['String'];
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
-  pullRequestId?: InputMaybe<Scalars['Int']>;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-};
-
-export type CommentUncheckedCreateWithoutPullRequestInput = {
-  commentId?: InputMaybe<Scalars['Int']>;
-  comments?: InputMaybe<CommentUncheckedCreateNestedManyWithoutCommentInput>;
-  content: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['Int']>;
-  phraseId?: InputMaybe<Scalars['Int']>;
+  issueId?: InputMaybe<Scalars['Int']>;
   updateAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -1498,8 +864,8 @@ export type CommentUncheckedUpdateInput = {
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  issueId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   phraseId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
-  pullRequestId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -1508,8 +874,8 @@ export type CommentUncheckedUpdateManyInput = {
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  issueId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   phraseId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
-  pullRequestId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -1532,8 +898,22 @@ export type CommentUncheckedUpdateManyWithoutCommentsInput = {
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pullRequestId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  issueId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type CommentUncheckedUpdateManyWithoutIssueInput = {
+  connect?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<CommentCreateOrConnectWithoutIssueInput>>>;
+  create?: InputMaybe<Array<InputMaybe<CommentCreateWithoutIssueInput>>>;
+  createMany?: InputMaybe<CommentCreateManyIssueInputEnvelope>;
+  delete?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
+  deleteMany?: InputMaybe<Array<InputMaybe<CommentScalarWhereInput>>>;
+  disconnect?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
+  set?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
+  update?: InputMaybe<Array<InputMaybe<CommentUpdateWithWhereUniqueWithoutIssueInput>>>;
+  updateMany?: InputMaybe<Array<InputMaybe<CommentUpdateManyWithWhereWithoutIssueInput>>>;
+  upsert?: InputMaybe<Array<InputMaybe<CommentUpsertWithWhereUniqueWithoutIssueInput>>>;
 };
 
 export type CommentUncheckedUpdateManyWithoutPhraseInput = {
@@ -1550,27 +930,13 @@ export type CommentUncheckedUpdateManyWithoutPhraseInput = {
   upsert?: InputMaybe<Array<InputMaybe<CommentUpsertWithWhereUniqueWithoutPhraseInput>>>;
 };
 
-export type CommentUncheckedUpdateManyWithoutPullRequestInput = {
-  connect?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<CommentCreateOrConnectWithoutPullRequestInput>>>;
-  create?: InputMaybe<Array<InputMaybe<CommentCreateWithoutPullRequestInput>>>;
-  createMany?: InputMaybe<CommentCreateManyPullRequestInputEnvelope>;
-  delete?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
-  deleteMany?: InputMaybe<Array<InputMaybe<CommentScalarWhereInput>>>;
-  disconnect?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
-  set?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
-  update?: InputMaybe<Array<InputMaybe<CommentUpdateWithWhereUniqueWithoutPullRequestInput>>>;
-  updateMany?: InputMaybe<Array<InputMaybe<CommentUpdateManyWithWhereWithoutPullRequestInput>>>;
-  upsert?: InputMaybe<Array<InputMaybe<CommentUpsertWithWhereUniqueWithoutPullRequestInput>>>;
-};
-
 export type CommentUncheckedUpdateWithoutCommentInput = {
   comments?: InputMaybe<CommentUncheckedUpdateManyWithoutCommentInput>;
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  issueId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   phraseId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
-  pullRequestId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -1579,8 +945,18 @@ export type CommentUncheckedUpdateWithoutCommentsInput = {
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  issueId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   phraseId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
-  pullRequestId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type CommentUncheckedUpdateWithoutIssueInput = {
+  commentId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  comments?: InputMaybe<CommentUncheckedUpdateManyWithoutCommentInput>;
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  phraseId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -1590,17 +966,7 @@ export type CommentUncheckedUpdateWithoutPhraseInput = {
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
-  pullRequestId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-};
-
-export type CommentUncheckedUpdateWithoutPullRequestInput = {
-  commentId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
-  comments?: InputMaybe<CommentUncheckedUpdateManyWithoutCommentInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  id?: InputMaybe<IntFieldUpdateOperationsInput>;
-  phraseId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  issueId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -1609,8 +975,8 @@ export type CommentUpdateInput = {
   comments?: InputMaybe<CommentUpdateManyWithoutCommentInput>;
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  issue?: InputMaybe<IssueUpdateOneWithoutCommentsInput>;
   phrase?: InputMaybe<PhraseUpdateOneWithoutCommentsInput>;
-  pullRequest?: InputMaybe<PullRequestUpdateOneWithoutCommentsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -1625,12 +991,12 @@ export type CommentUpdateManyWithWhereWithoutCommentInput = {
   where: CommentScalarWhereInput;
 };
 
-export type CommentUpdateManyWithWhereWithoutPhraseInput = {
+export type CommentUpdateManyWithWhereWithoutIssueInput = {
   data: CommentUncheckedUpdateManyWithoutCommentsInput;
   where: CommentScalarWhereInput;
 };
 
-export type CommentUpdateManyWithWhereWithoutPullRequestInput = {
+export type CommentUpdateManyWithWhereWithoutPhraseInput = {
   data: CommentUncheckedUpdateManyWithoutCommentsInput;
   where: CommentScalarWhereInput;
 };
@@ -1649,6 +1015,20 @@ export type CommentUpdateManyWithoutCommentInput = {
   upsert?: InputMaybe<Array<InputMaybe<CommentUpsertWithWhereUniqueWithoutCommentInput>>>;
 };
 
+export type CommentUpdateManyWithoutIssueInput = {
+  connect?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<CommentCreateOrConnectWithoutIssueInput>>>;
+  create?: InputMaybe<Array<InputMaybe<CommentCreateWithoutIssueInput>>>;
+  createMany?: InputMaybe<CommentCreateManyIssueInputEnvelope>;
+  delete?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
+  deleteMany?: InputMaybe<Array<InputMaybe<CommentScalarWhereInput>>>;
+  disconnect?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
+  set?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
+  update?: InputMaybe<Array<InputMaybe<CommentUpdateWithWhereUniqueWithoutIssueInput>>>;
+  updateMany?: InputMaybe<Array<InputMaybe<CommentUpdateManyWithWhereWithoutIssueInput>>>;
+  upsert?: InputMaybe<Array<InputMaybe<CommentUpsertWithWhereUniqueWithoutIssueInput>>>;
+};
+
 export type CommentUpdateManyWithoutPhraseInput = {
   connect?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
   connectOrCreate?: InputMaybe<Array<InputMaybe<CommentCreateOrConnectWithoutPhraseInput>>>;
@@ -1661,20 +1041,6 @@ export type CommentUpdateManyWithoutPhraseInput = {
   update?: InputMaybe<Array<InputMaybe<CommentUpdateWithWhereUniqueWithoutPhraseInput>>>;
   updateMany?: InputMaybe<Array<InputMaybe<CommentUpdateManyWithWhereWithoutPhraseInput>>>;
   upsert?: InputMaybe<Array<InputMaybe<CommentUpsertWithWhereUniqueWithoutPhraseInput>>>;
-};
-
-export type CommentUpdateManyWithoutPullRequestInput = {
-  connect?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<CommentCreateOrConnectWithoutPullRequestInput>>>;
-  create?: InputMaybe<Array<InputMaybe<CommentCreateWithoutPullRequestInput>>>;
-  createMany?: InputMaybe<CommentCreateManyPullRequestInputEnvelope>;
-  delete?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
-  deleteMany?: InputMaybe<Array<InputMaybe<CommentScalarWhereInput>>>;
-  disconnect?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
-  set?: InputMaybe<Array<InputMaybe<CommentWhereUniqueInput>>>;
-  update?: InputMaybe<Array<InputMaybe<CommentUpdateWithWhereUniqueWithoutPullRequestInput>>>;
-  updateMany?: InputMaybe<Array<InputMaybe<CommentUpdateManyWithWhereWithoutPullRequestInput>>>;
-  upsert?: InputMaybe<Array<InputMaybe<CommentUpsertWithWhereUniqueWithoutPullRequestInput>>>;
 };
 
 export type CommentUpdateOneWithoutCommentsInput = {
@@ -1692,13 +1058,13 @@ export type CommentUpdateWithWhereUniqueWithoutCommentInput = {
   where: CommentWhereUniqueInput;
 };
 
-export type CommentUpdateWithWhereUniqueWithoutPhraseInput = {
-  data: CommentUncheckedUpdateWithoutPhraseInput;
+export type CommentUpdateWithWhereUniqueWithoutIssueInput = {
+  data: CommentUncheckedUpdateWithoutIssueInput;
   where: CommentWhereUniqueInput;
 };
 
-export type CommentUpdateWithWhereUniqueWithoutPullRequestInput = {
-  data: CommentUncheckedUpdateWithoutPullRequestInput;
+export type CommentUpdateWithWhereUniqueWithoutPhraseInput = {
+  data: CommentUncheckedUpdateWithoutPhraseInput;
   where: CommentWhereUniqueInput;
 };
 
@@ -1706,8 +1072,8 @@ export type CommentUpdateWithoutCommentInput = {
   comments?: InputMaybe<CommentUpdateManyWithoutCommentInput>;
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  issue?: InputMaybe<IssueUpdateOneWithoutCommentsInput>;
   phrase?: InputMaybe<PhraseUpdateOneWithoutCommentsInput>;
-  pullRequest?: InputMaybe<PullRequestUpdateOneWithoutCommentsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -1715,8 +1081,17 @@ export type CommentUpdateWithoutCommentsInput = {
   comment?: InputMaybe<CommentUpdateOneWithoutCommentsInput>;
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  issue?: InputMaybe<IssueUpdateOneWithoutCommentsInput>;
   phrase?: InputMaybe<PhraseUpdateOneWithoutCommentsInput>;
-  pullRequest?: InputMaybe<PullRequestUpdateOneWithoutCommentsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type CommentUpdateWithoutIssueInput = {
+  comment?: InputMaybe<CommentUpdateOneWithoutCommentsInput>;
+  comments?: InputMaybe<CommentUpdateManyWithoutCommentInput>;
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  phrase?: InputMaybe<PhraseUpdateOneWithoutCommentsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -1725,16 +1100,7 @@ export type CommentUpdateWithoutPhraseInput = {
   comments?: InputMaybe<CommentUpdateManyWithoutCommentInput>;
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  pullRequest?: InputMaybe<PullRequestUpdateOneWithoutCommentsInput>;
-  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-};
-
-export type CommentUpdateWithoutPullRequestInput = {
-  comment?: InputMaybe<CommentUpdateOneWithoutCommentsInput>;
-  comments?: InputMaybe<CommentUpdateManyWithoutCommentInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  phrase?: InputMaybe<PhraseUpdateOneWithoutCommentsInput>;
+  issue?: InputMaybe<IssueUpdateOneWithoutCommentsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -1744,15 +1110,15 @@ export type CommentUpsertWithWhereUniqueWithoutCommentInput = {
   where: CommentWhereUniqueInput;
 };
 
-export type CommentUpsertWithWhereUniqueWithoutPhraseInput = {
-  create: CommentUncheckedCreateWithoutPhraseInput;
-  update: CommentUncheckedUpdateWithoutPhraseInput;
+export type CommentUpsertWithWhereUniqueWithoutIssueInput = {
+  create: CommentUncheckedCreateWithoutIssueInput;
+  update: CommentUncheckedUpdateWithoutIssueInput;
   where: CommentWhereUniqueInput;
 };
 
-export type CommentUpsertWithWhereUniqueWithoutPullRequestInput = {
-  create: CommentUncheckedCreateWithoutPullRequestInput;
-  update: CommentUncheckedUpdateWithoutPullRequestInput;
+export type CommentUpsertWithWhereUniqueWithoutPhraseInput = {
+  create: CommentUncheckedCreateWithoutPhraseInput;
+  update: CommentUncheckedUpdateWithoutPhraseInput;
   where: CommentWhereUniqueInput;
 };
 
@@ -1771,10 +1137,10 @@ export type CommentWhereInput = {
   content?: InputMaybe<StringFilter>;
   createAt?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<IntFilter>;
+  issue?: InputMaybe<IssueWhereInput>;
+  issueId?: InputMaybe<IntNullableFilter>;
   phrase?: InputMaybe<PhraseWhereInput>;
   phraseId?: InputMaybe<IntNullableFilter>;
-  pullRequest?: InputMaybe<PullRequestWhereInput>;
-  pullRequestId?: InputMaybe<IntNullableFilter>;
   updateAt?: InputMaybe<DateTimeFilter>;
 };
 
@@ -1834,27 +1200,6 @@ export type DateTimeWithAggregatesFilter = {
   lte?: InputMaybe<Scalars['DateTime']>;
   not?: InputMaybe<NestedDateTimeWithAggregatesFilter>;
   notIn?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
-};
-
-export type EnumActionTypeFieldUpdateOperationsInput = {
-  set?: InputMaybe<ActionType>;
-};
-
-export type EnumActionTypeFilter = {
-  equals?: InputMaybe<ActionType>;
-  in?: InputMaybe<Array<InputMaybe<ActionType>>>;
-  not?: InputMaybe<NestedEnumActionTypeFilter>;
-  notIn?: InputMaybe<Array<InputMaybe<ActionType>>>;
-};
-
-export type EnumActionTypeWithAggregatesFilter = {
-  _count?: InputMaybe<NestedIntFilter>;
-  _max?: InputMaybe<NestedEnumActionTypeFilter>;
-  _min?: InputMaybe<NestedEnumActionTypeFilter>;
-  equals?: InputMaybe<ActionType>;
-  in?: InputMaybe<Array<InputMaybe<ActionType>>>;
-  not?: InputMaybe<NestedEnumActionTypeWithAggregatesFilter>;
-  notIn?: InputMaybe<Array<InputMaybe<ActionType>>>;
 };
 
 export type EnumPhraseStatusFieldUpdateOperationsInput = {
@@ -1920,6 +1265,27 @@ export type EnumPullRequestStatusWithAggregatesFilter = {
   notIn?: InputMaybe<Array<InputMaybe<PullRequestStatus>>>;
 };
 
+export type EnumPullRequestTypeFieldUpdateOperationsInput = {
+  set?: InputMaybe<PullRequestType>;
+};
+
+export type EnumPullRequestTypeFilter = {
+  equals?: InputMaybe<PullRequestType>;
+  in?: InputMaybe<Array<InputMaybe<PullRequestType>>>;
+  not?: InputMaybe<NestedEnumPullRequestTypeFilter>;
+  notIn?: InputMaybe<Array<InputMaybe<PullRequestType>>>;
+};
+
+export type EnumPullRequestTypeWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedEnumPullRequestTypeFilter>;
+  _min?: InputMaybe<NestedEnumPullRequestTypeFilter>;
+  equals?: InputMaybe<PullRequestType>;
+  in?: InputMaybe<Array<InputMaybe<PullRequestType>>>;
+  not?: InputMaybe<NestedEnumPullRequestTypeWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<InputMaybe<PullRequestType>>>;
+};
+
 export type EnumSignUpTypeFieldUpdateOperationsInput = {
   set?: InputMaybe<SignUpType>;
 };
@@ -1964,6 +1330,22 @@ export type EnumUserStatusWithAggregatesFilter = {
 
 /** 错误码信息 */
 export enum ErrorCode {
+  /** 词条不存在 */
+  Ph1000 = 'PH1000',
+  /** 词条已存在 */
+  Ph1001 = 'PH1001',
+  /** 词条ID不能为空 */
+  Pr1000 = 'PR1000',
+  /** 词条或编码必填 */
+  Pr1001 = 'PR1001',
+  /** 词条或编码必须填写一项 */
+  Pr1002 = 'PR1002',
+  /** 排序值必填 */
+  Pr1003 = 'PR1003',
+  /** PR已存在 */
+  Pr1004 = 'PR1004',
+  /** 输入多行信息错误 */
+  Pr2000 = 'PR2000',
   /** 用户名已被使用 */
   U1000 = 'U1000',
   /** 邮箱已被使用 */
@@ -2032,12 +1414,618 @@ export type IntWithAggregatesFilter = {
   notIn?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
 };
 
+/** 词条-发起讨论问题 */
+export type Issue = {
+  __typename?: 'Issue';
+  _count: IssueCountOutputType;
+  comments: Array<Comment>;
+  content: Scalars['String'];
+  createAt: Scalars['DateTime'];
+  id: Scalars['Int'];
+  pullRequests: Array<PullRequest>;
+  status: Scalars['Boolean'];
+  updateAt: Scalars['DateTime'];
+  user: User;
+  userId: Scalars['Int'];
+};
+
+
+/** 词条-发起讨论问题 */
+export type IssueCommentsArgs = {
+  cursor?: InputMaybe<CommentWhereUniqueInput>;
+  distinct?: InputMaybe<CommentScalarFieldEnum>;
+  orderBy?: InputMaybe<CommentOrderByWithRelationAndSearchRelevanceInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<CommentWhereInput>;
+};
+
+
+/** 词条-发起讨论问题 */
+export type IssuePullRequestsArgs = {
+  cursor?: InputMaybe<PullRequestWhereUniqueInput>;
+  distinct?: InputMaybe<PullRequestScalarFieldEnum>;
+  orderBy?: InputMaybe<PullRequestOrderByWithRelationAndSearchRelevanceInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<PullRequestWhereInput>;
+};
+
+export type IssueAvgAggregateOutputType = {
+  __typename?: 'IssueAvgAggregateOutputType';
+  id?: Maybe<Scalars['Float']>;
+  userId?: Maybe<Scalars['Float']>;
+};
+
+export type IssueAvgOrderByAggregateInput = {
+  id?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type IssueCountAggregateOutputType = {
+  __typename?: 'IssueCountAggregateOutputType';
+  _all: Scalars['Int'];
+  content: Scalars['Int'];
+  createAt: Scalars['Int'];
+  id: Scalars['Int'];
+  status: Scalars['Int'];
+  updateAt: Scalars['Int'];
+  userId: Scalars['Int'];
+};
+
+export type IssueCountOrderByAggregateInput = {
+  content?: InputMaybe<SortOrder>;
+  createAt?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  status?: InputMaybe<SortOrder>;
+  updateAt?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type IssueCountOutputType = {
+  __typename?: 'IssueCountOutputType';
+  comments: Scalars['Int'];
+  pullRequests: Scalars['Int'];
+};
+
+export type IssueCreateInput = {
+  comments?: InputMaybe<CommentCreateNestedManyWithoutIssueInput>;
+  content: Scalars['String'];
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  pullRequests?: InputMaybe<PullRequestCreateNestedManyWithoutIssueInput>;
+  status?: InputMaybe<Scalars['Boolean']>;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+  user: UserCreateNestedOneWithoutIssuesInput;
+};
+
+export type IssueCreateManyInput = {
+  content: Scalars['String'];
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<Scalars['Boolean']>;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+  userId: Scalars['Int'];
+};
+
+export type IssueCreateManyUserInput = {
+  content: Scalars['String'];
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<Scalars['Boolean']>;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type IssueCreateManyUserInputEnvelope = {
+  data: IssueCreateManyUserInput;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type IssueCreateNestedManyWithoutPullRequestsInput = {
+  connect?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<IssueCreateOrConnectWithoutPullRequestsInput>>>;
+  create?: InputMaybe<Array<InputMaybe<IssueCreateWithoutPullRequestsInput>>>;
+};
+
+export type IssueCreateNestedManyWithoutUserInput = {
+  connect?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<IssueCreateOrConnectWithoutUserInput>>>;
+  create?: InputMaybe<Array<InputMaybe<IssueCreateWithoutUserInput>>>;
+  createMany?: InputMaybe<IssueCreateManyUserInputEnvelope>;
+};
+
+export type IssueCreateNestedOneWithoutCommentsInput = {
+  connect?: InputMaybe<IssueWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<IssueCreateOrConnectWithoutCommentsInput>;
+  create?: InputMaybe<IssueUncheckedCreateWithoutCommentsInput>;
+};
+
+export type IssueCreateOrConnectWithoutCommentsInput = {
+  create: IssueUncheckedCreateWithoutCommentsInput;
+  where: IssueWhereUniqueInput;
+};
+
+export type IssueCreateOrConnectWithoutPullRequestsInput = {
+  create: IssueUncheckedCreateWithoutPullRequestsInput;
+  where: IssueWhereUniqueInput;
+};
+
+export type IssueCreateOrConnectWithoutUserInput = {
+  create: IssueUncheckedCreateWithoutUserInput;
+  where: IssueWhereUniqueInput;
+};
+
+export type IssueCreateWithoutCommentsInput = {
+  content: Scalars['String'];
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  pullRequests?: InputMaybe<PullRequestCreateNestedManyWithoutIssueInput>;
+  status?: InputMaybe<Scalars['Boolean']>;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+  user: UserCreateNestedOneWithoutIssuesInput;
+};
+
+export type IssueCreateWithoutPullRequestsInput = {
+  comments?: InputMaybe<CommentCreateNestedManyWithoutIssueInput>;
+  content: Scalars['String'];
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  status?: InputMaybe<Scalars['Boolean']>;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+  user: UserCreateNestedOneWithoutIssuesInput;
+};
+
+export type IssueCreateWithoutUserInput = {
+  comments?: InputMaybe<CommentCreateNestedManyWithoutIssueInput>;
+  content: Scalars['String'];
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  pullRequests?: InputMaybe<PullRequestCreateNestedManyWithoutIssueInput>;
+  status?: InputMaybe<Scalars['Boolean']>;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type IssueListRelationFilter = {
+  every?: InputMaybe<IssueWhereInput>;
+  none?: InputMaybe<IssueWhereInput>;
+  some?: InputMaybe<IssueWhereInput>;
+};
+
+export type IssueMaxAggregateOutputType = {
+  __typename?: 'IssueMaxAggregateOutputType';
+  content?: Maybe<Scalars['String']>;
+  createAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['Int']>;
+  status?: Maybe<Scalars['Boolean']>;
+  updateAt?: Maybe<Scalars['DateTime']>;
+  userId?: Maybe<Scalars['Int']>;
+};
+
+export type IssueMaxOrderByAggregateInput = {
+  content?: InputMaybe<SortOrder>;
+  createAt?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  status?: InputMaybe<SortOrder>;
+  updateAt?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type IssueMinAggregateOutputType = {
+  __typename?: 'IssueMinAggregateOutputType';
+  content?: Maybe<Scalars['String']>;
+  createAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['Int']>;
+  status?: Maybe<Scalars['Boolean']>;
+  updateAt?: Maybe<Scalars['DateTime']>;
+  userId?: Maybe<Scalars['Int']>;
+};
+
+export type IssueMinOrderByAggregateInput = {
+  content?: InputMaybe<SortOrder>;
+  createAt?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  status?: InputMaybe<SortOrder>;
+  updateAt?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type IssueOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export enum IssueOrderByRelevanceFieldEnum {
+  Content = 'content'
+}
+
+export type IssueOrderByRelevanceInput = {
+  fields: IssueOrderByRelevanceFieldEnum;
+  search: Scalars['String'];
+  sort: SortOrder;
+};
+
+export type IssueOrderByWithAggregationInput = {
+  _avg?: InputMaybe<IssueAvgOrderByAggregateInput>;
+  _count?: InputMaybe<IssueCountOrderByAggregateInput>;
+  _max?: InputMaybe<IssueMaxOrderByAggregateInput>;
+  _min?: InputMaybe<IssueMinOrderByAggregateInput>;
+  _sum?: InputMaybe<IssueSumOrderByAggregateInput>;
+  content?: InputMaybe<SortOrder>;
+  createAt?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  status?: InputMaybe<SortOrder>;
+  updateAt?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type IssueOrderByWithRelationAndSearchRelevanceInput = {
+  _relevance?: InputMaybe<IssueOrderByRelevanceInput>;
+  comments?: InputMaybe<CommentOrderByRelationAggregateInput>;
+  content?: InputMaybe<SortOrder>;
+  createAt?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  pullRequests?: InputMaybe<PullRequestOrderByRelationAggregateInput>;
+  status?: InputMaybe<SortOrder>;
+  updateAt?: InputMaybe<SortOrder>;
+  user?: InputMaybe<UserOrderByWithRelationAndSearchRelevanceInput>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type IssuePullReqeustUserInput = {
+  /** 编码 */
+  code?: InputMaybe<Scalars['String']>;
+  /** 排序值 */
+  index?: InputMaybe<Scalars['Int']>;
+  /** 原词条ID，若为新建，则忽略 */
+  phraseId?: InputMaybe<Scalars['Int']>;
+  /** PR操作行为 */
+  type: PullRequestType;
+  /** 词条 */
+  word?: InputMaybe<Scalars['String']>;
+};
+
+export type IssueRelationFilter = {
+  is?: InputMaybe<IssueWhereInput>;
+  isNot?: InputMaybe<IssueWhereInput>;
+};
+
+export enum IssueScalarFieldEnum {
+  Content = 'content',
+  CreateAt = 'createAt',
+  Id = 'id',
+  Status = 'status',
+  UpdateAt = 'updateAt',
+  UserId = 'userId'
+}
+
+export type IssueScalarWhereInput = {
+  AND?: InputMaybe<Array<InputMaybe<IssueScalarWhereInput>>>;
+  NOT?: InputMaybe<Array<InputMaybe<IssueScalarWhereInput>>>;
+  OR?: InputMaybe<Array<InputMaybe<IssueScalarWhereInput>>>;
+  content?: InputMaybe<StringFilter>;
+  createAt?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<IntFilter>;
+  status?: InputMaybe<BoolFilter>;
+  updateAt?: InputMaybe<DateTimeFilter>;
+  userId?: InputMaybe<IntFilter>;
+};
+
+export type IssueScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<InputMaybe<IssueScalarWhereWithAggregatesInput>>>;
+  NOT?: InputMaybe<Array<InputMaybe<IssueScalarWhereWithAggregatesInput>>>;
+  OR?: InputMaybe<Array<InputMaybe<IssueScalarWhereWithAggregatesInput>>>;
+  content?: InputMaybe<StringWithAggregatesFilter>;
+  createAt?: InputMaybe<DateTimeWithAggregatesFilter>;
+  id?: InputMaybe<IntWithAggregatesFilter>;
+  status?: InputMaybe<BoolWithAggregatesFilter>;
+  updateAt?: InputMaybe<DateTimeWithAggregatesFilter>;
+  userId?: InputMaybe<IntWithAggregatesFilter>;
+};
+
+export type IssueSumAggregateOutputType = {
+  __typename?: 'IssueSumAggregateOutputType';
+  id?: Maybe<Scalars['Int']>;
+  userId?: Maybe<Scalars['Int']>;
+};
+
+export type IssueSumOrderByAggregateInput = {
+  id?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type IssueUncheckedCreateInput = {
+  comments?: InputMaybe<CommentUncheckedCreateNestedManyWithoutIssueInput>;
+  content: Scalars['String'];
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['Int']>;
+  pullRequests?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutIssueInput>;
+  status?: InputMaybe<Scalars['Boolean']>;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+  userId: Scalars['Int'];
+};
+
+export type IssueUncheckedCreateNestedManyWithoutPullRequestsInput = {
+  connect?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<IssueCreateOrConnectWithoutPullRequestsInput>>>;
+  create?: InputMaybe<Array<InputMaybe<IssueCreateWithoutPullRequestsInput>>>;
+};
+
+export type IssueUncheckedCreateNestedManyWithoutUserInput = {
+  connect?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<IssueCreateOrConnectWithoutUserInput>>>;
+  create?: InputMaybe<Array<InputMaybe<IssueCreateWithoutUserInput>>>;
+  createMany?: InputMaybe<IssueCreateManyUserInputEnvelope>;
+};
+
+export type IssueUncheckedCreateWithoutCommentsInput = {
+  content: Scalars['String'];
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['Int']>;
+  pullRequests?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutIssueInput>;
+  status?: InputMaybe<Scalars['Boolean']>;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+  userId: Scalars['Int'];
+};
+
+export type IssueUncheckedCreateWithoutPullRequestsInput = {
+  comments?: InputMaybe<CommentUncheckedCreateNestedManyWithoutIssueInput>;
+  content: Scalars['String'];
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<Scalars['Boolean']>;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+  userId: Scalars['Int'];
+};
+
+export type IssueUncheckedCreateWithoutUserInput = {
+  comments?: InputMaybe<CommentUncheckedCreateNestedManyWithoutIssueInput>;
+  content: Scalars['String'];
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['Int']>;
+  pullRequests?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutIssueInput>;
+  status?: InputMaybe<Scalars['Boolean']>;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type IssueUncheckedUpdateInput = {
+  comments?: InputMaybe<CommentUncheckedUpdateManyWithoutIssueInput>;
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pullRequests?: InputMaybe<PullRequestUncheckedUpdateManyWithoutIssueInput>;
+  status?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  userId?: InputMaybe<IntFieldUpdateOperationsInput>;
+};
+
+export type IssueUncheckedUpdateManyInput = {
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  status?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  userId?: InputMaybe<IntFieldUpdateOperationsInput>;
+};
+
+export type IssueUncheckedUpdateManyWithoutIssueInput = {
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  status?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  userId?: InputMaybe<IntFieldUpdateOperationsInput>;
+};
+
+export type IssueUncheckedUpdateManyWithoutIssuesInput = {
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  status?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type IssueUncheckedUpdateManyWithoutPullRequestsInput = {
+  connect?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<IssueCreateOrConnectWithoutPullRequestsInput>>>;
+  create?: InputMaybe<Array<InputMaybe<IssueCreateWithoutPullRequestsInput>>>;
+  delete?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  deleteMany?: InputMaybe<Array<InputMaybe<IssueScalarWhereInput>>>;
+  disconnect?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  set?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  update?: InputMaybe<Array<InputMaybe<IssueUpdateWithWhereUniqueWithoutPullRequestsInput>>>;
+  updateMany?: InputMaybe<Array<InputMaybe<IssueUpdateManyWithWhereWithoutPullRequestsInput>>>;
+  upsert?: InputMaybe<Array<InputMaybe<IssueUpsertWithWhereUniqueWithoutPullRequestsInput>>>;
+};
+
+export type IssueUncheckedUpdateManyWithoutUserInput = {
+  connect?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<IssueCreateOrConnectWithoutUserInput>>>;
+  create?: InputMaybe<Array<InputMaybe<IssueCreateWithoutUserInput>>>;
+  createMany?: InputMaybe<IssueCreateManyUserInputEnvelope>;
+  delete?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  deleteMany?: InputMaybe<Array<InputMaybe<IssueScalarWhereInput>>>;
+  disconnect?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  set?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  update?: InputMaybe<Array<InputMaybe<IssueUpdateWithWhereUniqueWithoutUserInput>>>;
+  updateMany?: InputMaybe<Array<InputMaybe<IssueUpdateManyWithWhereWithoutUserInput>>>;
+  upsert?: InputMaybe<Array<InputMaybe<IssueUpsertWithWhereUniqueWithoutUserInput>>>;
+};
+
+export type IssueUncheckedUpdateWithoutCommentsInput = {
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pullRequests?: InputMaybe<PullRequestUncheckedUpdateManyWithoutIssueInput>;
+  status?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  userId?: InputMaybe<IntFieldUpdateOperationsInput>;
+};
+
+export type IssueUncheckedUpdateWithoutPullRequestsInput = {
+  comments?: InputMaybe<CommentUncheckedUpdateManyWithoutIssueInput>;
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  status?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  userId?: InputMaybe<IntFieldUpdateOperationsInput>;
+};
+
+export type IssueUncheckedUpdateWithoutUserInput = {
+  comments?: InputMaybe<CommentUncheckedUpdateManyWithoutIssueInput>;
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pullRequests?: InputMaybe<PullRequestUncheckedUpdateManyWithoutIssueInput>;
+  status?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type IssueUpdateInput = {
+  comments?: InputMaybe<CommentUpdateManyWithoutIssueInput>;
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  pullRequests?: InputMaybe<PullRequestUpdateManyWithoutIssueInput>;
+  status?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutIssuesInput>;
+};
+
+export type IssueUpdateManyMutationInput = {
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  status?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type IssueUpdateManyWithWhereWithoutPullRequestsInput = {
+  data: IssueUncheckedUpdateManyWithoutIssueInput;
+  where: IssueScalarWhereInput;
+};
+
+export type IssueUpdateManyWithWhereWithoutUserInput = {
+  data: IssueUncheckedUpdateManyWithoutIssuesInput;
+  where: IssueScalarWhereInput;
+};
+
+export type IssueUpdateManyWithoutPullRequestsInput = {
+  connect?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<IssueCreateOrConnectWithoutPullRequestsInput>>>;
+  create?: InputMaybe<Array<InputMaybe<IssueCreateWithoutPullRequestsInput>>>;
+  delete?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  deleteMany?: InputMaybe<Array<InputMaybe<IssueScalarWhereInput>>>;
+  disconnect?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  set?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  update?: InputMaybe<Array<InputMaybe<IssueUpdateWithWhereUniqueWithoutPullRequestsInput>>>;
+  updateMany?: InputMaybe<Array<InputMaybe<IssueUpdateManyWithWhereWithoutPullRequestsInput>>>;
+  upsert?: InputMaybe<Array<InputMaybe<IssueUpsertWithWhereUniqueWithoutPullRequestsInput>>>;
+};
+
+export type IssueUpdateManyWithoutUserInput = {
+  connect?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<IssueCreateOrConnectWithoutUserInput>>>;
+  create?: InputMaybe<Array<InputMaybe<IssueCreateWithoutUserInput>>>;
+  createMany?: InputMaybe<IssueCreateManyUserInputEnvelope>;
+  delete?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  deleteMany?: InputMaybe<Array<InputMaybe<IssueScalarWhereInput>>>;
+  disconnect?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  set?: InputMaybe<Array<InputMaybe<IssueWhereUniqueInput>>>;
+  update?: InputMaybe<Array<InputMaybe<IssueUpdateWithWhereUniqueWithoutUserInput>>>;
+  updateMany?: InputMaybe<Array<InputMaybe<IssueUpdateManyWithWhereWithoutUserInput>>>;
+  upsert?: InputMaybe<Array<InputMaybe<IssueUpsertWithWhereUniqueWithoutUserInput>>>;
+};
+
+export type IssueUpdateOneWithoutCommentsInput = {
+  connect?: InputMaybe<IssueWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<IssueCreateOrConnectWithoutCommentsInput>;
+  create?: InputMaybe<IssueUncheckedCreateWithoutCommentsInput>;
+  delete?: InputMaybe<Scalars['Boolean']>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  update?: InputMaybe<IssueUncheckedUpdateWithoutCommentsInput>;
+  upsert?: InputMaybe<IssueUpsertWithoutCommentsInput>;
+};
+
+export type IssueUpdateWithWhereUniqueWithoutPullRequestsInput = {
+  data: IssueUncheckedUpdateWithoutPullRequestsInput;
+  where: IssueWhereUniqueInput;
+};
+
+export type IssueUpdateWithWhereUniqueWithoutUserInput = {
+  data: IssueUncheckedUpdateWithoutUserInput;
+  where: IssueWhereUniqueInput;
+};
+
+export type IssueUpdateWithoutCommentsInput = {
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  pullRequests?: InputMaybe<PullRequestUpdateManyWithoutIssueInput>;
+  status?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutIssuesInput>;
+};
+
+export type IssueUpdateWithoutPullRequestsInput = {
+  comments?: InputMaybe<CommentUpdateManyWithoutIssueInput>;
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  status?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutIssuesInput>;
+};
+
+export type IssueUpdateWithoutUserInput = {
+  comments?: InputMaybe<CommentUpdateManyWithoutIssueInput>;
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  pullRequests?: InputMaybe<PullRequestUpdateManyWithoutIssueInput>;
+  status?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type IssueUpsertWithWhereUniqueWithoutPullRequestsInput = {
+  create: IssueUncheckedCreateWithoutPullRequestsInput;
+  update: IssueUncheckedUpdateWithoutPullRequestsInput;
+  where: IssueWhereUniqueInput;
+};
+
+export type IssueUpsertWithWhereUniqueWithoutUserInput = {
+  create: IssueUncheckedCreateWithoutUserInput;
+  update: IssueUncheckedUpdateWithoutUserInput;
+  where: IssueWhereUniqueInput;
+};
+
+export type IssueUpsertWithoutCommentsInput = {
+  create: IssueUncheckedCreateWithoutCommentsInput;
+  update: IssueUncheckedUpdateWithoutCommentsInput;
+};
+
+export type IssueUserCreateInput = {
+  /** 内容 */
+  content: Scalars['String'];
+  /** 操作 */
+  pullRequests: Array<InputMaybe<IssuePullReqeustUserInput>>;
+};
+
+export type IssueWhereInput = {
+  AND?: InputMaybe<Array<InputMaybe<IssueWhereInput>>>;
+  NOT?: InputMaybe<Array<InputMaybe<IssueWhereInput>>>;
+  OR?: InputMaybe<Array<InputMaybe<IssueWhereInput>>>;
+  comments?: InputMaybe<CommentListRelationFilter>;
+  content?: InputMaybe<StringFilter>;
+  createAt?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<IntFilter>;
+  pullRequests?: InputMaybe<PullRequestListRelationFilter>;
+  status?: InputMaybe<BoolFilter>;
+  updateAt?: InputMaybe<DateTimeFilter>;
+  user?: InputMaybe<UserWhereInput>;
+  userId?: InputMaybe<IntFilter>;
+};
+
+export type IssueWhereUniqueInput = {
+  id?: InputMaybe<Scalars['Int']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addUserPermission?: Maybe<Scalars['Boolean']>;
-  createOneAction: Action;
   createOneCasbinRule: CasbinRule;
   createOneComment: Comment;
+  createOneIssue: Issue;
   createOneNotice: Notice;
   createOnePermission: Permission;
   createOnePermissionAction: PermissionAction;
@@ -2047,10 +2035,9 @@ export type Mutation = {
   createOneTag: Tag;
   createOneUser: User;
   createOneWechat: Wechat;
-  createSubmitOnePhrase?: Maybe<Phrase>;
-  deleteManyAction: BatchPayload;
   deleteManyCasbinRule: BatchPayload;
   deleteManyComment: BatchPayload;
+  deleteManyIssue: BatchPayload;
   deleteManyNotice: BatchPayload;
   deleteManyPermission: BatchPayload;
   deleteManyPermissionAction: BatchPayload;
@@ -2060,9 +2047,9 @@ export type Mutation = {
   deleteManyTag: BatchPayload;
   deleteManyUser: BatchPayload;
   deleteManyWechat: BatchPayload;
-  deleteOneAction?: Maybe<Action>;
   deleteOneCasbinRule?: Maybe<CasbinRule>;
   deleteOneComment?: Maybe<Comment>;
+  deleteOneIssue?: Maybe<Issue>;
   deleteOneNotice?: Maybe<Notice>;
   deleteOnePermission?: Maybe<Permission>;
   deleteOnePermissionAction?: Maybe<PermissionAction>;
@@ -2075,9 +2062,9 @@ export type Mutation = {
   deletePolicy?: Maybe<Scalars['Boolean']>;
   signIn?: Maybe<UserSignIn>;
   signUp?: Maybe<User>;
-  updateManyAction: BatchPayload;
   updateManyCasbinRule: BatchPayload;
   updateManyComment: BatchPayload;
+  updateManyIssue: BatchPayload;
   updateManyNotice: BatchPayload;
   updateManyPermission: BatchPayload;
   updateManyPermissionAction: BatchPayload;
@@ -2087,9 +2074,9 @@ export type Mutation = {
   updateManyTag: BatchPayload;
   updateManyUser: BatchPayload;
   updateManyWechat: BatchPayload;
-  updateOneAction: Action;
   updateOneCasbinRule: CasbinRule;
   updateOneComment: Comment;
+  updateOneIssue: Issue;
   updateOneNotice: Notice;
   updateOnePermission: Permission;
   updateOnePermissionAction: PermissionAction;
@@ -2101,9 +2088,9 @@ export type Mutation = {
   updateOneWechat: Wechat;
   updateUser?: Maybe<User>;
   updateUserMe?: Maybe<User>;
-  upsertOneAction: Action;
   upsertOneCasbinRule: CasbinRule;
   upsertOneComment: Comment;
+  upsertOneIssue: Issue;
   upsertOneNotice: Notice;
   upsertOnePermission: Permission;
   upsertOnePermissionAction: PermissionAction;
@@ -2122,11 +2109,6 @@ export type MutationAddUserPermissionArgs = {
 };
 
 
-export type MutationCreateOneActionArgs = {
-  data: ActionCreateInput;
-};
-
-
 export type MutationCreateOneCasbinRuleArgs = {
   data: CasbinRuleCreateInput;
 };
@@ -2134,6 +2116,11 @@ export type MutationCreateOneCasbinRuleArgs = {
 
 export type MutationCreateOneCommentArgs = {
   data: CommentCreateInput;
+};
+
+
+export type MutationCreateOneIssueArgs = {
+  data: IssueUserCreateInput;
 };
 
 
@@ -2182,16 +2169,6 @@ export type MutationCreateOneWechatArgs = {
 };
 
 
-export type MutationCreateSubmitOnePhraseArgs = {
-  data?: InputMaybe<SubmitOnePhraseCreateInput>;
-};
-
-
-export type MutationDeleteManyActionArgs = {
-  where?: InputMaybe<ActionWhereInput>;
-};
-
-
 export type MutationDeleteManyCasbinRuleArgs = {
   where?: InputMaybe<CasbinRuleWhereInput>;
 };
@@ -2199,6 +2176,11 @@ export type MutationDeleteManyCasbinRuleArgs = {
 
 export type MutationDeleteManyCommentArgs = {
   where?: InputMaybe<CommentWhereInput>;
+};
+
+
+export type MutationDeleteManyIssueArgs = {
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 
@@ -2247,11 +2229,6 @@ export type MutationDeleteManyWechatArgs = {
 };
 
 
-export type MutationDeleteOneActionArgs = {
-  where: ActionWhereUniqueInput;
-};
-
-
 export type MutationDeleteOneCasbinRuleArgs = {
   where: CasbinRuleWhereUniqueInput;
 };
@@ -2259,6 +2236,11 @@ export type MutationDeleteOneCasbinRuleArgs = {
 
 export type MutationDeleteOneCommentArgs = {
   where: CommentWhereUniqueInput;
+};
+
+
+export type MutationDeleteOneIssueArgs = {
+  where: IssueWhereUniqueInput;
 };
 
 
@@ -2322,12 +2304,6 @@ export type MutationSignUpArgs = {
 };
 
 
-export type MutationUpdateManyActionArgs = {
-  data: ActionUpdateManyMutationInput;
-  where?: InputMaybe<ActionWhereInput>;
-};
-
-
 export type MutationUpdateManyCasbinRuleArgs = {
   data: CasbinRuleUpdateManyMutationInput;
   where?: InputMaybe<CasbinRuleWhereInput>;
@@ -2337,6 +2313,12 @@ export type MutationUpdateManyCasbinRuleArgs = {
 export type MutationUpdateManyCommentArgs = {
   data: CommentUpdateManyMutationInput;
   where?: InputMaybe<CommentWhereInput>;
+};
+
+
+export type MutationUpdateManyIssueArgs = {
+  data: IssueUpdateManyMutationInput;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 
@@ -2394,12 +2376,6 @@ export type MutationUpdateManyWechatArgs = {
 };
 
 
-export type MutationUpdateOneActionArgs = {
-  data: ActionUpdateInput;
-  where: ActionWhereUniqueInput;
-};
-
-
 export type MutationUpdateOneCasbinRuleArgs = {
   data: CasbinRuleUpdateInput;
   where: CasbinRuleWhereUniqueInput;
@@ -2409,6 +2385,12 @@ export type MutationUpdateOneCasbinRuleArgs = {
 export type MutationUpdateOneCommentArgs = {
   data: CommentUpdateInput;
   where: CommentWhereUniqueInput;
+};
+
+
+export type MutationUpdateOneIssueArgs = {
+  data: IssueUpdateInput;
+  where: IssueWhereUniqueInput;
 };
 
 
@@ -2477,13 +2459,6 @@ export type MutationUpdateUserMeArgs = {
 };
 
 
-export type MutationUpsertOneActionArgs = {
-  create: ActionCreateInput;
-  update: ActionUpdateInput;
-  where: ActionWhereUniqueInput;
-};
-
-
 export type MutationUpsertOneCasbinRuleArgs = {
   create: CasbinRuleCreateInput;
   update: CasbinRuleUpdateInput;
@@ -2495,6 +2470,13 @@ export type MutationUpsertOneCommentArgs = {
   create: CommentCreateInput;
   update: CommentUpdateInput;
   where: CommentWhereUniqueInput;
+};
+
+
+export type MutationUpsertOneIssueArgs = {
+  create: IssueCreateInput;
+  update: IssueUpdateInput;
+  where: IssueWhereUniqueInput;
 };
 
 
@@ -2560,6 +2542,19 @@ export type MutationUpsertOneWechatArgs = {
   where: WechatWhereUniqueInput;
 };
 
+export type NestedBoolFilter = {
+  equals?: InputMaybe<Scalars['Boolean']>;
+  not?: InputMaybe<NestedBoolFilter>;
+};
+
+export type NestedBoolWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedBoolFilter>;
+  _min?: InputMaybe<NestedBoolFilter>;
+  equals?: InputMaybe<Scalars['Boolean']>;
+  not?: InputMaybe<NestedBoolWithAggregatesFilter>;
+};
+
 export type NestedDateTimeFilter = {
   equals?: InputMaybe<Scalars['DateTime']>;
   gt?: InputMaybe<Scalars['DateTime']>;
@@ -2608,23 +2603,6 @@ export type NestedDateTimeWithAggregatesFilter = {
   lte?: InputMaybe<Scalars['DateTime']>;
   not?: InputMaybe<NestedDateTimeWithAggregatesFilter>;
   notIn?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
-};
-
-export type NestedEnumActionTypeFilter = {
-  equals?: InputMaybe<ActionType>;
-  in?: InputMaybe<Array<InputMaybe<ActionType>>>;
-  not?: InputMaybe<NestedEnumActionTypeFilter>;
-  notIn?: InputMaybe<Array<InputMaybe<ActionType>>>;
-};
-
-export type NestedEnumActionTypeWithAggregatesFilter = {
-  _count?: InputMaybe<NestedIntFilter>;
-  _max?: InputMaybe<NestedEnumActionTypeFilter>;
-  _min?: InputMaybe<NestedEnumActionTypeFilter>;
-  equals?: InputMaybe<ActionType>;
-  in?: InputMaybe<Array<InputMaybe<ActionType>>>;
-  not?: InputMaybe<NestedEnumActionTypeWithAggregatesFilter>;
-  notIn?: InputMaybe<Array<InputMaybe<ActionType>>>;
 };
 
 export type NestedEnumPhraseStatusFilter = {
@@ -2676,6 +2654,23 @@ export type NestedEnumPullRequestStatusWithAggregatesFilter = {
   in?: InputMaybe<Array<InputMaybe<PullRequestStatus>>>;
   not?: InputMaybe<NestedEnumPullRequestStatusWithAggregatesFilter>;
   notIn?: InputMaybe<Array<InputMaybe<PullRequestStatus>>>;
+};
+
+export type NestedEnumPullRequestTypeFilter = {
+  equals?: InputMaybe<PullRequestType>;
+  in?: InputMaybe<Array<InputMaybe<PullRequestType>>>;
+  not?: InputMaybe<NestedEnumPullRequestTypeFilter>;
+  notIn?: InputMaybe<Array<InputMaybe<PullRequestType>>>;
+};
+
+export type NestedEnumPullRequestTypeWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedEnumPullRequestTypeFilter>;
+  _min?: InputMaybe<NestedEnumPullRequestTypeFilter>;
+  equals?: InputMaybe<PullRequestType>;
+  in?: InputMaybe<Array<InputMaybe<PullRequestType>>>;
+  not?: InputMaybe<NestedEnumPullRequestTypeWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<InputMaybe<PullRequestType>>>;
 };
 
 export type NestedEnumSignUpTypeFilter = {
@@ -3824,8 +3819,6 @@ export type PermissionWhereUniqueInput = {
 export type Phrase = {
   __typename?: 'Phrase';
   _count: PhraseCountOutputType;
-  /** 关联操作 */
-  actions: Array<Action>;
   /** 编码 */
   code: Scalars['String'];
   /** 评论 */
@@ -3834,6 +3827,8 @@ export type Phrase = {
   id: Scalars['Int'];
   /** 词频 */
   index: Scalars['Int'];
+  /** 关联PR */
+  pullRequests: Array<PullRequest>;
   /** 状态 */
   status: PhraseStatus;
   /** 标签 */
@@ -3850,17 +3845,6 @@ export type Phrase = {
 
 
 /** 词条 */
-export type PhraseActionsArgs = {
-  cursor?: InputMaybe<ActionWhereUniqueInput>;
-  distinct?: InputMaybe<ActionScalarFieldEnum>;
-  orderBy?: InputMaybe<ActionOrderByWithRelationAndSearchRelevanceInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<ActionWhereInput>;
-};
-
-
-/** 词条 */
 export type PhraseCommentsArgs = {
   cursor?: InputMaybe<CommentWhereUniqueInput>;
   distinct?: InputMaybe<CommentScalarFieldEnum>;
@@ -3868,6 +3852,17 @@ export type PhraseCommentsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<CommentWhereInput>;
+};
+
+
+/** 词条 */
+export type PhrasePullRequestsArgs = {
+  cursor?: InputMaybe<PullRequestWhereUniqueInput>;
+  distinct?: InputMaybe<PullRequestScalarFieldEnum>;
+  orderBy?: InputMaybe<PullRequestOrderByWithRelationAndSearchRelevanceInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<PullRequestWhereInput>;
 };
 
 
@@ -3922,17 +3917,17 @@ export type PhraseCountOrderByAggregateInput = {
 
 export type PhraseCountOutputType = {
   __typename?: 'PhraseCountOutputType';
-  actions: Scalars['Int'];
   comments: Scalars['Int'];
+  pullRequests: Scalars['Int'];
   tags: Scalars['Int'];
 };
 
 export type PhraseCreateInput = {
-  actions?: InputMaybe<ActionCreateNestedManyWithoutPhraseInput>;
   code: Scalars['String'];
   comments?: InputMaybe<CommentCreateNestedManyWithoutPhraseInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   index: Scalars['Int'];
+  pullRequests?: InputMaybe<PullRequestCreateNestedManyWithoutPhraseInput>;
   status: PhraseStatus;
   tags?: InputMaybe<TagCreateNestedManyWithoutPhrasesInput>;
   type: PhraseType;
@@ -3982,25 +3977,25 @@ export type PhraseCreateNestedManyWithoutUserInput = {
   createMany?: InputMaybe<PhraseCreateManyUserInputEnvelope>;
 };
 
-export type PhraseCreateNestedOneWithoutActionsInput = {
-  connect?: InputMaybe<PhraseWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<PhraseCreateOrConnectWithoutActionsInput>;
-  create?: InputMaybe<PhraseUncheckedCreateWithoutActionsInput>;
-};
-
 export type PhraseCreateNestedOneWithoutCommentsInput = {
   connect?: InputMaybe<PhraseWhereUniqueInput>;
   connectOrCreate?: InputMaybe<PhraseCreateOrConnectWithoutCommentsInput>;
   create?: InputMaybe<PhraseUncheckedCreateWithoutCommentsInput>;
 };
 
-export type PhraseCreateOrConnectWithoutActionsInput = {
-  create: PhraseUncheckedCreateWithoutActionsInput;
-  where: PhraseWhereUniqueInput;
+export type PhraseCreateNestedOneWithoutPullRequestsInput = {
+  connect?: InputMaybe<PhraseWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<PhraseCreateOrConnectWithoutPullRequestsInput>;
+  create?: InputMaybe<PhraseUncheckedCreateWithoutPullRequestsInput>;
 };
 
 export type PhraseCreateOrConnectWithoutCommentsInput = {
   create: PhraseUncheckedCreateWithoutCommentsInput;
+  where: PhraseWhereUniqueInput;
+};
+
+export type PhraseCreateOrConnectWithoutPullRequestsInput = {
+  create: PhraseUncheckedCreateWithoutPullRequestsInput;
   where: PhraseWhereUniqueInput;
 };
 
@@ -4014,11 +4009,11 @@ export type PhraseCreateOrConnectWithoutUserInput = {
   where: PhraseWhereUniqueInput;
 };
 
-export type PhraseCreateWithoutActionsInput = {
+export type PhraseCreateWithoutCommentsInput = {
   code: Scalars['String'];
-  comments?: InputMaybe<CommentCreateNestedManyWithoutPhraseInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   index: Scalars['Int'];
+  pullRequests?: InputMaybe<PullRequestCreateNestedManyWithoutPhraseInput>;
   status: PhraseStatus;
   tags?: InputMaybe<TagCreateNestedManyWithoutPhrasesInput>;
   type: PhraseType;
@@ -4027,9 +4022,9 @@ export type PhraseCreateWithoutActionsInput = {
   word: Scalars['String'];
 };
 
-export type PhraseCreateWithoutCommentsInput = {
-  actions?: InputMaybe<ActionCreateNestedManyWithoutPhraseInput>;
+export type PhraseCreateWithoutPullRequestsInput = {
   code: Scalars['String'];
+  comments?: InputMaybe<CommentCreateNestedManyWithoutPhraseInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   index: Scalars['Int'];
   status: PhraseStatus;
@@ -4041,11 +4036,11 @@ export type PhraseCreateWithoutCommentsInput = {
 };
 
 export type PhraseCreateWithoutTagsInput = {
-  actions?: InputMaybe<ActionCreateNestedManyWithoutPhraseInput>;
   code: Scalars['String'];
   comments?: InputMaybe<CommentCreateNestedManyWithoutPhraseInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   index: Scalars['Int'];
+  pullRequests?: InputMaybe<PullRequestCreateNestedManyWithoutPhraseInput>;
   status: PhraseStatus;
   type: PhraseType;
   updateAt?: InputMaybe<Scalars['DateTime']>;
@@ -4054,11 +4049,11 @@ export type PhraseCreateWithoutTagsInput = {
 };
 
 export type PhraseCreateWithoutUserInput = {
-  actions?: InputMaybe<ActionCreateNestedManyWithoutPhraseInput>;
   code: Scalars['String'];
   comments?: InputMaybe<CommentCreateNestedManyWithoutPhraseInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   index: Scalars['Int'];
+  pullRequests?: InputMaybe<PullRequestCreateNestedManyWithoutPhraseInput>;
   status: PhraseStatus;
   tags?: InputMaybe<TagCreateNestedManyWithoutPhrasesInput>;
   type: PhraseType;
@@ -4156,12 +4151,12 @@ export type PhraseOrderByWithAggregationInput = {
 
 export type PhraseOrderByWithRelationAndSearchRelevanceInput = {
   _relevance?: InputMaybe<PhraseOrderByRelevanceInput>;
-  actions?: InputMaybe<ActionOrderByRelationAggregateInput>;
   code?: InputMaybe<SortOrder>;
   comments?: InputMaybe<CommentOrderByRelationAggregateInput>;
   createAt?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   index?: InputMaybe<SortOrder>;
+  pullRequests?: InputMaybe<PullRequestOrderByRelationAggregateInput>;
   status?: InputMaybe<SortOrder>;
   tags?: InputMaybe<TagOrderByRelationAggregateInput>;
   type?: InputMaybe<SortOrder>;
@@ -4248,12 +4243,12 @@ export enum PhraseType {
 }
 
 export type PhraseUncheckedCreateInput = {
-  actions?: InputMaybe<ActionUncheckedCreateNestedManyWithoutPhraseInput>;
   code: Scalars['String'];
   comments?: InputMaybe<CommentUncheckedCreateNestedManyWithoutPhraseInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
   index: Scalars['Int'];
+  pullRequests?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutPhraseInput>;
   status: PhraseStatus;
   tags?: InputMaybe<TagUncheckedCreateNestedManyWithoutPhrasesInput>;
   type: PhraseType;
@@ -4275,12 +4270,12 @@ export type PhraseUncheckedCreateNestedManyWithoutUserInput = {
   createMany?: InputMaybe<PhraseCreateManyUserInputEnvelope>;
 };
 
-export type PhraseUncheckedCreateWithoutActionsInput = {
+export type PhraseUncheckedCreateWithoutCommentsInput = {
   code: Scalars['String'];
-  comments?: InputMaybe<CommentUncheckedCreateNestedManyWithoutPhraseInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
   index: Scalars['Int'];
+  pullRequests?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutPhraseInput>;
   status: PhraseStatus;
   tags?: InputMaybe<TagUncheckedCreateNestedManyWithoutPhrasesInput>;
   type: PhraseType;
@@ -4289,9 +4284,9 @@ export type PhraseUncheckedCreateWithoutActionsInput = {
   word: Scalars['String'];
 };
 
-export type PhraseUncheckedCreateWithoutCommentsInput = {
-  actions?: InputMaybe<ActionUncheckedCreateNestedManyWithoutPhraseInput>;
+export type PhraseUncheckedCreateWithoutPullRequestsInput = {
   code: Scalars['String'];
+  comments?: InputMaybe<CommentUncheckedCreateNestedManyWithoutPhraseInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
   index: Scalars['Int'];
@@ -4304,12 +4299,12 @@ export type PhraseUncheckedCreateWithoutCommentsInput = {
 };
 
 export type PhraseUncheckedCreateWithoutTagsInput = {
-  actions?: InputMaybe<ActionUncheckedCreateNestedManyWithoutPhraseInput>;
   code: Scalars['String'];
   comments?: InputMaybe<CommentUncheckedCreateNestedManyWithoutPhraseInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
   index: Scalars['Int'];
+  pullRequests?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutPhraseInput>;
   status: PhraseStatus;
   type: PhraseType;
   updateAt?: InputMaybe<Scalars['DateTime']>;
@@ -4318,12 +4313,12 @@ export type PhraseUncheckedCreateWithoutTagsInput = {
 };
 
 export type PhraseUncheckedCreateWithoutUserInput = {
-  actions?: InputMaybe<ActionUncheckedCreateNestedManyWithoutPhraseInput>;
   code: Scalars['String'];
   comments?: InputMaybe<CommentUncheckedCreateNestedManyWithoutPhraseInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
   index: Scalars['Int'];
+  pullRequests?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutPhraseInput>;
   status: PhraseStatus;
   tags?: InputMaybe<TagUncheckedCreateNestedManyWithoutPhrasesInput>;
   type: PhraseType;
@@ -4332,12 +4327,12 @@ export type PhraseUncheckedCreateWithoutUserInput = {
 };
 
 export type PhraseUncheckedUpdateInput = {
-  actions?: InputMaybe<ActionUncheckedUpdateManyWithoutPhraseInput>;
   code?: InputMaybe<StringFieldUpdateOperationsInput>;
   comments?: InputMaybe<CommentUncheckedUpdateManyWithoutPhraseInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   index?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pullRequests?: InputMaybe<PullRequestUncheckedUpdateManyWithoutPhraseInput>;
   status?: InputMaybe<EnumPhraseStatusFieldUpdateOperationsInput>;
   tags?: InputMaybe<TagUncheckedUpdateManyWithoutPhrasesInput>;
   type?: InputMaybe<EnumPhraseTypeFieldUpdateOperationsInput>;
@@ -4396,12 +4391,12 @@ export type PhraseUncheckedUpdateManyWithoutUserInput = {
   upsert?: InputMaybe<Array<InputMaybe<PhraseUpsertWithWhereUniqueWithoutUserInput>>>;
 };
 
-export type PhraseUncheckedUpdateWithoutActionsInput = {
+export type PhraseUncheckedUpdateWithoutCommentsInput = {
   code?: InputMaybe<StringFieldUpdateOperationsInput>;
-  comments?: InputMaybe<CommentUncheckedUpdateManyWithoutPhraseInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   index?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pullRequests?: InputMaybe<PullRequestUncheckedUpdateManyWithoutPhraseInput>;
   status?: InputMaybe<EnumPhraseStatusFieldUpdateOperationsInput>;
   tags?: InputMaybe<TagUncheckedUpdateManyWithoutPhrasesInput>;
   type?: InputMaybe<EnumPhraseTypeFieldUpdateOperationsInput>;
@@ -4410,9 +4405,9 @@ export type PhraseUncheckedUpdateWithoutActionsInput = {
   word?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
-export type PhraseUncheckedUpdateWithoutCommentsInput = {
-  actions?: InputMaybe<ActionUncheckedUpdateManyWithoutPhraseInput>;
+export type PhraseUncheckedUpdateWithoutPullRequestsInput = {
   code?: InputMaybe<StringFieldUpdateOperationsInput>;
+  comments?: InputMaybe<CommentUncheckedUpdateManyWithoutPhraseInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   index?: InputMaybe<IntFieldUpdateOperationsInput>;
@@ -4425,12 +4420,12 @@ export type PhraseUncheckedUpdateWithoutCommentsInput = {
 };
 
 export type PhraseUncheckedUpdateWithoutTagsInput = {
-  actions?: InputMaybe<ActionUncheckedUpdateManyWithoutPhraseInput>;
   code?: InputMaybe<StringFieldUpdateOperationsInput>;
   comments?: InputMaybe<CommentUncheckedUpdateManyWithoutPhraseInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   index?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pullRequests?: InputMaybe<PullRequestUncheckedUpdateManyWithoutPhraseInput>;
   status?: InputMaybe<EnumPhraseStatusFieldUpdateOperationsInput>;
   type?: InputMaybe<EnumPhraseTypeFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -4439,12 +4434,12 @@ export type PhraseUncheckedUpdateWithoutTagsInput = {
 };
 
 export type PhraseUncheckedUpdateWithoutUserInput = {
-  actions?: InputMaybe<ActionUncheckedUpdateManyWithoutPhraseInput>;
   code?: InputMaybe<StringFieldUpdateOperationsInput>;
   comments?: InputMaybe<CommentUncheckedUpdateManyWithoutPhraseInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   index?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pullRequests?: InputMaybe<PullRequestUncheckedUpdateManyWithoutPhraseInput>;
   status?: InputMaybe<EnumPhraseStatusFieldUpdateOperationsInput>;
   tags?: InputMaybe<TagUncheckedUpdateManyWithoutPhrasesInput>;
   type?: InputMaybe<EnumPhraseTypeFieldUpdateOperationsInput>;
@@ -4453,11 +4448,11 @@ export type PhraseUncheckedUpdateWithoutUserInput = {
 };
 
 export type PhraseUpdateInput = {
-  actions?: InputMaybe<ActionUpdateManyWithoutPhraseInput>;
   code?: InputMaybe<StringFieldUpdateOperationsInput>;
   comments?: InputMaybe<CommentUpdateManyWithoutPhraseInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   index?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pullRequests?: InputMaybe<PullRequestUpdateManyWithoutPhraseInput>;
   status?: InputMaybe<EnumPhraseStatusFieldUpdateOperationsInput>;
   tags?: InputMaybe<TagUpdateManyWithoutPhrasesInput>;
   type?: InputMaybe<EnumPhraseTypeFieldUpdateOperationsInput>;
@@ -4513,14 +4508,6 @@ export type PhraseUpdateManyWithoutUserInput = {
   upsert?: InputMaybe<Array<InputMaybe<PhraseUpsertWithWhereUniqueWithoutUserInput>>>;
 };
 
-export type PhraseUpdateOneRequiredWithoutActionsInput = {
-  connect?: InputMaybe<PhraseWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<PhraseCreateOrConnectWithoutActionsInput>;
-  create?: InputMaybe<PhraseUncheckedCreateWithoutActionsInput>;
-  update?: InputMaybe<PhraseUncheckedUpdateWithoutActionsInput>;
-  upsert?: InputMaybe<PhraseUpsertWithoutActionsInput>;
-};
-
 export type PhraseUpdateOneWithoutCommentsInput = {
   connect?: InputMaybe<PhraseWhereUniqueInput>;
   connectOrCreate?: InputMaybe<PhraseCreateOrConnectWithoutCommentsInput>;
@@ -4529,6 +4516,16 @@ export type PhraseUpdateOneWithoutCommentsInput = {
   disconnect?: InputMaybe<Scalars['Boolean']>;
   update?: InputMaybe<PhraseUncheckedUpdateWithoutCommentsInput>;
   upsert?: InputMaybe<PhraseUpsertWithoutCommentsInput>;
+};
+
+export type PhraseUpdateOneWithoutPullRequestsInput = {
+  connect?: InputMaybe<PhraseWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<PhraseCreateOrConnectWithoutPullRequestsInput>;
+  create?: InputMaybe<PhraseUncheckedCreateWithoutPullRequestsInput>;
+  delete?: InputMaybe<Scalars['Boolean']>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  update?: InputMaybe<PhraseUncheckedUpdateWithoutPullRequestsInput>;
+  upsert?: InputMaybe<PhraseUpsertWithoutPullRequestsInput>;
 };
 
 export type PhraseUpdateWithWhereUniqueWithoutTagsInput = {
@@ -4541,11 +4538,11 @@ export type PhraseUpdateWithWhereUniqueWithoutUserInput = {
   where: PhraseWhereUniqueInput;
 };
 
-export type PhraseUpdateWithoutActionsInput = {
+export type PhraseUpdateWithoutCommentsInput = {
   code?: InputMaybe<StringFieldUpdateOperationsInput>;
-  comments?: InputMaybe<CommentUpdateManyWithoutPhraseInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   index?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pullRequests?: InputMaybe<PullRequestUpdateManyWithoutPhraseInput>;
   status?: InputMaybe<EnumPhraseStatusFieldUpdateOperationsInput>;
   tags?: InputMaybe<TagUpdateManyWithoutPhrasesInput>;
   type?: InputMaybe<EnumPhraseTypeFieldUpdateOperationsInput>;
@@ -4554,9 +4551,9 @@ export type PhraseUpdateWithoutActionsInput = {
   word?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
-export type PhraseUpdateWithoutCommentsInput = {
-  actions?: InputMaybe<ActionUpdateManyWithoutPhraseInput>;
+export type PhraseUpdateWithoutPullRequestsInput = {
   code?: InputMaybe<StringFieldUpdateOperationsInput>;
+  comments?: InputMaybe<CommentUpdateManyWithoutPhraseInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   index?: InputMaybe<IntFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumPhraseStatusFieldUpdateOperationsInput>;
@@ -4568,11 +4565,11 @@ export type PhraseUpdateWithoutCommentsInput = {
 };
 
 export type PhraseUpdateWithoutTagsInput = {
-  actions?: InputMaybe<ActionUpdateManyWithoutPhraseInput>;
   code?: InputMaybe<StringFieldUpdateOperationsInput>;
   comments?: InputMaybe<CommentUpdateManyWithoutPhraseInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   index?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pullRequests?: InputMaybe<PullRequestUpdateManyWithoutPhraseInput>;
   status?: InputMaybe<EnumPhraseStatusFieldUpdateOperationsInput>;
   type?: InputMaybe<EnumPhraseTypeFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -4581,11 +4578,11 @@ export type PhraseUpdateWithoutTagsInput = {
 };
 
 export type PhraseUpdateWithoutUserInput = {
-  actions?: InputMaybe<ActionUpdateManyWithoutPhraseInput>;
   code?: InputMaybe<StringFieldUpdateOperationsInput>;
   comments?: InputMaybe<CommentUpdateManyWithoutPhraseInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   index?: InputMaybe<IntFieldUpdateOperationsInput>;
+  pullRequests?: InputMaybe<PullRequestUpdateManyWithoutPhraseInput>;
   status?: InputMaybe<EnumPhraseStatusFieldUpdateOperationsInput>;
   tags?: InputMaybe<TagUpdateManyWithoutPhrasesInput>;
   type?: InputMaybe<EnumPhraseTypeFieldUpdateOperationsInput>;
@@ -4605,26 +4602,26 @@ export type PhraseUpsertWithWhereUniqueWithoutUserInput = {
   where: PhraseWhereUniqueInput;
 };
 
-export type PhraseUpsertWithoutActionsInput = {
-  create: PhraseUncheckedCreateWithoutActionsInput;
-  update: PhraseUncheckedUpdateWithoutActionsInput;
-};
-
 export type PhraseUpsertWithoutCommentsInput = {
   create: PhraseUncheckedCreateWithoutCommentsInput;
   update: PhraseUncheckedUpdateWithoutCommentsInput;
+};
+
+export type PhraseUpsertWithoutPullRequestsInput = {
+  create: PhraseUncheckedCreateWithoutPullRequestsInput;
+  update: PhraseUncheckedUpdateWithoutPullRequestsInput;
 };
 
 export type PhraseWhereInput = {
   AND?: InputMaybe<Array<InputMaybe<PhraseWhereInput>>>;
   NOT?: InputMaybe<Array<InputMaybe<PhraseWhereInput>>>;
   OR?: InputMaybe<Array<InputMaybe<PhraseWhereInput>>>;
-  actions?: InputMaybe<ActionListRelationFilter>;
   code?: InputMaybe<StringFilter>;
   comments?: InputMaybe<CommentListRelationFilter>;
   createAt?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<IntFilter>;
   index?: InputMaybe<IntFilter>;
+  pullRequests?: InputMaybe<PullRequestListRelationFilter>;
   status?: InputMaybe<EnumPhraseStatusFilter>;
   tags?: InputMaybe<TagListRelationFilter>;
   type?: InputMaybe<EnumPhraseTypeFilter>;
@@ -4638,181 +4635,167 @@ export type PhraseWhereUniqueInput = {
   id?: InputMaybe<Scalars['Int']>;
 };
 
-/** 词条-拉取请求 */
+/**
+ * 词条-拉取请求
+ * 记录如何去调整一个词条
+ */
 export type PullRequest = {
   __typename?: 'PullRequest';
   _count: PullRequestCountOutputType;
-  action: Action;
-  actionId: Scalars['Int'];
-  comments: Array<Comment>;
-  content: Scalars['String'];
+  code?: Maybe<Scalars['String']>;
   createAt: Scalars['DateTime'];
   id: Scalars['Int'];
+  index?: Maybe<Scalars['Int']>;
+  issue: Array<Issue>;
+  phrase?: Maybe<Phrase>;
+  phraseId?: Maybe<Scalars['Int']>;
   status: PullRequestStatus;
+  type: PullRequestType;
   updateAt: Scalars['DateTime'];
-  user: User;
-  userId: Scalars['Int'];
+  word?: Maybe<Scalars['String']>;
 };
 
 
-/** 词条-拉取请求 */
-export type PullRequestCommentsArgs = {
-  cursor?: InputMaybe<CommentWhereUniqueInput>;
-  distinct?: InputMaybe<CommentScalarFieldEnum>;
-  orderBy?: InputMaybe<CommentOrderByWithRelationAndSearchRelevanceInput>;
+/**
+ * 词条-拉取请求
+ * 记录如何去调整一个词条
+ */
+export type PullRequestIssueArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<IssueScalarFieldEnum>;
+  orderBy?: InputMaybe<IssueOrderByWithRelationAndSearchRelevanceInput>;
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<CommentWhereInput>;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 export type PullRequestAvgAggregateOutputType = {
   __typename?: 'PullRequestAvgAggregateOutputType';
-  actionId?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
-  userId?: Maybe<Scalars['Float']>;
+  index?: Maybe<Scalars['Float']>;
+  phraseId?: Maybe<Scalars['Float']>;
 };
 
 export type PullRequestAvgOrderByAggregateInput = {
-  actionId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
-  userId?: InputMaybe<SortOrder>;
+  index?: InputMaybe<SortOrder>;
+  phraseId?: InputMaybe<SortOrder>;
 };
 
 export type PullRequestCountAggregateOutputType = {
   __typename?: 'PullRequestCountAggregateOutputType';
   _all: Scalars['Int'];
-  actionId: Scalars['Int'];
-  content: Scalars['Int'];
+  code: Scalars['Int'];
   createAt: Scalars['Int'];
   id: Scalars['Int'];
+  index: Scalars['Int'];
+  phraseId: Scalars['Int'];
   status: Scalars['Int'];
+  type: Scalars['Int'];
   updateAt: Scalars['Int'];
-  userId: Scalars['Int'];
+  word: Scalars['Int'];
 };
 
 export type PullRequestCountOrderByAggregateInput = {
-  actionId?: InputMaybe<SortOrder>;
-  content?: InputMaybe<SortOrder>;
+  code?: InputMaybe<SortOrder>;
   createAt?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  index?: InputMaybe<SortOrder>;
+  phraseId?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
+  type?: InputMaybe<SortOrder>;
   updateAt?: InputMaybe<SortOrder>;
-  userId?: InputMaybe<SortOrder>;
+  word?: InputMaybe<SortOrder>;
 };
 
 export type PullRequestCountOutputType = {
   __typename?: 'PullRequestCountOutputType';
-  comments: Scalars['Int'];
+  issue: Scalars['Int'];
 };
 
 export type PullRequestCreateInput = {
-  action: ActionCreateNestedOneWithoutPullRequestsInput;
-  comments?: InputMaybe<CommentCreateNestedManyWithoutPullRequestInput>;
-  content: Scalars['String'];
+  code?: InputMaybe<Scalars['String']>;
   createAt?: InputMaybe<Scalars['DateTime']>;
-  status: PullRequestStatus;
+  index?: InputMaybe<Scalars['Int']>;
+  issue?: InputMaybe<IssueCreateNestedManyWithoutPullRequestsInput>;
+  phrase?: InputMaybe<PhraseCreateNestedOneWithoutPullRequestsInput>;
+  status?: InputMaybe<PullRequestStatus>;
+  type: PullRequestType;
   updateAt?: InputMaybe<Scalars['DateTime']>;
-  user: UserCreateNestedOneWithoutPullRequestsInput;
-};
-
-export type PullRequestCreateManyActionInput = {
-  content: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['Int']>;
-  status: PullRequestStatus;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-  userId: Scalars['Int'];
-};
-
-export type PullRequestCreateManyActionInputEnvelope = {
-  data: PullRequestCreateManyActionInput;
-  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+  word?: InputMaybe<Scalars['String']>;
 };
 
 export type PullRequestCreateManyInput = {
-  actionId: Scalars['Int'];
-  content: Scalars['String'];
+  code?: InputMaybe<Scalars['String']>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
-  status: PullRequestStatus;
+  index?: InputMaybe<Scalars['Int']>;
+  phraseId?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<PullRequestStatus>;
+  type: PullRequestType;
   updateAt?: InputMaybe<Scalars['DateTime']>;
-  userId: Scalars['Int'];
+  word?: InputMaybe<Scalars['String']>;
 };
 
-export type PullRequestCreateManyUserInput = {
-  actionId: Scalars['Int'];
-  content: Scalars['String'];
+export type PullRequestCreateManyPhraseInput = {
+  code?: InputMaybe<Scalars['String']>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
-  status: PullRequestStatus;
+  index?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<PullRequestStatus>;
+  type: PullRequestType;
   updateAt?: InputMaybe<Scalars['DateTime']>;
+  word?: InputMaybe<Scalars['String']>;
 };
 
-export type PullRequestCreateManyUserInputEnvelope = {
-  data: PullRequestCreateManyUserInput;
+export type PullRequestCreateManyPhraseInputEnvelope = {
+  data: PullRequestCreateManyPhraseInput;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
-export type PullRequestCreateNestedManyWithoutActionInput = {
+export type PullRequestCreateNestedManyWithoutIssueInput = {
   connect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutActionInput>>>;
-  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutActionInput>>>;
-  createMany?: InputMaybe<PullRequestCreateManyActionInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutIssueInput>>>;
+  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutIssueInput>>>;
 };
 
-export type PullRequestCreateNestedManyWithoutUserInput = {
+export type PullRequestCreateNestedManyWithoutPhraseInput = {
   connect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutUserInput>>>;
-  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutUserInput>>>;
-  createMany?: InputMaybe<PullRequestCreateManyUserInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutPhraseInput>>>;
+  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutPhraseInput>>>;
+  createMany?: InputMaybe<PullRequestCreateManyPhraseInputEnvelope>;
 };
 
-export type PullRequestCreateNestedOneWithoutCommentsInput = {
-  connect?: InputMaybe<PullRequestWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<PullRequestCreateOrConnectWithoutCommentsInput>;
-  create?: InputMaybe<PullRequestUncheckedCreateWithoutCommentsInput>;
-};
-
-export type PullRequestCreateOrConnectWithoutActionInput = {
-  create: PullRequestUncheckedCreateWithoutActionInput;
+export type PullRequestCreateOrConnectWithoutIssueInput = {
+  create: PullRequestUncheckedCreateWithoutIssueInput;
   where: PullRequestWhereUniqueInput;
 };
 
-export type PullRequestCreateOrConnectWithoutCommentsInput = {
-  create: PullRequestUncheckedCreateWithoutCommentsInput;
+export type PullRequestCreateOrConnectWithoutPhraseInput = {
+  create: PullRequestUncheckedCreateWithoutPhraseInput;
   where: PullRequestWhereUniqueInput;
 };
 
-export type PullRequestCreateOrConnectWithoutUserInput = {
-  create: PullRequestUncheckedCreateWithoutUserInput;
-  where: PullRequestWhereUniqueInput;
+export type PullRequestCreateWithoutIssueInput = {
+  code?: InputMaybe<Scalars['String']>;
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  index?: InputMaybe<Scalars['Int']>;
+  phrase?: InputMaybe<PhraseCreateNestedOneWithoutPullRequestsInput>;
+  status?: InputMaybe<PullRequestStatus>;
+  type: PullRequestType;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+  word?: InputMaybe<Scalars['String']>;
 };
 
-export type PullRequestCreateWithoutActionInput = {
-  comments?: InputMaybe<CommentCreateNestedManyWithoutPullRequestInput>;
-  content: Scalars['String'];
+export type PullRequestCreateWithoutPhraseInput = {
+  code?: InputMaybe<Scalars['String']>;
   createAt?: InputMaybe<Scalars['DateTime']>;
-  status: PullRequestStatus;
+  index?: InputMaybe<Scalars['Int']>;
+  issue?: InputMaybe<IssueCreateNestedManyWithoutPullRequestsInput>;
+  status?: InputMaybe<PullRequestStatus>;
+  type: PullRequestType;
   updateAt?: InputMaybe<Scalars['DateTime']>;
-  user: UserCreateNestedOneWithoutPullRequestsInput;
-};
-
-export type PullRequestCreateWithoutCommentsInput = {
-  action: ActionCreateNestedOneWithoutPullRequestsInput;
-  content: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  status: PullRequestStatus;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-  user: UserCreateNestedOneWithoutPullRequestsInput;
-};
-
-export type PullRequestCreateWithoutUserInput = {
-  action: ActionCreateNestedOneWithoutPullRequestsInput;
-  comments?: InputMaybe<CommentCreateNestedManyWithoutPullRequestInput>;
-  content: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  status: PullRequestStatus;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
+  word?: InputMaybe<Scalars['String']>;
 };
 
 export type PullRequestListRelationFilter = {
@@ -4823,44 +4806,52 @@ export type PullRequestListRelationFilter = {
 
 export type PullRequestMaxAggregateOutputType = {
   __typename?: 'PullRequestMaxAggregateOutputType';
-  actionId?: Maybe<Scalars['Int']>;
-  content?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['String']>;
   createAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['Int']>;
+  index?: Maybe<Scalars['Int']>;
+  phraseId?: Maybe<Scalars['Int']>;
   status?: Maybe<PullRequestStatus>;
+  type?: Maybe<PullRequestType>;
   updateAt?: Maybe<Scalars['DateTime']>;
-  userId?: Maybe<Scalars['Int']>;
+  word?: Maybe<Scalars['String']>;
 };
 
 export type PullRequestMaxOrderByAggregateInput = {
-  actionId?: InputMaybe<SortOrder>;
-  content?: InputMaybe<SortOrder>;
+  code?: InputMaybe<SortOrder>;
   createAt?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  index?: InputMaybe<SortOrder>;
+  phraseId?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
+  type?: InputMaybe<SortOrder>;
   updateAt?: InputMaybe<SortOrder>;
-  userId?: InputMaybe<SortOrder>;
+  word?: InputMaybe<SortOrder>;
 };
 
 export type PullRequestMinAggregateOutputType = {
   __typename?: 'PullRequestMinAggregateOutputType';
-  actionId?: Maybe<Scalars['Int']>;
-  content?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['String']>;
   createAt?: Maybe<Scalars['DateTime']>;
   id?: Maybe<Scalars['Int']>;
+  index?: Maybe<Scalars['Int']>;
+  phraseId?: Maybe<Scalars['Int']>;
   status?: Maybe<PullRequestStatus>;
+  type?: Maybe<PullRequestType>;
   updateAt?: Maybe<Scalars['DateTime']>;
-  userId?: Maybe<Scalars['Int']>;
+  word?: Maybe<Scalars['String']>;
 };
 
 export type PullRequestMinOrderByAggregateInput = {
-  actionId?: InputMaybe<SortOrder>;
-  content?: InputMaybe<SortOrder>;
+  code?: InputMaybe<SortOrder>;
   createAt?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  index?: InputMaybe<SortOrder>;
+  phraseId?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
+  type?: InputMaybe<SortOrder>;
   updateAt?: InputMaybe<SortOrder>;
-  userId?: InputMaybe<SortOrder>;
+  word?: InputMaybe<SortOrder>;
 };
 
 export type PullRequestOrderByRelationAggregateInput = {
@@ -4868,7 +4859,8 @@ export type PullRequestOrderByRelationAggregateInput = {
 };
 
 export enum PullRequestOrderByRelevanceFieldEnum {
-  Content = 'content'
+  Code = 'code',
+  Word = 'word'
 }
 
 export type PullRequestOrderByRelevanceInput = {
@@ -4883,68 +4875,72 @@ export type PullRequestOrderByWithAggregationInput = {
   _max?: InputMaybe<PullRequestMaxOrderByAggregateInput>;
   _min?: InputMaybe<PullRequestMinOrderByAggregateInput>;
   _sum?: InputMaybe<PullRequestSumOrderByAggregateInput>;
-  actionId?: InputMaybe<SortOrder>;
-  content?: InputMaybe<SortOrder>;
+  code?: InputMaybe<SortOrder>;
   createAt?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  index?: InputMaybe<SortOrder>;
+  phraseId?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
+  type?: InputMaybe<SortOrder>;
   updateAt?: InputMaybe<SortOrder>;
-  userId?: InputMaybe<SortOrder>;
+  word?: InputMaybe<SortOrder>;
 };
 
 export type PullRequestOrderByWithRelationAndSearchRelevanceInput = {
   _relevance?: InputMaybe<PullRequestOrderByRelevanceInput>;
-  action?: InputMaybe<ActionOrderByWithRelationAndSearchRelevanceInput>;
-  actionId?: InputMaybe<SortOrder>;
-  comments?: InputMaybe<CommentOrderByRelationAggregateInput>;
-  content?: InputMaybe<SortOrder>;
+  code?: InputMaybe<SortOrder>;
   createAt?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  index?: InputMaybe<SortOrder>;
+  issue?: InputMaybe<IssueOrderByRelationAggregateInput>;
+  phrase?: InputMaybe<PhraseOrderByWithRelationAndSearchRelevanceInput>;
+  phraseId?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
+  type?: InputMaybe<SortOrder>;
   updateAt?: InputMaybe<SortOrder>;
-  user?: InputMaybe<UserOrderByWithRelationAndSearchRelevanceInput>;
-  userId?: InputMaybe<SortOrder>;
-};
-
-export type PullRequestRelationFilter = {
-  is?: InputMaybe<PullRequestWhereInput>;
-  isNot?: InputMaybe<PullRequestWhereInput>;
+  word?: InputMaybe<SortOrder>;
 };
 
 export enum PullRequestScalarFieldEnum {
-  ActionId = 'actionId',
-  Content = 'content',
+  Code = 'code',
   CreateAt = 'createAt',
   Id = 'id',
+  Index = 'index',
+  PhraseId = 'phraseId',
   Status = 'status',
+  Type = 'type',
   UpdateAt = 'updateAt',
-  UserId = 'userId'
+  Word = 'word'
 }
 
 export type PullRequestScalarWhereInput = {
   AND?: InputMaybe<Array<InputMaybe<PullRequestScalarWhereInput>>>;
   NOT?: InputMaybe<Array<InputMaybe<PullRequestScalarWhereInput>>>;
   OR?: InputMaybe<Array<InputMaybe<PullRequestScalarWhereInput>>>;
-  actionId?: InputMaybe<IntFilter>;
-  content?: InputMaybe<StringFilter>;
+  code?: InputMaybe<StringNullableFilter>;
   createAt?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<IntFilter>;
+  index?: InputMaybe<IntNullableFilter>;
+  phraseId?: InputMaybe<IntNullableFilter>;
   status?: InputMaybe<EnumPullRequestStatusFilter>;
+  type?: InputMaybe<EnumPullRequestTypeFilter>;
   updateAt?: InputMaybe<DateTimeFilter>;
-  userId?: InputMaybe<IntFilter>;
+  word?: InputMaybe<StringNullableFilter>;
 };
 
 export type PullRequestScalarWhereWithAggregatesInput = {
   AND?: InputMaybe<Array<InputMaybe<PullRequestScalarWhereWithAggregatesInput>>>;
   NOT?: InputMaybe<Array<InputMaybe<PullRequestScalarWhereWithAggregatesInput>>>;
   OR?: InputMaybe<Array<InputMaybe<PullRequestScalarWhereWithAggregatesInput>>>;
-  actionId?: InputMaybe<IntWithAggregatesFilter>;
-  content?: InputMaybe<StringWithAggregatesFilter>;
+  code?: InputMaybe<StringNullableWithAggregatesFilter>;
   createAt?: InputMaybe<DateTimeWithAggregatesFilter>;
   id?: InputMaybe<IntWithAggregatesFilter>;
+  index?: InputMaybe<IntNullableWithAggregatesFilter>;
+  phraseId?: InputMaybe<IntNullableWithAggregatesFilter>;
   status?: InputMaybe<EnumPullRequestStatusWithAggregatesFilter>;
+  type?: InputMaybe<EnumPullRequestTypeWithAggregatesFilter>;
   updateAt?: InputMaybe<DateTimeWithAggregatesFilter>;
-  userId?: InputMaybe<IntWithAggregatesFilter>;
+  word?: InputMaybe<StringNullableWithAggregatesFilter>;
 };
 
 export enum PullRequestStatus {
@@ -4955,293 +4951,279 @@ export enum PullRequestStatus {
 
 export type PullRequestSumAggregateOutputType = {
   __typename?: 'PullRequestSumAggregateOutputType';
-  actionId?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
-  userId?: Maybe<Scalars['Int']>;
+  index?: Maybe<Scalars['Int']>;
+  phraseId?: Maybe<Scalars['Int']>;
 };
 
 export type PullRequestSumOrderByAggregateInput = {
-  actionId?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
-  userId?: InputMaybe<SortOrder>;
+  index?: InputMaybe<SortOrder>;
+  phraseId?: InputMaybe<SortOrder>;
 };
+
+export enum PullRequestType {
+  Change = 'Change',
+  Create = 'Create',
+  Delete = 'Delete',
+  Move = 'Move'
+}
 
 export type PullRequestUncheckedCreateInput = {
-  actionId: Scalars['Int'];
-  comments?: InputMaybe<CommentUncheckedCreateNestedManyWithoutPullRequestInput>;
-  content: Scalars['String'];
+  code?: InputMaybe<Scalars['String']>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
-  status: PullRequestStatus;
+  index?: InputMaybe<Scalars['Int']>;
+  issue?: InputMaybe<IssueUncheckedCreateNestedManyWithoutPullRequestsInput>;
+  phraseId?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<PullRequestStatus>;
+  type: PullRequestType;
   updateAt?: InputMaybe<Scalars['DateTime']>;
-  userId: Scalars['Int'];
+  word?: InputMaybe<Scalars['String']>;
 };
 
-export type PullRequestUncheckedCreateNestedManyWithoutActionInput = {
+export type PullRequestUncheckedCreateNestedManyWithoutIssueInput = {
   connect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutActionInput>>>;
-  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutActionInput>>>;
-  createMany?: InputMaybe<PullRequestCreateManyActionInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutIssueInput>>>;
+  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutIssueInput>>>;
 };
 
-export type PullRequestUncheckedCreateNestedManyWithoutUserInput = {
+export type PullRequestUncheckedCreateNestedManyWithoutPhraseInput = {
   connect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutUserInput>>>;
-  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutUserInput>>>;
-  createMany?: InputMaybe<PullRequestCreateManyUserInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutPhraseInput>>>;
+  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutPhraseInput>>>;
+  createMany?: InputMaybe<PullRequestCreateManyPhraseInputEnvelope>;
 };
 
-export type PullRequestUncheckedCreateWithoutActionInput = {
-  comments?: InputMaybe<CommentUncheckedCreateNestedManyWithoutPullRequestInput>;
-  content: Scalars['String'];
+export type PullRequestUncheckedCreateWithoutIssueInput = {
+  code?: InputMaybe<Scalars['String']>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
-  status: PullRequestStatus;
+  index?: InputMaybe<Scalars['Int']>;
+  phraseId?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<PullRequestStatus>;
+  type: PullRequestType;
   updateAt?: InputMaybe<Scalars['DateTime']>;
-  userId: Scalars['Int'];
+  word?: InputMaybe<Scalars['String']>;
 };
 
-export type PullRequestUncheckedCreateWithoutCommentsInput = {
-  actionId: Scalars['Int'];
-  content: Scalars['String'];
+export type PullRequestUncheckedCreateWithoutPhraseInput = {
+  code?: InputMaybe<Scalars['String']>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
-  status: PullRequestStatus;
+  index?: InputMaybe<Scalars['Int']>;
+  issue?: InputMaybe<IssueUncheckedCreateNestedManyWithoutPullRequestsInput>;
+  status?: InputMaybe<PullRequestStatus>;
+  type: PullRequestType;
   updateAt?: InputMaybe<Scalars['DateTime']>;
-  userId: Scalars['Int'];
-};
-
-export type PullRequestUncheckedCreateWithoutUserInput = {
-  actionId: Scalars['Int'];
-  comments?: InputMaybe<CommentUncheckedCreateNestedManyWithoutPullRequestInput>;
-  content: Scalars['String'];
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['Int']>;
-  status: PullRequestStatus;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
+  word?: InputMaybe<Scalars['String']>;
 };
 
 export type PullRequestUncheckedUpdateInput = {
-  actionId?: InputMaybe<IntFieldUpdateOperationsInput>;
-  comments?: InputMaybe<CommentUncheckedUpdateManyWithoutPullRequestInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  issue?: InputMaybe<IssueUncheckedUpdateManyWithoutPullRequestsInput>;
+  phraseId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumPullRequestStatusFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumPullRequestTypeFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  userId?: InputMaybe<IntFieldUpdateOperationsInput>;
+  word?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
 };
 
 export type PullRequestUncheckedUpdateManyInput = {
-  actionId?: InputMaybe<IntFieldUpdateOperationsInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  phraseId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumPullRequestStatusFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumPullRequestTypeFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  userId?: InputMaybe<IntFieldUpdateOperationsInput>;
+  word?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
 };
 
-export type PullRequestUncheckedUpdateManyWithoutActionInput = {
+export type PullRequestUncheckedUpdateManyWithoutIssueInput = {
   connect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutActionInput>>>;
-  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutActionInput>>>;
-  createMany?: InputMaybe<PullRequestCreateManyActionInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutIssueInput>>>;
+  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutIssueInput>>>;
   delete?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
   deleteMany?: InputMaybe<Array<InputMaybe<PullRequestScalarWhereInput>>>;
   disconnect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
   set?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
-  update?: InputMaybe<Array<InputMaybe<PullRequestUpdateWithWhereUniqueWithoutActionInput>>>;
-  updateMany?: InputMaybe<Array<InputMaybe<PullRequestUpdateManyWithWhereWithoutActionInput>>>;
-  upsert?: InputMaybe<Array<InputMaybe<PullRequestUpsertWithWhereUniqueWithoutActionInput>>>;
+  update?: InputMaybe<Array<InputMaybe<PullRequestUpdateWithWhereUniqueWithoutIssueInput>>>;
+  updateMany?: InputMaybe<Array<InputMaybe<PullRequestUpdateManyWithWhereWithoutIssueInput>>>;
+  upsert?: InputMaybe<Array<InputMaybe<PullRequestUpsertWithWhereUniqueWithoutIssueInput>>>;
+};
+
+export type PullRequestUncheckedUpdateManyWithoutPhraseInput = {
+  connect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutPhraseInput>>>;
+  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutPhraseInput>>>;
+  createMany?: InputMaybe<PullRequestCreateManyPhraseInputEnvelope>;
+  delete?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
+  deleteMany?: InputMaybe<Array<InputMaybe<PullRequestScalarWhereInput>>>;
+  disconnect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
+  set?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
+  update?: InputMaybe<Array<InputMaybe<PullRequestUpdateWithWhereUniqueWithoutPhraseInput>>>;
+  updateMany?: InputMaybe<Array<InputMaybe<PullRequestUpdateManyWithWhereWithoutPhraseInput>>>;
+  upsert?: InputMaybe<Array<InputMaybe<PullRequestUpsertWithWhereUniqueWithoutPhraseInput>>>;
 };
 
 export type PullRequestUncheckedUpdateManyWithoutPullRequestsInput = {
-  actionId?: InputMaybe<IntFieldUpdateOperationsInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumPullRequestStatusFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumPullRequestTypeFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  word?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
 };
 
-export type PullRequestUncheckedUpdateManyWithoutUserInput = {
-  connect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutUserInput>>>;
-  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutUserInput>>>;
-  createMany?: InputMaybe<PullRequestCreateManyUserInputEnvelope>;
-  delete?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
-  deleteMany?: InputMaybe<Array<InputMaybe<PullRequestScalarWhereInput>>>;
-  disconnect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
-  set?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
-  update?: InputMaybe<Array<InputMaybe<PullRequestUpdateWithWhereUniqueWithoutUserInput>>>;
-  updateMany?: InputMaybe<Array<InputMaybe<PullRequestUpdateManyWithWhereWithoutUserInput>>>;
-  upsert?: InputMaybe<Array<InputMaybe<PullRequestUpsertWithWhereUniqueWithoutUserInput>>>;
-};
-
-export type PullRequestUncheckedUpdateWithoutActionInput = {
-  comments?: InputMaybe<CommentUncheckedUpdateManyWithoutPullRequestInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+export type PullRequestUncheckedUpdateWithoutIssueInput = {
+  code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  phraseId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumPullRequestStatusFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumPullRequestTypeFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  userId?: InputMaybe<IntFieldUpdateOperationsInput>;
+  word?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
 };
 
-export type PullRequestUncheckedUpdateWithoutCommentsInput = {
-  actionId?: InputMaybe<IntFieldUpdateOperationsInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+export type PullRequestUncheckedUpdateWithoutPhraseInput = {
+  code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  issue?: InputMaybe<IssueUncheckedUpdateManyWithoutPullRequestsInput>;
   status?: InputMaybe<EnumPullRequestStatusFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumPullRequestTypeFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  userId?: InputMaybe<IntFieldUpdateOperationsInput>;
-};
-
-export type PullRequestUncheckedUpdateWithoutUserInput = {
-  actionId?: InputMaybe<IntFieldUpdateOperationsInput>;
-  comments?: InputMaybe<CommentUncheckedUpdateManyWithoutPullRequestInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  id?: InputMaybe<IntFieldUpdateOperationsInput>;
-  status?: InputMaybe<EnumPullRequestStatusFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  word?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
 };
 
 export type PullRequestUpdateInput = {
-  action?: InputMaybe<ActionUpdateOneRequiredWithoutPullRequestsInput>;
-  comments?: InputMaybe<CommentUpdateManyWithoutPullRequestInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  issue?: InputMaybe<IssueUpdateManyWithoutPullRequestsInput>;
+  phrase?: InputMaybe<PhraseUpdateOneWithoutPullRequestsInput>;
   status?: InputMaybe<EnumPullRequestStatusFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumPullRequestTypeFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  user?: InputMaybe<UserUpdateOneRequiredWithoutPullRequestsInput>;
+  word?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
 };
 
 export type PullRequestUpdateManyMutationInput = {
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumPullRequestStatusFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumPullRequestTypeFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  word?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
 };
 
-export type PullRequestUpdateManyWithWhereWithoutActionInput = {
+export type PullRequestUpdateManyWithWhereWithoutIssueInput = {
   data: PullRequestUncheckedUpdateManyWithoutPullRequestsInput;
   where: PullRequestScalarWhereInput;
 };
 
-export type PullRequestUpdateManyWithWhereWithoutUserInput = {
+export type PullRequestUpdateManyWithWhereWithoutPhraseInput = {
   data: PullRequestUncheckedUpdateManyWithoutPullRequestsInput;
   where: PullRequestScalarWhereInput;
 };
 
-export type PullRequestUpdateManyWithoutActionInput = {
+export type PullRequestUpdateManyWithoutIssueInput = {
   connect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutActionInput>>>;
-  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutActionInput>>>;
-  createMany?: InputMaybe<PullRequestCreateManyActionInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutIssueInput>>>;
+  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutIssueInput>>>;
   delete?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
   deleteMany?: InputMaybe<Array<InputMaybe<PullRequestScalarWhereInput>>>;
   disconnect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
   set?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
-  update?: InputMaybe<Array<InputMaybe<PullRequestUpdateWithWhereUniqueWithoutActionInput>>>;
-  updateMany?: InputMaybe<Array<InputMaybe<PullRequestUpdateManyWithWhereWithoutActionInput>>>;
-  upsert?: InputMaybe<Array<InputMaybe<PullRequestUpsertWithWhereUniqueWithoutActionInput>>>;
+  update?: InputMaybe<Array<InputMaybe<PullRequestUpdateWithWhereUniqueWithoutIssueInput>>>;
+  updateMany?: InputMaybe<Array<InputMaybe<PullRequestUpdateManyWithWhereWithoutIssueInput>>>;
+  upsert?: InputMaybe<Array<InputMaybe<PullRequestUpsertWithWhereUniqueWithoutIssueInput>>>;
 };
 
-export type PullRequestUpdateManyWithoutUserInput = {
+export type PullRequestUpdateManyWithoutPhraseInput = {
   connect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
-  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutUserInput>>>;
-  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutUserInput>>>;
-  createMany?: InputMaybe<PullRequestCreateManyUserInputEnvelope>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutPhraseInput>>>;
+  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutPhraseInput>>>;
+  createMany?: InputMaybe<PullRequestCreateManyPhraseInputEnvelope>;
   delete?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
   deleteMany?: InputMaybe<Array<InputMaybe<PullRequestScalarWhereInput>>>;
   disconnect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
   set?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
-  update?: InputMaybe<Array<InputMaybe<PullRequestUpdateWithWhereUniqueWithoutUserInput>>>;
-  updateMany?: InputMaybe<Array<InputMaybe<PullRequestUpdateManyWithWhereWithoutUserInput>>>;
-  upsert?: InputMaybe<Array<InputMaybe<PullRequestUpsertWithWhereUniqueWithoutUserInput>>>;
+  update?: InputMaybe<Array<InputMaybe<PullRequestUpdateWithWhereUniqueWithoutPhraseInput>>>;
+  updateMany?: InputMaybe<Array<InputMaybe<PullRequestUpdateManyWithWhereWithoutPhraseInput>>>;
+  upsert?: InputMaybe<Array<InputMaybe<PullRequestUpsertWithWhereUniqueWithoutPhraseInput>>>;
 };
 
-export type PullRequestUpdateOneWithoutCommentsInput = {
-  connect?: InputMaybe<PullRequestWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<PullRequestCreateOrConnectWithoutCommentsInput>;
-  create?: InputMaybe<PullRequestUncheckedCreateWithoutCommentsInput>;
-  delete?: InputMaybe<Scalars['Boolean']>;
-  disconnect?: InputMaybe<Scalars['Boolean']>;
-  update?: InputMaybe<PullRequestUncheckedUpdateWithoutCommentsInput>;
-  upsert?: InputMaybe<PullRequestUpsertWithoutCommentsInput>;
-};
-
-export type PullRequestUpdateWithWhereUniqueWithoutActionInput = {
-  data: PullRequestUncheckedUpdateWithoutActionInput;
+export type PullRequestUpdateWithWhereUniqueWithoutIssueInput = {
+  data: PullRequestUncheckedUpdateWithoutIssueInput;
   where: PullRequestWhereUniqueInput;
 };
 
-export type PullRequestUpdateWithWhereUniqueWithoutUserInput = {
-  data: PullRequestUncheckedUpdateWithoutUserInput;
+export type PullRequestUpdateWithWhereUniqueWithoutPhraseInput = {
+  data: PullRequestUncheckedUpdateWithoutPhraseInput;
   where: PullRequestWhereUniqueInput;
 };
 
-export type PullRequestUpdateWithoutActionInput = {
-  comments?: InputMaybe<CommentUpdateManyWithoutPullRequestInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+export type PullRequestUpdateWithoutIssueInput = {
+  code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  phrase?: InputMaybe<PhraseUpdateOneWithoutPullRequestsInput>;
   status?: InputMaybe<EnumPullRequestStatusFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumPullRequestTypeFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  user?: InputMaybe<UserUpdateOneRequiredWithoutPullRequestsInput>;
+  word?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
 };
 
-export type PullRequestUpdateWithoutCommentsInput = {
-  action?: InputMaybe<ActionUpdateOneRequiredWithoutPullRequestsInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+export type PullRequestUpdateWithoutPhraseInput = {
+  code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  issue?: InputMaybe<IssueUpdateManyWithoutPullRequestsInput>;
   status?: InputMaybe<EnumPullRequestStatusFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumPullRequestTypeFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  user?: InputMaybe<UserUpdateOneRequiredWithoutPullRequestsInput>;
+  word?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
 };
 
-export type PullRequestUpdateWithoutUserInput = {
-  action?: InputMaybe<ActionUpdateOneRequiredWithoutPullRequestsInput>;
-  comments?: InputMaybe<CommentUpdateManyWithoutPullRequestInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
-  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  status?: InputMaybe<EnumPullRequestStatusFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-};
-
-export type PullRequestUpsertWithWhereUniqueWithoutActionInput = {
-  create: PullRequestUncheckedCreateWithoutActionInput;
-  update: PullRequestUncheckedUpdateWithoutActionInput;
+export type PullRequestUpsertWithWhereUniqueWithoutIssueInput = {
+  create: PullRequestUncheckedCreateWithoutIssueInput;
+  update: PullRequestUncheckedUpdateWithoutIssueInput;
   where: PullRequestWhereUniqueInput;
 };
 
-export type PullRequestUpsertWithWhereUniqueWithoutUserInput = {
-  create: PullRequestUncheckedCreateWithoutUserInput;
-  update: PullRequestUncheckedUpdateWithoutUserInput;
+export type PullRequestUpsertWithWhereUniqueWithoutPhraseInput = {
+  create: PullRequestUncheckedCreateWithoutPhraseInput;
+  update: PullRequestUncheckedUpdateWithoutPhraseInput;
   where: PullRequestWhereUniqueInput;
-};
-
-export type PullRequestUpsertWithoutCommentsInput = {
-  create: PullRequestUncheckedCreateWithoutCommentsInput;
-  update: PullRequestUncheckedUpdateWithoutCommentsInput;
 };
 
 export type PullRequestWhereInput = {
   AND?: InputMaybe<Array<InputMaybe<PullRequestWhereInput>>>;
   NOT?: InputMaybe<Array<InputMaybe<PullRequestWhereInput>>>;
   OR?: InputMaybe<Array<InputMaybe<PullRequestWhereInput>>>;
-  action?: InputMaybe<ActionWhereInput>;
-  actionId?: InputMaybe<IntFilter>;
-  comments?: InputMaybe<CommentListRelationFilter>;
-  content?: InputMaybe<StringFilter>;
+  code?: InputMaybe<StringNullableFilter>;
   createAt?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<IntFilter>;
+  index?: InputMaybe<IntNullableFilter>;
+  issue?: InputMaybe<IssueListRelationFilter>;
+  phrase?: InputMaybe<PhraseWhereInput>;
+  phraseId?: InputMaybe<IntNullableFilter>;
   status?: InputMaybe<EnumPullRequestStatusFilter>;
+  type?: InputMaybe<EnumPullRequestTypeFilter>;
   updateAt?: InputMaybe<DateTimeFilter>;
-  user?: InputMaybe<UserWhereInput>;
-  userId?: InputMaybe<IntFilter>;
+  word?: InputMaybe<StringNullableFilter>;
 };
 
 export type PullRequestWhereUniqueInput = {
@@ -5250,9 +5232,9 @@ export type PullRequestWhereUniqueInput = {
 
 export type Query = {
   __typename?: 'Query';
-  aggregateAction?: Maybe<AggregateAction>;
   aggregateCasbinRule?: Maybe<AggregateCasbinRule>;
   aggregateComment?: Maybe<AggregateComment>;
+  aggregateIssue?: Maybe<AggregateIssue>;
   aggregateNotice?: Maybe<AggregateNotice>;
   aggregatePermission?: Maybe<AggregatePermission>;
   aggregatePermissionAction?: Maybe<AggregatePermissionAction>;
@@ -5262,9 +5244,9 @@ export type Query = {
   aggregateTag?: Maybe<AggregateTag>;
   aggregateUser?: Maybe<AggregateUser>;
   aggregateWechat?: Maybe<AggregateWechat>;
-  findFirstAction?: Maybe<Action>;
   findFirstCasbinRule?: Maybe<CasbinRule>;
   findFirstComment?: Maybe<Comment>;
+  findFirstIssue?: Maybe<Issue>;
   findFirstNotice?: Maybe<Notice>;
   findFirstPermission?: Maybe<Permission>;
   findFirstPermissionAction?: Maybe<PermissionAction>;
@@ -5274,12 +5256,12 @@ export type Query = {
   findFirstTag?: Maybe<Tag>;
   findFirstUser?: Maybe<User>;
   findFirstWechat?: Maybe<Wechat>;
-  findManyAction: Array<Action>;
-  findManyActionCount: Scalars['Int'];
   findManyCasbinRule: Array<CasbinRule>;
   findManyCasbinRuleCount: Scalars['Int'];
   findManyComment: Array<Comment>;
   findManyCommentCount: Scalars['Int'];
+  findManyIssue: Array<Issue>;
+  findManyIssueCount: Scalars['Int'];
   findManyNotice: Array<Notice>;
   findManyNoticeCount: Scalars['Int'];
   findManyPermission: Array<Permission>;
@@ -5300,9 +5282,9 @@ export type Query = {
   findManyWechatCount: Scalars['Int'];
   findMePermissions?: Maybe<Array<Maybe<Array<Maybe<Scalars['String']>>>>>;
   findRolePermissions?: Maybe<Array<Maybe<Array<Maybe<Scalars['String']>>>>>;
-  findUniqueAction?: Maybe<Action>;
   findUniqueCasbinRule?: Maybe<CasbinRule>;
   findUniqueComment?: Maybe<Comment>;
+  findUniqueIssue?: Maybe<Issue>;
   findUniqueNotice?: Maybe<Notice>;
   findUniquePermission?: Maybe<Permission>;
   findUniquePermissionAction?: Maybe<PermissionAction>;
@@ -5314,16 +5296,6 @@ export type Query = {
   findUniqueWechat?: Maybe<Wechat>;
   findUserMe?: Maybe<User>;
   findUserPermissions?: Maybe<Array<Maybe<Array<Maybe<Scalars['String']>>>>>;
-  testQuery?: Maybe<Scalars['String']>;
-};
-
-
-export type QueryAggregateActionArgs = {
-  cursor?: InputMaybe<ActionWhereUniqueInput>;
-  orderBy?: InputMaybe<Array<InputMaybe<ActionOrderByWithRelationAndSearchRelevanceInput>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<ActionWhereInput>;
 };
 
 
@@ -5342,6 +5314,15 @@ export type QueryAggregateCommentArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<CommentWhereInput>;
+};
+
+
+export type QueryAggregateIssueArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  orderBy?: InputMaybe<Array<InputMaybe<IssueOrderByWithRelationAndSearchRelevanceInput>>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 
@@ -5426,16 +5407,6 @@ export type QueryAggregateWechatArgs = {
 };
 
 
-export type QueryFindFirstActionArgs = {
-  cursor?: InputMaybe<ActionWhereUniqueInput>;
-  distinct?: InputMaybe<Array<InputMaybe<ActionScalarFieldEnum>>>;
-  orderBy?: InputMaybe<Array<InputMaybe<ActionOrderByWithRelationAndSearchRelevanceInput>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<ActionWhereInput>;
-};
-
-
 export type QueryFindFirstCasbinRuleArgs = {
   cursor?: InputMaybe<CasbinRuleWhereUniqueInput>;
   distinct?: InputMaybe<Array<InputMaybe<CasbinRuleScalarFieldEnum>>>;
@@ -5453,6 +5424,16 @@ export type QueryFindFirstCommentArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<CommentWhereInput>;
+};
+
+
+export type QueryFindFirstIssueArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<InputMaybe<IssueScalarFieldEnum>>>;
+  orderBy?: InputMaybe<Array<InputMaybe<IssueOrderByWithRelationAndSearchRelevanceInput>>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 
@@ -5546,26 +5527,6 @@ export type QueryFindFirstWechatArgs = {
 };
 
 
-export type QueryFindManyActionArgs = {
-  cursor?: InputMaybe<ActionWhereUniqueInput>;
-  distinct?: InputMaybe<Array<InputMaybe<ActionScalarFieldEnum>>>;
-  orderBy?: InputMaybe<Array<InputMaybe<ActionOrderByWithRelationAndSearchRelevanceInput>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<ActionWhereInput>;
-};
-
-
-export type QueryFindManyActionCountArgs = {
-  cursor?: InputMaybe<ActionWhereUniqueInput>;
-  distinct?: InputMaybe<Array<InputMaybe<ActionScalarFieldEnum>>>;
-  orderBy?: InputMaybe<Array<InputMaybe<ActionOrderByWithRelationAndSearchRelevanceInput>>>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<ActionWhereInput>;
-};
-
-
 export type QueryFindManyCasbinRuleArgs = {
   cursor?: InputMaybe<CasbinRuleWhereUniqueInput>;
   distinct?: InputMaybe<Array<InputMaybe<CasbinRuleScalarFieldEnum>>>;
@@ -5603,6 +5564,26 @@ export type QueryFindManyCommentCountArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<CommentWhereInput>;
+};
+
+
+export type QueryFindManyIssueArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<InputMaybe<IssueScalarFieldEnum>>>;
+  orderBy?: InputMaybe<Array<InputMaybe<IssueOrderByWithRelationAndSearchRelevanceInput>>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<IssueWhereInput>;
+};
+
+
+export type QueryFindManyIssueCountArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<InputMaybe<IssueScalarFieldEnum>>>;
+  orderBy?: InputMaybe<Array<InputMaybe<IssueOrderByWithRelationAndSearchRelevanceInput>>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 
@@ -5791,11 +5772,6 @@ export type QueryFindRolePermissionsArgs = {
 };
 
 
-export type QueryFindUniqueActionArgs = {
-  where: ActionWhereUniqueInput;
-};
-
-
 export type QueryFindUniqueCasbinRuleArgs = {
   where: CasbinRuleWhereUniqueInput;
 };
@@ -5803,6 +5779,11 @@ export type QueryFindUniqueCasbinRuleArgs = {
 
 export type QueryFindUniqueCommentArgs = {
   where: CommentWhereUniqueInput;
+};
+
+
+export type QueryFindUniqueIssueArgs = {
+  where: IssueWhereUniqueInput;
 };
 
 
@@ -6288,14 +6269,6 @@ export type StringWithAggregatesFilter = {
   startsWith?: InputMaybe<Scalars['String']>;
 };
 
-export type SubmitOnePhraseCreateInput = {
-  code: Scalars['String'];
-  index?: InputMaybe<Scalars['Int']>;
-  /** 类型 */
-  type?: InputMaybe<PhraseType>;
-  word: Scalars['String'];
-};
-
 /**
  * 标签
  * 用于搜索关联词条
@@ -6622,15 +6595,14 @@ export type TagWhereUniqueInput = {
 export type User = {
   __typename?: 'User';
   _count: UserCountOutputType;
-  actions: Array<Action>;
   createAt: Scalars['DateTime'];
   id: Scalars['Int'];
+  issues: Array<Issue>;
   name?: Maybe<Scalars['String']>;
   nickname?: Maybe<Scalars['String']>;
   notices: Array<Notice>;
   phone?: Maybe<Scalars['String']>;
   phrases: Array<Phrase>;
-  pullRequests: Array<PullRequest>;
   roles: Array<Role>;
   signUpType: SignUpType;
   status: UserStatus;
@@ -6641,13 +6613,13 @@ export type User = {
 
 
 /** 用户 */
-export type UserActionsArgs = {
-  cursor?: InputMaybe<ActionWhereUniqueInput>;
-  distinct?: InputMaybe<ActionScalarFieldEnum>;
-  orderBy?: InputMaybe<ActionOrderByWithRelationAndSearchRelevanceInput>;
+export type UserIssuesArgs = {
+  cursor?: InputMaybe<IssueWhereUniqueInput>;
+  distinct?: InputMaybe<IssueScalarFieldEnum>;
+  orderBy?: InputMaybe<IssueOrderByWithRelationAndSearchRelevanceInput>;
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<ActionWhereInput>;
+  where?: InputMaybe<IssueWhereInput>;
 };
 
 
@@ -6670,17 +6642,6 @@ export type UserPhrasesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<PhraseWhereInput>;
-};
-
-
-/** 用户 */
-export type UserPullRequestsArgs = {
-  cursor?: InputMaybe<PullRequestWhereUniqueInput>;
-  distinct?: InputMaybe<PullRequestScalarFieldEnum>;
-  orderBy?: InputMaybe<PullRequestOrderByWithRelationAndSearchRelevanceInput>;
-  skip?: InputMaybe<Scalars['Int']>;
-  take?: InputMaybe<Scalars['Int']>;
-  where?: InputMaybe<PullRequestWhereInput>;
 };
 
 
@@ -6735,23 +6696,21 @@ export type UserCountOrderByAggregateInput = {
 
 export type UserCountOutputType = {
   __typename?: 'UserCountOutputType';
-  actions: Scalars['Int'];
+  issues: Scalars['Int'];
   notices: Scalars['Int'];
   phrases: Scalars['Int'];
-  pullRequests: Scalars['Int'];
   roles: Scalars['Int'];
 };
 
 export type UserCreateInput = {
-  actions?: InputMaybe<ActionCreateNestedManyWithoutUserInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
+  issues?: InputMaybe<IssueCreateNestedManyWithoutUserInput>;
   name?: InputMaybe<Scalars['String']>;
   nickname?: InputMaybe<Scalars['String']>;
   notices?: InputMaybe<NoticeCreateNestedManyWithoutUserInput>;
   password?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   phrases?: InputMaybe<PhraseCreateNestedManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestCreateNestedManyWithoutUserInput>;
   roles?: InputMaybe<RoleCreateNestedManyWithoutUsersInput>;
   signUpType?: InputMaybe<SignUpType>;
   status?: InputMaybe<UserStatus>;
@@ -6778,10 +6737,10 @@ export type UserCreateNestedManyWithoutRolesInput = {
   create?: InputMaybe<Array<InputMaybe<UserCreateWithoutRolesInput>>>;
 };
 
-export type UserCreateNestedOneWithoutActionsInput = {
+export type UserCreateNestedOneWithoutIssuesInput = {
   connect?: InputMaybe<UserWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutActionsInput>;
-  create?: InputMaybe<UserUncheckedCreateWithoutActionsInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutIssuesInput>;
+  create?: InputMaybe<UserUncheckedCreateWithoutIssuesInput>;
 };
 
 export type UserCreateNestedOneWithoutNoticesInput = {
@@ -6796,20 +6755,14 @@ export type UserCreateNestedOneWithoutPhrasesInput = {
   create?: InputMaybe<UserUncheckedCreateWithoutPhrasesInput>;
 };
 
-export type UserCreateNestedOneWithoutPullRequestsInput = {
-  connect?: InputMaybe<UserWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutPullRequestsInput>;
-  create?: InputMaybe<UserUncheckedCreateWithoutPullRequestsInput>;
-};
-
 export type UserCreateNestedOneWithoutWechatInput = {
   connect?: InputMaybe<UserWhereUniqueInput>;
   connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutWechatInput>;
   create?: InputMaybe<UserUncheckedCreateWithoutWechatInput>;
 };
 
-export type UserCreateOrConnectWithoutActionsInput = {
-  create: UserUncheckedCreateWithoutActionsInput;
+export type UserCreateOrConnectWithoutIssuesInput = {
+  create: UserUncheckedCreateWithoutIssuesInput;
   where: UserWhereUniqueInput;
 };
 
@@ -6823,11 +6776,6 @@ export type UserCreateOrConnectWithoutPhrasesInput = {
   where: UserWhereUniqueInput;
 };
 
-export type UserCreateOrConnectWithoutPullRequestsInput = {
-  create: UserUncheckedCreateWithoutPullRequestsInput;
-  where: UserWhereUniqueInput;
-};
-
 export type UserCreateOrConnectWithoutRolesInput = {
   create: UserUncheckedCreateWithoutRolesInput;
   where: UserWhereUniqueInput;
@@ -6838,7 +6786,7 @@ export type UserCreateOrConnectWithoutWechatInput = {
   where: UserWhereUniqueInput;
 };
 
-export type UserCreateWithoutActionsInput = {
+export type UserCreateWithoutIssuesInput = {
   createAt?: InputMaybe<Scalars['DateTime']>;
   name?: InputMaybe<Scalars['String']>;
   nickname?: InputMaybe<Scalars['String']>;
@@ -6846,7 +6794,6 @@ export type UserCreateWithoutActionsInput = {
   password?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   phrases?: InputMaybe<PhraseCreateNestedManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestCreateNestedManyWithoutUserInput>;
   roles?: InputMaybe<RoleCreateNestedManyWithoutUsersInput>;
   signUpType?: InputMaybe<SignUpType>;
   status?: InputMaybe<UserStatus>;
@@ -6855,14 +6802,13 @@ export type UserCreateWithoutActionsInput = {
 };
 
 export type UserCreateWithoutNoticesInput = {
-  actions?: InputMaybe<ActionCreateNestedManyWithoutUserInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
+  issues?: InputMaybe<IssueCreateNestedManyWithoutUserInput>;
   name?: InputMaybe<Scalars['String']>;
   nickname?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   phrases?: InputMaybe<PhraseCreateNestedManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestCreateNestedManyWithoutUserInput>;
   roles?: InputMaybe<RoleCreateNestedManyWithoutUsersInput>;
   signUpType?: InputMaybe<SignUpType>;
   status?: InputMaybe<UserStatus>;
@@ -6871,30 +6817,13 @@ export type UserCreateWithoutNoticesInput = {
 };
 
 export type UserCreateWithoutPhrasesInput = {
-  actions?: InputMaybe<ActionCreateNestedManyWithoutUserInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
+  issues?: InputMaybe<IssueCreateNestedManyWithoutUserInput>;
   name?: InputMaybe<Scalars['String']>;
   nickname?: InputMaybe<Scalars['String']>;
   notices?: InputMaybe<NoticeCreateNestedManyWithoutUserInput>;
   password?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
-  pullRequests?: InputMaybe<PullRequestCreateNestedManyWithoutUserInput>;
-  roles?: InputMaybe<RoleCreateNestedManyWithoutUsersInput>;
-  signUpType?: InputMaybe<SignUpType>;
-  status?: InputMaybe<UserStatus>;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-  wechat?: InputMaybe<WechatCreateNestedOneWithoutUserInput>;
-};
-
-export type UserCreateWithoutPullRequestsInput = {
-  actions?: InputMaybe<ActionCreateNestedManyWithoutUserInput>;
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  name?: InputMaybe<Scalars['String']>;
-  nickname?: InputMaybe<Scalars['String']>;
-  notices?: InputMaybe<NoticeCreateNestedManyWithoutUserInput>;
-  password?: InputMaybe<Scalars['String']>;
-  phone?: InputMaybe<Scalars['String']>;
-  phrases?: InputMaybe<PhraseCreateNestedManyWithoutUserInput>;
   roles?: InputMaybe<RoleCreateNestedManyWithoutUsersInput>;
   signUpType?: InputMaybe<SignUpType>;
   status?: InputMaybe<UserStatus>;
@@ -6903,15 +6832,14 @@ export type UserCreateWithoutPullRequestsInput = {
 };
 
 export type UserCreateWithoutRolesInput = {
-  actions?: InputMaybe<ActionCreateNestedManyWithoutUserInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
+  issues?: InputMaybe<IssueCreateNestedManyWithoutUserInput>;
   name?: InputMaybe<Scalars['String']>;
   nickname?: InputMaybe<Scalars['String']>;
   notices?: InputMaybe<NoticeCreateNestedManyWithoutUserInput>;
   password?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   phrases?: InputMaybe<PhraseCreateNestedManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestCreateNestedManyWithoutUserInput>;
   signUpType?: InputMaybe<SignUpType>;
   status?: InputMaybe<UserStatus>;
   updateAt?: InputMaybe<Scalars['DateTime']>;
@@ -6919,15 +6847,14 @@ export type UserCreateWithoutRolesInput = {
 };
 
 export type UserCreateWithoutWechatInput = {
-  actions?: InputMaybe<ActionCreateNestedManyWithoutUserInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
+  issues?: InputMaybe<IssueCreateNestedManyWithoutUserInput>;
   name?: InputMaybe<Scalars['String']>;
   nickname?: InputMaybe<Scalars['String']>;
   notices?: InputMaybe<NoticeCreateNestedManyWithoutUserInput>;
   password?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   phrases?: InputMaybe<PhraseCreateNestedManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestCreateNestedManyWithoutUserInput>;
   roles?: InputMaybe<RoleCreateNestedManyWithoutUsersInput>;
   signUpType?: InputMaybe<SignUpType>;
   status?: InputMaybe<UserStatus>;
@@ -7038,16 +6965,15 @@ export type UserOrderByWithAggregationInput = {
 
 export type UserOrderByWithRelationAndSearchRelevanceInput = {
   _relevance?: InputMaybe<UserOrderByRelevanceInput>;
-  actions?: InputMaybe<ActionOrderByRelationAggregateInput>;
   createAt?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  issues?: InputMaybe<IssueOrderByRelationAggregateInput>;
   name?: InputMaybe<SortOrder>;
   nickname?: InputMaybe<SortOrder>;
   notices?: InputMaybe<NoticeOrderByRelationAggregateInput>;
   password?: InputMaybe<SortOrder>;
   phone?: InputMaybe<SortOrder>;
   phrases?: InputMaybe<PhraseOrderByRelationAggregateInput>;
-  pullRequests?: InputMaybe<PullRequestOrderByRelationAggregateInput>;
   roles?: InputMaybe<RoleOrderByRelationAggregateInput>;
   signUpType?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
@@ -7139,16 +7065,15 @@ export type UserSumOrderByAggregateInput = {
 };
 
 export type UserUncheckedCreateInput = {
-  actions?: InputMaybe<ActionUncheckedCreateNestedManyWithoutUserInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
+  issues?: InputMaybe<IssueUncheckedCreateNestedManyWithoutUserInput>;
   name?: InputMaybe<Scalars['String']>;
   nickname?: InputMaybe<Scalars['String']>;
   notices?: InputMaybe<NoticeUncheckedCreateNestedManyWithoutUserInput>;
   password?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   phrases?: InputMaybe<PhraseUncheckedCreateNestedManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutUserInput>;
   roles?: InputMaybe<RoleUncheckedCreateNestedManyWithoutUsersInput>;
   signUpType?: InputMaybe<SignUpType>;
   status?: InputMaybe<UserStatus>;
@@ -7168,7 +7093,7 @@ export type UserUncheckedCreateNestedOneWithoutWechatInput = {
   create?: InputMaybe<UserUncheckedCreateWithoutWechatInput>;
 };
 
-export type UserUncheckedCreateWithoutActionsInput = {
+export type UserUncheckedCreateWithoutIssuesInput = {
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
@@ -7177,7 +7102,6 @@ export type UserUncheckedCreateWithoutActionsInput = {
   password?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   phrases?: InputMaybe<PhraseUncheckedCreateNestedManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutUserInput>;
   roles?: InputMaybe<RoleUncheckedCreateNestedManyWithoutUsersInput>;
   signUpType?: InputMaybe<SignUpType>;
   status?: InputMaybe<UserStatus>;
@@ -7186,15 +7110,14 @@ export type UserUncheckedCreateWithoutActionsInput = {
 };
 
 export type UserUncheckedCreateWithoutNoticesInput = {
-  actions?: InputMaybe<ActionUncheckedCreateNestedManyWithoutUserInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
+  issues?: InputMaybe<IssueUncheckedCreateNestedManyWithoutUserInput>;
   name?: InputMaybe<Scalars['String']>;
   nickname?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   phrases?: InputMaybe<PhraseUncheckedCreateNestedManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutUserInput>;
   roles?: InputMaybe<RoleUncheckedCreateNestedManyWithoutUsersInput>;
   signUpType?: InputMaybe<SignUpType>;
   status?: InputMaybe<UserStatus>;
@@ -7203,32 +7126,14 @@ export type UserUncheckedCreateWithoutNoticesInput = {
 };
 
 export type UserUncheckedCreateWithoutPhrasesInput = {
-  actions?: InputMaybe<ActionUncheckedCreateNestedManyWithoutUserInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
+  issues?: InputMaybe<IssueUncheckedCreateNestedManyWithoutUserInput>;
   name?: InputMaybe<Scalars['String']>;
   nickname?: InputMaybe<Scalars['String']>;
   notices?: InputMaybe<NoticeUncheckedCreateNestedManyWithoutUserInput>;
   password?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
-  pullRequests?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutUserInput>;
-  roles?: InputMaybe<RoleUncheckedCreateNestedManyWithoutUsersInput>;
-  signUpType?: InputMaybe<SignUpType>;
-  status?: InputMaybe<UserStatus>;
-  updateAt?: InputMaybe<Scalars['DateTime']>;
-  wechatId?: InputMaybe<Scalars['Int']>;
-};
-
-export type UserUncheckedCreateWithoutPullRequestsInput = {
-  actions?: InputMaybe<ActionUncheckedCreateNestedManyWithoutUserInput>;
-  createAt?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['Int']>;
-  name?: InputMaybe<Scalars['String']>;
-  nickname?: InputMaybe<Scalars['String']>;
-  notices?: InputMaybe<NoticeUncheckedCreateNestedManyWithoutUserInput>;
-  password?: InputMaybe<Scalars['String']>;
-  phone?: InputMaybe<Scalars['String']>;
-  phrases?: InputMaybe<PhraseUncheckedCreateNestedManyWithoutUserInput>;
   roles?: InputMaybe<RoleUncheckedCreateNestedManyWithoutUsersInput>;
   signUpType?: InputMaybe<SignUpType>;
   status?: InputMaybe<UserStatus>;
@@ -7237,16 +7142,15 @@ export type UserUncheckedCreateWithoutPullRequestsInput = {
 };
 
 export type UserUncheckedCreateWithoutRolesInput = {
-  actions?: InputMaybe<ActionUncheckedCreateNestedManyWithoutUserInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
+  issues?: InputMaybe<IssueUncheckedCreateNestedManyWithoutUserInput>;
   name?: InputMaybe<Scalars['String']>;
   nickname?: InputMaybe<Scalars['String']>;
   notices?: InputMaybe<NoticeUncheckedCreateNestedManyWithoutUserInput>;
   password?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   phrases?: InputMaybe<PhraseUncheckedCreateNestedManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutUserInput>;
   signUpType?: InputMaybe<SignUpType>;
   status?: InputMaybe<UserStatus>;
   updateAt?: InputMaybe<Scalars['DateTime']>;
@@ -7254,16 +7158,15 @@ export type UserUncheckedCreateWithoutRolesInput = {
 };
 
 export type UserUncheckedCreateWithoutWechatInput = {
-  actions?: InputMaybe<ActionUncheckedCreateNestedManyWithoutUserInput>;
   createAt?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['Int']>;
+  issues?: InputMaybe<IssueUncheckedCreateNestedManyWithoutUserInput>;
   name?: InputMaybe<Scalars['String']>;
   nickname?: InputMaybe<Scalars['String']>;
   notices?: InputMaybe<NoticeUncheckedCreateNestedManyWithoutUserInput>;
   password?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   phrases?: InputMaybe<PhraseUncheckedCreateNestedManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutUserInput>;
   roles?: InputMaybe<RoleUncheckedCreateNestedManyWithoutUsersInput>;
   signUpType?: InputMaybe<SignUpType>;
   status?: InputMaybe<UserStatus>;
@@ -7271,16 +7174,15 @@ export type UserUncheckedCreateWithoutWechatInput = {
 };
 
 export type UserUncheckedUpdateInput = {
-  actions?: InputMaybe<ActionUncheckedUpdateManyWithoutUserInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  issues?: InputMaybe<IssueUncheckedUpdateManyWithoutUserInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   notices?: InputMaybe<NoticeUncheckedUpdateManyWithoutUserInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phone?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phrases?: InputMaybe<PhraseUncheckedUpdateManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestUncheckedUpdateManyWithoutUserInput>;
   roles?: InputMaybe<RoleUncheckedUpdateManyWithoutUsersInput>;
   signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
@@ -7337,7 +7239,7 @@ export type UserUncheckedUpdateOneWithoutWechatInput = {
   upsert?: InputMaybe<UserUpsertWithoutWechatInput>;
 };
 
-export type UserUncheckedUpdateWithoutActionsInput = {
+export type UserUncheckedUpdateWithoutIssuesInput = {
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7346,7 +7248,6 @@ export type UserUncheckedUpdateWithoutActionsInput = {
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phone?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phrases?: InputMaybe<PhraseUncheckedUpdateManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestUncheckedUpdateManyWithoutUserInput>;
   roles?: InputMaybe<RoleUncheckedUpdateManyWithoutUsersInput>;
   signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
@@ -7355,15 +7256,14 @@ export type UserUncheckedUpdateWithoutActionsInput = {
 };
 
 export type UserUncheckedUpdateWithoutNoticesInput = {
-  actions?: InputMaybe<ActionUncheckedUpdateManyWithoutUserInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  issues?: InputMaybe<IssueUncheckedUpdateManyWithoutUserInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phone?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phrases?: InputMaybe<PhraseUncheckedUpdateManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestUncheckedUpdateManyWithoutUserInput>;
   roles?: InputMaybe<RoleUncheckedUpdateManyWithoutUsersInput>;
   signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
@@ -7372,32 +7272,14 @@ export type UserUncheckedUpdateWithoutNoticesInput = {
 };
 
 export type UserUncheckedUpdateWithoutPhrasesInput = {
-  actions?: InputMaybe<ActionUncheckedUpdateManyWithoutUserInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  issues?: InputMaybe<IssueUncheckedUpdateManyWithoutUserInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   notices?: InputMaybe<NoticeUncheckedUpdateManyWithoutUserInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phone?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  pullRequests?: InputMaybe<PullRequestUncheckedUpdateManyWithoutUserInput>;
-  roles?: InputMaybe<RoleUncheckedUpdateManyWithoutUsersInput>;
-  signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
-  status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  wechatId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
-};
-
-export type UserUncheckedUpdateWithoutPullRequestsInput = {
-  actions?: InputMaybe<ActionUncheckedUpdateManyWithoutUserInput>;
-  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  id?: InputMaybe<IntFieldUpdateOperationsInput>;
-  name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  notices?: InputMaybe<NoticeUncheckedUpdateManyWithoutUserInput>;
-  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  phone?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  phrases?: InputMaybe<PhraseUncheckedUpdateManyWithoutUserInput>;
   roles?: InputMaybe<RoleUncheckedUpdateManyWithoutUsersInput>;
   signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
@@ -7406,16 +7288,15 @@ export type UserUncheckedUpdateWithoutPullRequestsInput = {
 };
 
 export type UserUncheckedUpdateWithoutRolesInput = {
-  actions?: InputMaybe<ActionUncheckedUpdateManyWithoutUserInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  issues?: InputMaybe<IssueUncheckedUpdateManyWithoutUserInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   notices?: InputMaybe<NoticeUncheckedUpdateManyWithoutUserInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phone?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phrases?: InputMaybe<PhraseUncheckedUpdateManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestUncheckedUpdateManyWithoutUserInput>;
   signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -7423,16 +7304,15 @@ export type UserUncheckedUpdateWithoutRolesInput = {
 };
 
 export type UserUncheckedUpdateWithoutWechatInput = {
-  actions?: InputMaybe<ActionUncheckedUpdateManyWithoutUserInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  issues?: InputMaybe<IssueUncheckedUpdateManyWithoutUserInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   notices?: InputMaybe<NoticeUncheckedUpdateManyWithoutUserInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phone?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phrases?: InputMaybe<PhraseUncheckedUpdateManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestUncheckedUpdateManyWithoutUserInput>;
   roles?: InputMaybe<RoleUncheckedUpdateManyWithoutUsersInput>;
   signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
@@ -7440,15 +7320,14 @@ export type UserUncheckedUpdateWithoutWechatInput = {
 };
 
 export type UserUpdateInput = {
-  actions?: InputMaybe<ActionUpdateManyWithoutUserInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  issues?: InputMaybe<IssueUpdateManyWithoutUserInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   notices?: InputMaybe<NoticeUpdateManyWithoutUserInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phone?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phrases?: InputMaybe<PhraseUpdateManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestUpdateManyWithoutUserInput>;
   roles?: InputMaybe<RoleUpdateManyWithoutUsersInput>;
   signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
@@ -7492,12 +7371,12 @@ export type UserUpdateOneInput = {
   status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
 };
 
-export type UserUpdateOneRequiredWithoutActionsInput = {
+export type UserUpdateOneRequiredWithoutIssuesInput = {
   connect?: InputMaybe<UserWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutActionsInput>;
-  create?: InputMaybe<UserUncheckedCreateWithoutActionsInput>;
-  update?: InputMaybe<UserUncheckedUpdateWithoutActionsInput>;
-  upsert?: InputMaybe<UserUpsertWithoutActionsInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutIssuesInput>;
+  create?: InputMaybe<UserUncheckedCreateWithoutIssuesInput>;
+  update?: InputMaybe<UserUncheckedUpdateWithoutIssuesInput>;
+  upsert?: InputMaybe<UserUpsertWithoutIssuesInput>;
 };
 
 export type UserUpdateOneRequiredWithoutNoticesInput = {
@@ -7506,14 +7385,6 @@ export type UserUpdateOneRequiredWithoutNoticesInput = {
   create?: InputMaybe<UserUncheckedCreateWithoutNoticesInput>;
   update?: InputMaybe<UserUncheckedUpdateWithoutNoticesInput>;
   upsert?: InputMaybe<UserUpsertWithoutNoticesInput>;
-};
-
-export type UserUpdateOneRequiredWithoutPullRequestsInput = {
-  connect?: InputMaybe<UserWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutPullRequestsInput>;
-  create?: InputMaybe<UserUncheckedCreateWithoutPullRequestsInput>;
-  update?: InputMaybe<UserUncheckedUpdateWithoutPullRequestsInput>;
-  upsert?: InputMaybe<UserUpsertWithoutPullRequestsInput>;
 };
 
 export type UserUpdateOneWithoutPhrasesInput = {
@@ -7541,7 +7412,7 @@ export type UserUpdateWithWhereUniqueWithoutRolesInput = {
   where: UserWhereUniqueInput;
 };
 
-export type UserUpdateWithoutActionsInput = {
+export type UserUpdateWithoutIssuesInput = {
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7549,7 +7420,6 @@ export type UserUpdateWithoutActionsInput = {
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phone?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phrases?: InputMaybe<PhraseUpdateManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestUpdateManyWithoutUserInput>;
   roles?: InputMaybe<RoleUpdateManyWithoutUsersInput>;
   signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
@@ -7558,14 +7428,13 @@ export type UserUpdateWithoutActionsInput = {
 };
 
 export type UserUpdateWithoutNoticesInput = {
-  actions?: InputMaybe<ActionUpdateManyWithoutUserInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  issues?: InputMaybe<IssueUpdateManyWithoutUserInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phone?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phrases?: InputMaybe<PhraseUpdateManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestUpdateManyWithoutUserInput>;
   roles?: InputMaybe<RoleUpdateManyWithoutUsersInput>;
   signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
@@ -7574,30 +7443,13 @@ export type UserUpdateWithoutNoticesInput = {
 };
 
 export type UserUpdateWithoutPhrasesInput = {
-  actions?: InputMaybe<ActionUpdateManyWithoutUserInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  issues?: InputMaybe<IssueUpdateManyWithoutUserInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   notices?: InputMaybe<NoticeUpdateManyWithoutUserInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phone?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  pullRequests?: InputMaybe<PullRequestUpdateManyWithoutUserInput>;
-  roles?: InputMaybe<RoleUpdateManyWithoutUsersInput>;
-  signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
-  status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
-  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  wechat?: InputMaybe<WechatUpdateOneWithoutUserInput>;
-};
-
-export type UserUpdateWithoutPullRequestsInput = {
-  actions?: InputMaybe<ActionUpdateManyWithoutUserInput>;
-  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  notices?: InputMaybe<NoticeUpdateManyWithoutUserInput>;
-  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  phone?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  phrases?: InputMaybe<PhraseUpdateManyWithoutUserInput>;
   roles?: InputMaybe<RoleUpdateManyWithoutUsersInput>;
   signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
@@ -7606,15 +7458,14 @@ export type UserUpdateWithoutPullRequestsInput = {
 };
 
 export type UserUpdateWithoutRolesInput = {
-  actions?: InputMaybe<ActionUpdateManyWithoutUserInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  issues?: InputMaybe<IssueUpdateManyWithoutUserInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   notices?: InputMaybe<NoticeUpdateManyWithoutUserInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phone?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phrases?: InputMaybe<PhraseUpdateManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestUpdateManyWithoutUserInput>;
   signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -7622,15 +7473,14 @@ export type UserUpdateWithoutRolesInput = {
 };
 
 export type UserUpdateWithoutWechatInput = {
-  actions?: InputMaybe<ActionUpdateManyWithoutUserInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  issues?: InputMaybe<IssueUpdateManyWithoutUserInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   notices?: InputMaybe<NoticeUpdateManyWithoutUserInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phone?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   phrases?: InputMaybe<PhraseUpdateManyWithoutUserInput>;
-  pullRequests?: InputMaybe<PullRequestUpdateManyWithoutUserInput>;
   roles?: InputMaybe<RoleUpdateManyWithoutUsersInput>;
   signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
@@ -7643,9 +7493,9 @@ export type UserUpsertWithWhereUniqueWithoutRolesInput = {
   where: UserWhereUniqueInput;
 };
 
-export type UserUpsertWithoutActionsInput = {
-  create: UserUncheckedCreateWithoutActionsInput;
-  update: UserUncheckedUpdateWithoutActionsInput;
+export type UserUpsertWithoutIssuesInput = {
+  create: UserUncheckedCreateWithoutIssuesInput;
+  update: UserUncheckedUpdateWithoutIssuesInput;
 };
 
 export type UserUpsertWithoutNoticesInput = {
@@ -7658,11 +7508,6 @@ export type UserUpsertWithoutPhrasesInput = {
   update: UserUncheckedUpdateWithoutPhrasesInput;
 };
 
-export type UserUpsertWithoutPullRequestsInput = {
-  create: UserUncheckedCreateWithoutPullRequestsInput;
-  update: UserUncheckedUpdateWithoutPullRequestsInput;
-};
-
 export type UserUpsertWithoutWechatInput = {
   create: UserUncheckedCreateWithoutWechatInput;
   update: UserUncheckedUpdateWithoutWechatInput;
@@ -7672,16 +7517,15 @@ export type UserWhereInput = {
   AND?: InputMaybe<Array<InputMaybe<UserWhereInput>>>;
   NOT?: InputMaybe<Array<InputMaybe<UserWhereInput>>>;
   OR?: InputMaybe<Array<InputMaybe<UserWhereInput>>>;
-  actions?: InputMaybe<ActionListRelationFilter>;
   createAt?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<IntFilter>;
+  issues?: InputMaybe<IssueListRelationFilter>;
   name?: InputMaybe<StringNullableFilter>;
   nickname?: InputMaybe<StringNullableFilter>;
   notices?: InputMaybe<NoticeListRelationFilter>;
   password?: InputMaybe<StringNullableFilter>;
   phone?: InputMaybe<StringNullableFilter>;
   phrases?: InputMaybe<PhraseListRelationFilter>;
-  pullRequests?: InputMaybe<PullRequestListRelationFilter>;
   roles?: InputMaybe<RoleListRelationFilter>;
   signUpType?: InputMaybe<EnumSignUpTypeFilter>;
   status?: InputMaybe<EnumUserStatusFilter>;
@@ -8146,7 +7990,7 @@ export type FindManyPhraseQueryVariables = Exact<{
 }>;
 
 
-export type FindManyPhraseQuery = { __typename?: 'Query', findManyPhrase: Array<{ __typename?: 'Phrase', id: number, updateAt: any, word: string, code: string, type: PhraseType, user?: { __typename?: 'User', name?: string | null, nickname?: string | null } | null, _count: { __typename?: 'PhraseCountOutputType', comments: number } }> };
+export type FindManyPhraseQuery = { __typename?: 'Query', findManyPhrase: Array<{ __typename?: 'Phrase', id: number, updateAt: any, word: string, code: string, type: PhraseType, status: PhraseStatus, user?: { __typename?: 'User', id: number, name?: string | null, nickname?: string | null } | null, _count: { __typename?: 'PhraseCountOutputType', comments: number, pullRequests: number } }> };
 
 export type FindUserMeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -8168,7 +8012,7 @@ export type SignUpMutationVariables = Exact<{
 export type SignUpMutation = { __typename?: 'Mutation', signUp?: { __typename?: 'User', id: number, name?: string | null } | null };
 
 
-export const FindManyPhraseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindManyPhrase"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PhraseWhereInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PhraseOrderByWithRelationAndSearchRelevanceInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PhraseWhereUniqueInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"take"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findManyPhrase"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}},{"kind":"Argument","name":{"kind":"Name","value":"take"},"value":{"kind":"Variable","name":{"kind":"Name","value":"take"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"updateAt"}},{"kind":"Field","name":{"kind":"Name","value":"word"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"nickname"}}]}},{"kind":"Field","name":{"kind":"Name","value":"_count"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comments"}}]}}]}}]}}]} as unknown as DocumentNode<FindManyPhraseQuery, FindManyPhraseQueryVariables>;
+export const FindManyPhraseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindManyPhrase"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PhraseWhereInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PhraseOrderByWithRelationAndSearchRelevanceInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PhraseWhereUniqueInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"take"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findManyPhrase"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"cursor"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cursor"}}},{"kind":"Argument","name":{"kind":"Name","value":"take"},"value":{"kind":"Variable","name":{"kind":"Name","value":"take"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"updateAt"}},{"kind":"Field","name":{"kind":"Name","value":"word"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"nickname"}}]}},{"kind":"Field","name":{"kind":"Name","value":"_count"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comments"}},{"kind":"Field","name":{"kind":"Name","value":"pullRequests"}}]}}]}}]}}]} as unknown as DocumentNode<FindManyPhraseQuery, FindManyPhraseQueryVariables>;
 export const FindUserMeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindUserMe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findUserMe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"nickname"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<FindUserMeQuery, FindUserMeQueryVariables>;
 export const SignInDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SignIn"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserSignInInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signIn"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<SignInMutation, SignInMutationVariables>;
 export const SignUpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SignUp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserSignUpInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signUp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<SignUpMutation, SignUpMutationVariables>;

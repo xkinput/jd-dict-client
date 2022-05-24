@@ -9,7 +9,7 @@ export const CreatePhraseModal: FC<Props> = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   return <>
-    <Button>提交词条</Button>
+    <Button colorScheme="gray" onClick={onOpen}>提交词条</Button>
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>

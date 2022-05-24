@@ -20,6 +20,7 @@ specifiers:
   '@typescript-eslint/parser': ^5.25.0
   '@unocss/reset': ^0.34.0
   '@vitejs/plugin-react': ^1.3.2
+  dayjs: ^1.11.2
   eslint: ^8.15.0
   eslint-plugin-import: ^2.26.0
   eslint-plugin-jsx-a11y: ^6.5.1
@@ -55,6 +56,7 @@ dependencies:
   '@graphql-codegen/typescript-operations': 2.4.0_graphql@16.5.0
   '@reduxjs/toolkit': 1.8.1_j24pcqpkbsj43woxscsovlj4au
   '@unocss/reset': 0.34.0
+  dayjs: 1.11.2
   formik: 2.2.9_react@18.1.0
   framer-motion: 6.3.3_ef5jwxihqo6n7gxfmzogljlgcm
   graphql: 16.5.0
@@ -3443,6 +3445,10 @@ packages:
 
   /date-fns/1.30.1:
     resolution: {integrity: sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==}
+    dev: false
+
+  /dayjs/1.11.2:
+    resolution: {integrity: sha512-F4LXf1OeU9hrSYRPTTj/6FbO4HTjPKXvEIC1P2kcnFurViINCVk3ZV0xAS3XVx9MkMsXbbqlK6hjseaYbgKEHw==}
     dev: false
 
   /debounce/1.2.1:
