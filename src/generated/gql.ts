@@ -1962,6 +1962,14 @@ export type EnumUserStatusWithAggregatesFilter = {
   notIn?: InputMaybe<Array<InputMaybe<UserStatus>>>;
 };
 
+/** 错误码信息 */
+export enum ErrorCode {
+  /** 用户名已被使用 */
+  U1000 = 'U1000',
+  /** 邮箱已被使用 */
+  U1001 = 'U1001'
+}
+
 export type IntFieldUpdateOperationsInput = {
   decrement?: InputMaybe<Scalars['Int']>;
   divide?: InputMaybe<Scalars['Int']>;

@@ -1,6 +1,5 @@
 import { store } from './../store/index'
 import { APP_NAME } from '~/config/global'
-import { useRootDispatch, useRootState } from '~/store'
 import { setToken, userSlice } from '~/store/user'
 import { findUserMe } from '~/store/user/thunks'
 

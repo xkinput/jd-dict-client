@@ -11,6 +11,7 @@ specifiers:
   '@graphql-codegen/typescript': ^2.4.11
   '@graphql-codegen/typescript-operations': ^2.4.0
   '@reduxjs/toolkit': ^1.8.1
+  '@types/lodash': ^4.14.182
   '@types/node': ^17.0.35
   '@types/react': ^18.0.9
   '@types/react-dom': ^18.0.4
@@ -28,8 +29,10 @@ specifiers:
   graphql: ^16.5.0
   history: ^5.3.0
   immer: ^9.0.14
+  lodash: ^4.17.21
   react: ^18.1.0
   react-dom: ^18.1.0
+  react-icons: ^4.3.1
   react-redux: ^8.0.1
   react-router-dom: 6.3.0
   redux: ^4.2.0
@@ -57,8 +60,10 @@ dependencies:
   graphql: 16.5.0
   history: 5.3.0
   immer: 9.0.14
+  lodash: 4.17.21
   react: 18.1.0
   react-dom: 18.1.0_react@18.1.0
+  react-icons: 4.3.1_react@18.1.0
   react-redux: 8.0.1_d5prddqdjf6tcianjubzhf4vay
   react-router-dom: 6.3.0_ef5jwxihqo6n7gxfmzogljlgcm
   redux: 4.2.0
@@ -66,6 +71,7 @@ dependencies:
   yup: 0.32.11
 
 devDependencies:
+  '@types/lodash': 4.14.182
   '@types/node': 17.0.35
   '@types/react': 18.0.9
   '@types/react-dom': 18.0.4
@@ -2419,12 +2425,11 @@ packages:
   /@types/lodash.mergewith/4.6.6:
     resolution: {integrity: sha512-RY/8IaVENjG19rxTZu9Nukqh0W2UrYgmBj5sdns4hWRZaV8PqR7wIKHFKzvOTjo4zVRV7sVI+yFhAJql12Kfqg==}
     dependencies:
-      '@types/lodash': 4.14.180
+      '@types/lodash': 4.14.182
     dev: false
 
-  /@types/lodash/4.14.180:
-    resolution: {integrity: sha512-XOKXa1KIxtNXgASAnwj7cnttJxS4fksBRywK/9LzRV5YxrF80BXZIGeQSuoESQ/VkUj30Ae0+YcuHc15wJCB2g==}
-    dev: false
+  /@types/lodash/4.14.182:
+    resolution: {integrity: sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==}
 
   /@types/node/17.0.35:
     resolution: {integrity: sha512-vu1SrqBjbbZ3J6vwY17jBs8Sr/BKA+/a/WtjRG+whKg1iuLFOosq872EXS0eXWILdO36DHQQeku/ZcL6hz2fpg==}
@@ -2440,7 +2445,6 @@ packages:
     resolution: {integrity: sha512-FgTtbqPOCI3dzZPZoC2T/sx3L34qxy99ITWn4eoSA95qPyXDMH0ALoAqUp49ITniiJFsXUVBtalh/KffMpg21Q==}
     dependencies:
       '@types/react': 18.0.9
-    dev: true
 
   /@types/react-redux/7.1.24:
     resolution: {integrity: sha512-7FkurKcS1k0FHZEtdbbgN8Oc6b+stGSfZYjQGicofJ0j4U0qIn/jaSvnP2pLwZKiai3/17xqqxkkrxTgN8UNbQ==}
@@ -5891,6 +5895,14 @@ packages:
       - '@types/react'
     dev: false
 
+  /react-icons/4.3.1_react@18.1.0:
+    resolution: {integrity: sha512-cB10MXLTs3gVuXimblAdI71jrJx8njrJZmNMEMC+sQu5B/BIOmlsAjskdqpn81y8UBVEGuHODd7/ci5DvoSzTQ==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.1.0
+    dev: false
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -6681,7 +6693,6 @@ packages:
     resolution: {integrity: sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==}
     engines: {node: '>=4.2.0'}
     hasBin: true
-    dev: true
 
   /ua-parser-js/0.7.31:
     resolution: {integrity: sha512-qLK/Xe9E2uzmYI3qLeOmI0tEOt+TBBQyUIAh4aAgU05FVYzeZrKUdkAZfBNVGRaHVgV0TDkdEngJSw/SyQchkQ==}
@@ -7031,7 +7042,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       '@babel/runtime': 7.17.7
-      '@types/lodash': 4.14.180
+      '@types/lodash': 4.14.182
       lodash: 4.17.21
       lodash-es: 4.17.21
       nanoclone: 0.2.1

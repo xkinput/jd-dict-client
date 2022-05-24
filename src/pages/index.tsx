@@ -1,8 +1,7 @@
-import { useQuery } from '@apollo/client'
-import { Button, Container, Stack } from '@chakra-ui/react'
-import { Suspense, useState } from 'react'
-import { PhraseList } from '~/components/PhraseList'
-import { FindManyPhraseDocument, FindManyPhraseQueryVariables } from '~/generated/gql'
+import { Container } from '@chakra-ui/react'
+import { useState } from 'react'
+import { PhraseList } from '~/components/phrase/List'
+import { FindManyPhraseQueryVariables } from '~/generated/gql'
 
 export const Index = () => {
   const [ findManyPhraseListVariables, setFindManyPhraseListVariables ] = useState<FindManyPhraseQueryVariables>({

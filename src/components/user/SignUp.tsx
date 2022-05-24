@@ -1,8 +1,8 @@
 import { useMutation } from '@apollo/client'
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
+import { CheckCircleIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputRightElement, ModalProps, Stack, useDisclosure } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
-import { FC, useRef, useState } from 'react'
+import { FC, ReactNode, useEffect, useRef, useState } from 'react'
 import * as Yup from 'yup'
 import { SignUpDocument } from '~/generated/gql'
 import { mutateLog } from '~/utils/log'
@@ -16,13 +16,11 @@ export const SignUp: FC<Props> = ({ onChange }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ isPasswordShow, setIsPasswordShow ] = useState(false)
 
-  const [ dialogProps, setDialogProps ] = useState({
-    isOpen,
-    onClose,
+  const [ dialogProps, setDialogProps ] = useState<Omit<DialogSuccessProps, 'isOpen' | 'onClose'>>({
     cancelRef: useRef(),
     content: {
       header: '注册成功',
-      body: '您已成功注册，请登录',
+      body: '',
     }
   })
 
@@ -46,10 +44,19 @@ export const SignUp: FC<Props> = ({ onChange }) => {
               }
             })
 
-            if (!errors) throw errors
+            if (!data.signUp) throw errors
             setSubmitting(false)
             setDialogProps(v => {
-              v.content.body = `您的账户名：${data.signUp.name}，请前往登录页面登录`
+              v.content.body = (
+                <>
+                  <Stack alignItems="center">
+                    <CheckCircleIcon color="green" fontSize="5xl" />
+                    <div>
+                      您的账户名：{data.signUp.name}，请前往登录页面登录
+                    </div>
+                  </Stack>
+                </>
+              )
               return v
             })
             onOpen()
@@ -104,7 +111,7 @@ export const SignUp: FC<Props> = ({ onChange }) => {
           )
         }}
       </Formik>
-      <DialogSuccess {...dialogProps} />
+      <DialogSuccess isOpen={isOpen} onClose={onClose} {...dialogProps} />
     </>
   )
 }
@@ -115,7 +122,7 @@ interface DialogSuccessProps {
   onClose: () => void
   content: {
     header?: string
-    body?: string
+    body?: string | ReactNode
     confirm?: string
   }
 }
@@ -142,7 +149,7 @@ export const DialogSuccess: FC<DialogSuccessProps> = ({ isOpen, onClose, cancelR
           }
 
           <AlertDialogFooter>
-            <Button onClick={onClose}>
+            <Button onClick={() => onClose()}>
               { content.confirm || '确认' }
             </Button>
           </AlertDialogFooter>
