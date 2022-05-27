@@ -18,6 +18,7 @@ query FindManyPhrase(
     code
     type
     status
+    index
     user {
       id
       name

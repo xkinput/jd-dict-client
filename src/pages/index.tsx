@@ -1,10 +1,9 @@
-import { BaseBreakpointConfig, Breakpoints } from '.pnpm/@chakra-ui+theme-tools@2.0.0_@chakra-ui+system@2.0.2/node_modules/@chakra-ui/theme-tools'
-import { Box, Button, Container, Flex, Grid, GridItem, Stack, useBreakpointValue } from '@chakra-ui/react'
+import { Box, Container, Flex, Stack } from '@chakra-ui/react'
 import { useState } from 'react'
 import { UserInfo } from '~/components/home/UserInfo'
-import { CreatePhrase } from '~/components/phrase/Create'
-import { PhraseList } from '~/components/phrase/List'
-import { CreatePhraseModal } from '~/components/phrase/modal/Create'
+import { FormIssue } from '~/components/issue/Create'
+import { PhraseList } from '~/components/issue/List'
+import { CreatePhraseModal } from '~/components/issue/modal/Create'
 import { FindManyPhraseQueryVariables } from '~/generated/gql'
 import { useRootState } from '~/store'
 
@@ -31,7 +30,7 @@ export const Index = () => {
             <Stack bg="blackAlpha.100" rounded="md">
               <UserInfo />
               <CreatePhraseModal>
-                <CreatePhrase/>
+                <FormIssue />
               </CreatePhraseModal>
             </Stack>
           </Box>
