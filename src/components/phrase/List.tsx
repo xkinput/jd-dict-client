@@ -34,13 +34,14 @@ export const PhraseList: FC<Props> = ({ variables }) => {
       return (
         <Grid
           key={phrase.id}
-          p="3"
+          px={{ base: 3, md: 10 }}
+          py={{ base: 3 }}
           bg="blackAlpha.100"
           h="130"
           rounded='md'
           gap={4}>
           <GridItem rowSpan={2} colSpan={1}>
-            <Text ml={4} mt={3} fontSize="4xl">{phrase.word}</Text>
+            <Text ml={{ base: 1, md: 4 }} mt={3} fontSize="4xl">{phrase.word}</Text>
           </GridItem>
           <GridItem colSpan={2} fontSize="xl" as="code">{phrase.code}</GridItem>
           <GridItem colSpan={2}>

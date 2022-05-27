@@ -1,4 +1,5 @@
-import { Box, Button, Container, Grid, GridItem, Stack } from '@chakra-ui/react'
+import { BaseBreakpointConfig, Breakpoints } from '.pnpm/@chakra-ui+theme-tools@2.0.0_@chakra-ui+system@2.0.2/node_modules/@chakra-ui/theme-tools'
+import { Box, Button, Container, Flex, Grid, GridItem, Stack, useBreakpointValue } from '@chakra-ui/react'
 import { useState } from 'react'
 import { UserInfo } from '~/components/home/UserInfo'
 import { CreatePhrase } from '~/components/phrase/Create'
@@ -13,19 +14,19 @@ export const Index = () => {
 
   return <>
     <Container maxW='container.lg' py="3" >
-      <Grid templateColumns='1fr 200px' gap={6}>
-        <GridItem>
+      <Flex gap={6} wrap={{ base: 'wrap', md: 'nowrap' }}>
+        <Box flexGrow={1} order={{ base: 2, md: 1 }}>
           <PhraseList variables={findManyPhraseListVariables}/>
-        </GridItem>
-        <GridItem>
+        </Box>
+        <Box display={{ base: 'block', md: 'inline-block' }} w={{ base: 'full', md: 200 }} order={{ base: 1, md: 2 }}>
           <Stack bg="blackAlpha.100" rounded="md">
             <UserInfo />
             <CreatePhraseModal>
               <CreatePhrase/>
             </CreatePhraseModal>
           </Stack>
-        </GridItem>
-      </Grid>
+        </Box>
+      </Flex>
     </Container>
   </>
 }

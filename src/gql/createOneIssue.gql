@@ -1,0 +1,6 @@
+mutation CreateOneIssue($data: IssueUserCreateInput!) {
+  createOneIssue(data: $data) {
+    id
+    createAt
+  }
+}
