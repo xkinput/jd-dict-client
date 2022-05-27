@@ -40,7 +40,7 @@ export interface Props {
 export const Header: FC<Props> = ({ onTrigger }) => {
   const { isOpen, onToggle } = useDisclosure()
 
-  const isLogin = useRootState(s => s.user.isLogin)
+  const isSingined = useRootState(s => s.user.isSingined)
 
   return (
     <Box>
@@ -80,7 +80,7 @@ export const Header: FC<Props> = ({ onTrigger }) => {
           </Flex>
         </Flex>
 
-        {!isLogin
+        {!isSingined
           ? <LoginButtonGroup onTrigger={onTrigger}/>
           : <UserInfoOfHeader onTrigger={onTrigger}/>}
       </Flex>

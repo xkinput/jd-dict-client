@@ -6,11 +6,14 @@ import { CreatePhrase } from '~/components/phrase/Create'
 import { PhraseList } from '~/components/phrase/List'
 import { CreatePhraseModal } from '~/components/phrase/modal/Create'
 import { FindManyPhraseQueryVariables } from '~/generated/gql'
+import { useRootState } from '~/store'
 
 export const Index = () => {
   const [ findManyPhraseListVariables, setFindManyPhraseListVariables ] = useState<FindManyPhraseQueryVariables>({
     take: 5,
   })
+
+  const isUserSingined = useRootState(s => s.user.isSingined)
 
   return <>
     <Container maxW='container.lg' py="3" >
@@ -18,14 +21,21 @@ export const Index = () => {
         <Box flexGrow={1} order={{ base: 2, md: 1 }}>
           <PhraseList variables={findManyPhraseListVariables}/>
         </Box>
-        <Box display={{ base: 'block', md: 'inline-block' }} w={{ base: 'full', md: 200 }} order={{ base: 1, md: 2 }}>
-          <Stack bg="blackAlpha.100" rounded="md">
-            <UserInfo />
-            <CreatePhraseModal>
-              <CreatePhrase/>
-            </CreatePhraseModal>
-          </Stack>
-        </Box>
+        {
+          isUserSingined
+          && <Box
+            display={{ base: 'block', md: 'inline-block' }}
+            w={{ base: 'full', md: 200 }}
+            order={{ base: 1, md: 2 }}
+          >
+            <Stack bg="blackAlpha.100" rounded="md">
+              <UserInfo />
+              <CreatePhraseModal>
+                <CreatePhrase/>
+              </CreatePhraseModal>
+            </Stack>
+          </Box>
+        }
       </Flex>
     </Container>
   </>

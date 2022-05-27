@@ -1,11 +1,14 @@
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
-import { FormControl, FormErrorMessage, FormLabel, HStack, IconButton, Input, Text, Stack, Textarea, Divider, Grid, GridItem, RadioGroup, Radio, useBoolean, Button } from '@chakra-ui/react'
+import { FormControl, FormErrorMessage, FormLabel, HStack, IconButton, Input, Text, Textarea, Divider, Grid, GridItem, RadioGroup, Radio, useBoolean, Button } from '@chakra-ui/react'
 import { Field, FieldArray, Form, Formik } from 'formik'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Select } from 'chakra-react-select'
 import { phraseTypeMap } from '~/enum/phrase'
 import { pullReqeustTypeMap } from '~/enum/pullRequest'
-import { IssuePullReqeustUserInput, IssueUserCreateInput, PhraseType, PullRequestType } from '~/generated/gql'
+import { FindManyTagDocument, FindManyTagQueryVariables, IssuePullReqeustUserInput, IssueUserCreateInput, PhraseType, PullRequestType } from '~/generated/gql'
+import { useQuery } from '@apollo/client'
+import { mutateLog } from '~/utils/log'
+import { BsInboxFill } from 'react-icons/bs'
 
 interface Props {
 
@@ -128,7 +131,7 @@ export const CreatePhrase: FC<Props> = () => {
                           </Field>
                         </GridItem>
                         {
-                          isShowMoreOption && CreateIssueForm({ idx })
+                          isShowMoreOption && CreateIssueMoreForm({ idx })
                         }
                         <GridItem colSpan={2}>
                           <Button w="full" onClick={setIsShowMoreOption.toggle}>{isShowMoreOption ? '隐藏' : '显示'}高级选项</Button>
@@ -146,7 +149,7 @@ export const CreatePhrase: FC<Props> = () => {
   )
 }
 
-const CreateIssueForm = ({ idx }: { idx: number }) => {
+const CreateIssueMoreForm = ({ idx }: { idx: number }) => {
   return (
     <>
       <GridItem colSpan={{ base: 2, md: 1 }}>
@@ -159,22 +162,50 @@ const CreateIssueForm = ({ idx }: { idx: number }) => {
           )}
         </Field>
       </GridItem>
-      <GridItem colSpan={{ base: 2, md: 1 }}>
-        <Field name={`pullRequests[${idx}].tags`}>
-          {({ field, form }) => (
-            <FormControl>
-              <FormLabel htmlFor={`pullRequests[${idx}].tags`}>标签</FormLabel>
-              <Select 
-                isMulti
-                name={field.name}
-                defaultValue={field.value}
-                options={[]}
-                placeholder="请选择标签"
-              />
-            </FormControl>
-          )}
-        </Field>
-      </GridItem>
+      <CreateIssueMoreFormTag idx={idx} />
     </>
   )
+}
+
+const CreateIssueMoreFormTag = ({ idx }: {idx: number}) => {
+  const [ variables, setVariables ] = useState<FindManyTagQueryVariables>({})
+  const { data, loading, error } = useQuery(FindManyTagDocument, {
+    variables
+  })
+
+  const tagOptions = data?.findManyTag.map(it => ({
+    label: it.name,
+    value: it.id,
+  }))
+
+  useEffect(() => {
+    console.log('error', error)
+    mutateLog(error, {
+      prefixTitle: '标签列表加载失败：'
+    })
+  }, [ error ])
+
+  return <GridItem colSpan={{ base: 2, md: 1 }}>
+    <Field name={`pullRequests[${idx}].tags`}>
+      {({ field, form }) => (
+        <FormControl>
+          <FormLabel htmlFor={`pullRequests[${idx}].tags`}>标签</FormLabel>
+          <Select
+            isMulti
+            name={field.name}
+            defaultValue={field.value}
+            isLoading={loading}
+            options={tagOptions}
+            placeholder="请选择标签"
+            noOptionsMessage={() => (
+              <HStack gap={1}>
+                <BsInboxFill display="inline-block" fontSize="50"/>
+                <span>没有更多选项了</span>
+              </HStack>
+            )}
+          />
+        </FormControl>
+      )}
+    </Field>
+  </GridItem>
 }

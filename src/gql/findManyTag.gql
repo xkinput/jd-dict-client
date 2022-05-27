@@ -1,0 +1,14 @@
+query FindManyTag(
+  $where: TagWhereInput
+  $orderBy: [TagOrderByWithRelationAndSearchRelevanceInput]
+  $take: Int
+  $skip: Int
+) {
+  findManyTag(where: $where, orderBy: $orderBy, take: $take, skip: $skip) {
+    id
+    name
+    _count {
+      phrases
+    }
+  }
+}

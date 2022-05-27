@@ -29,6 +29,18 @@ export const PhraseList: FC<Props> = ({ variables }) => {
     <Text fontSize="lg" as="em">到底了……</Text>
   </Stack>
 
+  function getWordFontSize(word: string): string {
+    let len = word.length
+    let map = {
+      2: '4xl',
+      6: '3xl',
+      10: '2xl',
+      14: 'xl',
+    }
+
+    return Object.entries(map).find(([ k, v ]) => len <= Number(k))?.[1] ?? 'xl'
+  }
+
   return <VStack spacing={4} align='stretch'>
     {data.findManyPhrase.map(phrase => {
       return (
@@ -37,11 +49,10 @@ export const PhraseList: FC<Props> = ({ variables }) => {
           px={{ base: 3, md: 10 }}
           py={{ base: 3 }}
           bg="blackAlpha.100"
-          h="130"
           rounded='md'
           gap={4}>
           <GridItem rowSpan={2} colSpan={1}>
-            <Text ml={{ base: 1, md: 4 }} mt={3} fontSize="4xl">{phrase.word}</Text>
+            <Text ml={{ base: 1, md: 4 }} mt={3} fontSize={getWordFontSize(phrase.word)}>{phrase.word}</Text>
           </GridItem>
           <GridItem colSpan={2} fontSize="xl" as="code">{phrase.code}</GridItem>
           <GridItem colSpan={2}>
