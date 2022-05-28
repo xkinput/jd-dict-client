@@ -8,9 +8,10 @@ import { FindManyPhraseQueryVariables } from '~/generated/gql'
 import { useRootState } from '~/store'
 
 export const Index = () => {
-  const [ findManyPhraseListVariables, setFindManyPhraseListVariables ] = useState<FindManyPhraseQueryVariables>({
+  const findManyPhraseListVariables: FindManyPhraseQueryVariables = {
     take: 5,
-  })
+    skip: 0
+  }
 
   const isUserSingined = useRootState(s => s.user.isSingined)
 
@@ -24,7 +25,7 @@ export const Index = () => {
           isUserSingined
           && <Box
             display={{ base: 'block', md: 'inline-block' }}
-            w={{ base: 'full', md: 200 }}
+            minW={{ base: 'full', md: 240 }}
             order={{ base: 1, md: 2 }}
           >
             <Stack bg="blackAlpha.100" rounded="md">

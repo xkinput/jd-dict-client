@@ -3,6 +3,7 @@ import { ApolloError } from '@apollo/client'
 import { createStandaloneToast, UseToastOptions } from '@chakra-ui/toast'
 import { ErrorCodeMap } from '~/enum/error'
 import { ReactNode } from 'react'
+import { GraphQLError } from 'graphql'
 
 export const { ToastContainer, toast } = createStandaloneToast({
   defaultOptions: {
@@ -23,13 +24,18 @@ export function mutateLog(e: ApolloError | Error, toastOpts: ToastOpts = { prefi
   let msg: string = e.message
   let description: ReactNode | string
 
-  if (e instanceof ApolloError) {
-    description = e.graphQLErrors.map(it => (<>
-      {(it.extensions.code && ErrorCodeMap.get(it.extensions.code as ErrorCode)) || it.message}
-    </>))
+  if (e instanceof ApolloError && e.graphQLErrors.length > 0) {
+    description = e.graphQLErrors.map((graphQLError, idx) => (
+      <span key={idx}>
+        {(graphQLError?.extensions?.code === 'MU1000' && 'errors' in graphQLError.extensions
+          ? (graphQLError.extensions.errors as unknown as GraphQLError[]).map(it => transCodeToMsg(it, graphQLError)).map(it => <>{it}<br/></>)
+          : transCodeToMsg(graphQLError)
+        )}
+      </span>
+    ))
   }
 
-  let isUseDescTitle = Boolean(Array.isArray(description) && description.length > 0)
+  let isUseDescTitle = Array.isArray(description) && description.length > 0
 
   let title = <>
     {toastOpts.prefixTitle}{isUseDescTitle ? description : msg}
@@ -50,4 +56,21 @@ export function mutateLog(e: ApolloError | Error, toastOpts: ToastOpts = { prefi
     ...toastOpts,
     description
   })
+}
+
+function transCodeToMsg(error: GraphQLError, graphQLError?: GraphQLError) {
+  console.log('%c 🍲 error: ', 'font-size:20px;background-color: #ED9EC7;color:#fff;', error)
+  let extensions = error?.extensions
+  let idx = (extensions?.pr as any)?._prIndex
+  let args = extensions?.args
+
+  let path = error?.path || graphQLError.path
+
+  let msg = ErrorCodeMap.get(extensions?.code as keyof typeof ErrorCode) || error.message
+
+  if (path?.[0] === 'createOneIssue') {
+    return `${idx && `词条：${idx}`} ${msg}`
+  }
+
+  return msg
 }

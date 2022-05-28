@@ -1,23 +1,39 @@
-import { AddIcon, DeleteIcon, InfoIcon, InfoOutlineIcon } from '@chakra-ui/icons'
-import { FormControl, FormErrorMessage, FormLabel, HStack, IconButton, Input, Text, Textarea, Divider, Grid, GridItem, RadioGroup, Radio, useBoolean, Button, Stack, Tooltip } from '@chakra-ui/react'
-import { Field, FieldArray, Form, Formik } from 'formik'
-import { FC, useEffect, useState } from 'react'
+import { AddIcon, CheckCircleIcon, DeleteIcon, InfoIcon } from '@chakra-ui/icons'
+import { FormControl, FormErrorMessage, FormLabel, HStack, IconButton, Input, Text, Textarea, Divider, Grid, GridItem, RadioGroup, Radio, useBoolean, Button, Stack, Tooltip, ScaleFade, Box, Flex, useDisclosure } from '@chakra-ui/react'
+import { Field, FieldArray, Form, Formik, FormikHelpers } from 'formik'
+import { FC, memo, useRef, useState } from 'react'
 import { Select } from 'chakra-react-select'
-import { useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { BsInboxFill } from 'react-icons/bs'
-import { debounce, set } from 'lodash'
-import { useSetState } from 'ahooks'
+import { cloneDeep, debounce, set } from 'lodash'
+import * as Yup from 'yup'
 import { phraseTypeMap } from '~/enum/phrase'
 import { pullReqeustTypeMap } from '~/enum/pullRequest'
-import { FindManyPhraseDocument, FindManyPhraseQueryVariables, FindManyTagDocument, FindManyTagQueryVariables, IssuePullReqeustUserInput, IssueUserCreateInput, PhraseStatus, PhraseType, PullRequestType } from '~/generated/gql'
+import { CreateOneIssueDocument, FindManyPhraseDocument, FindManyPhraseQueryVariables, FindManyTagDocument, FindManyTagQueryVariables, IssuePullReqeustUserInput, IssueUserCreateInput, PhraseStatus, PhraseType, PullRequestType } from '~/generated/gql'
 import { mutateLog } from '~/utils/log'
+import { motion, TargetAndTransition } from 'framer-motion'
+import { DialogSuccess, DialogSuccessProps } from '../modal/DialogSuccess'
 
 interface Props {
 
 }
 
+interface IssuePullReqeustUserInputExtendsProps extends IssuePullReqeustUserInput {
+  _props?: {
+    index: number
+    checked: boolean
+  }
+}
+
+interface IssueUserCreateInputExtendsProps extends IssueUserCreateInput {
+  pullRequests: IssuePullReqeustUserInputExtendsProps[]
+}
+
 export const FormIssue: FC<Props> = () => {
-  const pullRequestTpl: IssuePullReqeustUserInput = {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [ mutate ] = useMutation(CreateOneIssueDocument)
+
+  const pullRequestTpl: IssuePullReqeustUserInputExtendsProps = {
     pullRequestType: PullRequestType.Create,
     phraseType: PhraseType.Single,
     word: '',
@@ -25,28 +41,88 @@ export const FormIssue: FC<Props> = () => {
     index: 0,
     phraseId: null,
     tags: [],
+    _props: {
+      index: 1,
+      checked: false
+    }
   }
 
-  const formValue: IssueUserCreateInput  = {
+  const formValue: IssueUserCreateInputExtendsProps = {
     content: '',
-    pullRequests: [ pullRequestTpl ],
+    pullRequests: [ cloneDeep(pullRequestTpl) ],
   }
 
-  const [ isShowMoreOption, setIsShowMoreOption ] = useBoolean()
+  const [ dialogProps, setDialogProps ] = useState<Omit<DialogSuccessProps, 'isOpen' | 'onClose'>>({
+    cancelRef: useRef(),
+    content: {
+      header: '提交成功',
+      body: '',
+    }
+  })
+
+  async function onSubmit(values: IssueUserCreateInputExtendsProps, { setSubmitting, setFieldError }: FormikHelpers<any>) {
+    try {
+      const { data, errors } = await mutate({
+        variables: {
+          data: {
+            content: values.content,
+            pullRequests: values.pullRequests.map(({ _props, ...field }) => ({
+              ...field,
+              _prIndex: _props.index
+            }))
+          }
+        }
+      })
+
+      if (errors) {
+        for (let err of errors) {
+          console.log('%c 🍿 err: ', 'font-size:20px;background-color: #4b4b4b;color:#fff;', err)
+        }
+        throw errors
+      }
+      setSubmitting(false)
+
+      setDialogProps(v => {
+        v.content.body = (
+          <>
+            <Stack alignItems="center">
+              <CheckCircleIcon color="green" fontSize="5xl" />
+              <div>
+                您共提交{data.createOneIssue.pullRequests.length}个词条，点击下方列表查看详情
+              </div>
+            </Stack>
+          </>
+        )
+        return v
+      })
+      onOpen()
+    } catch (e) {
+      mutateLog(e, {
+        prefixTitle: '提交失败：'
+      })
+      setSubmitting(false)
+    }
+  }
 
   return (
     <>
       <Formik
         initialValues={formValue}
-        onSubmit={async () => {
-
-        }}
+        validationSchema={Yup.object().shape({
+          content: Yup.string(),
+          pullRequests: Yup.array().of(Yup.object().shape({
+            pullRequestType: Yup.string().oneOf(Object.values(PullRequestType)),
+            phraseType: Yup.string().oneOf(Object.values(PhraseType)),
+          }))
+        })}
+        onSubmit={onSubmit}
       >
-        {({ values }) => (
+        {({ values, isSubmitting }) => (
           <Form>
             <Field name="content">
               {({ field, form }) => (
-                <FormControl>
+                <FormControl isInvalid={form.errors.content && form.touched.content}>
+                  {JSON.stringify(form.errors)}
                   <FormLabel htmlFor="content">内容</FormLabel>
                   <Textarea {...field} placeholder="请输入内容" resize="vertical" />
                   <FormErrorMessage>{form.errors.content}</FormErrorMessage>
@@ -58,70 +134,114 @@ export const FormIssue: FC<Props> = () => {
                 <div>
                   <HStack justifyContent="flex-end" alignItems="center" py={2}>
                     <span>新增一条</span>
-                    <IconButton w={15} icon={<AddIcon />} aria-label="Add" onClick={() => unshift(pullRequestTpl)} />
+                    <IconButton w={15} icon={<AddIcon />} aria-label="Add" onClick={() => {
+                      pullRequestTpl._props.index++
+                      unshift(cloneDeep(pullRequestTpl))
+                    }} />
                   </HStack>
+                  <Divider m={2} />
                   {values.pullRequests.map((pr, idx) => (
-                    <div key={idx}>
-                      <Divider m={2} />
-                      <HStack justifyContent="space-between">
-                        <Text fontSize="xl">词条：{pr.word}</Text>
-                        <IconButton w={15} icon={<DeleteIcon />} aria-label="Delete" onClick={() => remove(idx)} />
-                      </HStack>
-                      <Grid templateColumns="50% 1fr" gap={2}>
-                        <GridItem colSpan={{ base: 2, md: 1 }}>
-                          <Field name={`pullRequests[${idx}].pullRequestType`}>
-                            {({ field, form }) => (
-                              <FormControl>
-                                <FormLabel htmlFor={`pullRequests[${idx}].pullRequestType`}>操作类型</FormLabel>
-                                <RadioGroup
-                                  {...field}
-                                  onChange={it => {
-                                    form.setFieldValue(`pullRequests[${idx}].pullRequestType`, it)
-                                  }}
-                                >
-                                  <Grid templateColumns="50% 1fr">
-                                    {Object.entries(pullReqeustTypeMap).map(([ k, v ]) => (
-                                      <Radio value={k} key={k}>{v}</Radio>
-                                    ))}
-                                  </Grid>
-                                </RadioGroup>
-                              </FormControl>
-                            )}
-                          </Field>
-                        </GridItem>
-                        {
-                          form.values.pullRequests[idx].pullRequestType === PullRequestType.Create
-                            ? <FormItemSelectPullRequestType idx={idx}/>
-                            : <FormItemSelectPhrase idx={idx}/>
-                        }
-                        <FormItemInputWord idx={idx}/>
-                        <GridItem colSpan={{ base: 2, md: 1 }}>
-                          <Field name={`pullRequests[${idx}].code`}>
-                            {({ field, form }) => (
-                              <FormControl>
-                                <FormLabel htmlFor={`pullRequests[${idx}].code`}>编码</FormLabel>
-                                <Input {...field} placeholder="请输入编码" />
-                              </FormControl>
-                            )}
-                          </Field>
-                        </GridItem>
-                        {
-                          isShowMoreOption && <FormMore idx={idx}/>
-                        }
-                        <GridItem colSpan={2}>
-                          <Button w="full" onClick={setIsShowMoreOption.toggle}>{isShowMoreOption ? '隐藏' : '显示'}高级选项</Button>
-                        </GridItem>
-                      </Grid>
-                    </div>
+                    <PhrasePullRequestCard idx={idx} values={values} pr={pr} remove={remove} key={pr._props.index} />
                   ))}
                 </div>
               )}
             </FieldArray>
+            <Stack mt={4}>
+              <Button colorScheme="teal" type="submit" isLoading={isSubmitting}>
+                提交
+              </Button>
+            </Stack>
           </Form>
         )}
       </Formik>
+      <DialogSuccess isOpen={isOpen} onClose={onClose} {...dialogProps} />
     </>
   )
+}
+
+function PhrasePullRequestCard ({ pr, idx, remove, values }: any) {
+  const [ isShowMoreOption, setIsShowMoreOption ] = useBoolean()
+
+  const UNSELECTED_OPACITY = 0.8
+  
+  const initialFieldAnimate: TargetAndTransition = {
+    scale: [ 1, 1.025, 1 ],
+    opacity: [ 0, 0.1, 0.2, 0.3, 0.4, UNSELECTED_OPACITY ],
+    transition: { duration: 0.2 },
+  }
+
+  const deleteFieldAnimate: TargetAndTransition = {
+    scale: [ 1, 0.95 ],
+    opacity: [ 1, UNSELECTED_OPACITY, 0.2, 0.1 ],
+    transition: { duration: 0.2 },
+  }
+
+  const [ fieldAnimate, setFieldAnimate ] = useState(initialFieldAnimate)
+
+  return <Stack
+    as={motion.div}
+    animate={fieldAnimate}
+    opacity="0"
+    scale="1"
+  >
+    <HStack justifyContent="space-between">
+      <Text fontSize="xl">词条{pr._props.index}：{pr.word}</Text>
+      <IconButton w={15} icon={<DeleteIcon />} aria-label="Delete" onClick={() => {
+        setFieldAnimate(deleteFieldAnimate)
+        setTimeout(() => {
+          remove(idx)
+        }, 200)
+      }} />
+    </HStack>
+    <Grid templateColumns="50% 1fr" gap={2}>
+      <GridItem colSpan={{ base: 2, md: 1 }}>
+        <Field name={`pullRequests[${idx}].pullRequestType`}>
+          {({ field, form }) => (
+            <FormControl isInvalid={form.errors.pullRequests?.[idx]?.pullRequestType && form.errors.pullRequests?.[idx]?.pullRequestType}>
+              <FormLabel htmlFor={`pullRequests[${idx}].pullRequestType`}>操作类型</FormLabel>
+              <RadioGroup
+                {...field}
+                onChange={it => {
+                  form.setFieldValue(`pullRequests[${idx}].pullRequestType`, it)
+                }}
+              >
+                <Grid templateColumns="50% 1fr">
+                  {Object.entries(pullReqeustTypeMap).map(([ k, v ]) => (
+                    <Radio value={k} key={k}>{v}</Radio>
+                  ))}
+                </Grid>
+              </RadioGroup>
+            </FormControl>
+          )}
+        </Field>
+      </GridItem>
+      {
+        values.pullRequests[idx].pullRequestType === PullRequestType.Create
+          ? <FormItemSelectPullRequestType idx={idx} />
+          : <FormItemSelectPhrase idx={idx} />
+      }
+      <FormItemInputWord idx={idx} />
+      <GridItem colSpan={{ base: 2, md: 1 }}>
+        <Field name={`pullRequests[${idx}].code`}>
+          {({ field, form }) => (
+            <FormControl>
+              <FormLabel htmlFor={`pullRequests[${idx}].code`}>编码</FormLabel>
+              <Input {...field} placeholder="请输入编码" />
+            </FormControl>
+          )}
+        </Field>
+      </GridItem>
+      {
+        isShowMoreOption && <FormMore idx={idx} />
+      }
+      <GridItem colSpan={2}>
+        <Button w="full" onClick={setIsShowMoreOption.toggle}>{isShowMoreOption ? '隐藏' : '显示'}高级选项</Button>
+      </GridItem>
+    </Grid>
+    <Box>
+      <Divider m={2} display="block" />
+    </Box>
+  </Stack>
 }
 
 interface PropsIdx {
@@ -179,7 +299,7 @@ function FormItemSelectTag({ idx }: PropsIdx) {
             className="md:w-48"
             noOptionsMessage={() => (
               <HStack gap={1}>
-                <BsInboxFill display="inline-block" fontSize="50"/>
+                <BsInboxFill display="inline-block" fontSize="50" />
                 <span>没有更多选项了</span>
               </HStack>
             )}
@@ -234,14 +354,14 @@ function FormItemSelectPullRequestType({ idx }: PropsIdx) {
 }
 
 function FormItemSelectPhrase({ idx }: PropsIdx) {
-  const [ variables, setVariables ] = useSetState<FindManyPhraseQueryVariables>({
+  const [ variables, setVariables ] = useState<FindManyPhraseQueryVariables>({
     where: {
       status: {
         equals: PhraseStatus.Finish
       },
     }
   })
-  const { data, loading, error } = useQuery(FindManyPhraseDocument, {
+  const { data, loading, refetch, error } = useQuery(FindManyPhraseDocument, {
     variables
   })
 
@@ -263,6 +383,7 @@ function FormItemSelectPhrase({ idx }: PropsIdx) {
       set(v, 'where.word.contains', value)
       return v
     })
+    refetch()
   }
 
   const formatOptionLabel = ({ value, label, code, index }, meta) => (
@@ -286,11 +407,11 @@ function FormItemSelectPhrase({ idx }: PropsIdx) {
               <span>原词条</span>
               {
                 form.values.pullRequests[idx]?.phraseId
-                  && (
-                    <Tooltip label="查看已选择词条信息">
-                      <IconButton size="xs" aria-label='查看词条信息' icon={<InfoIcon/>}/>
-                    </Tooltip>
-                  )
+                && (
+                  <Tooltip label="查看已选择词条信息">
+                    <IconButton size="xs" aria-label='查看词条信息' icon={<InfoIcon />} />
+                  </Tooltip>
+                )
               }
             </HStack>
           </FormLabel>
@@ -302,6 +423,7 @@ function FormItemSelectPhrase({ idx }: PropsIdx) {
               (option: typeof tagOptions[number]) => form.setFieldValue(field.name, option.value)
             }
             onInputChange={debounce(onInputSearch, 500)}
+            placeholder="请选择或搜索"
             noOptionsMessage={() => ('没有词条可选')}
             className="md:w-48"
             formatOptionLabel={formatOptionLabel}

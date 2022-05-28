@@ -1,11 +1,12 @@
 import { useMutation } from '@apollo/client'
 import { CheckCircleIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
-import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputRightElement, ModalProps, Stack, useDisclosure } from '@chakra-ui/react'
+import { Button, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputRightElement, Stack, useDisclosure } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
-import { FC, ReactNode, useEffect, useRef, useState } from 'react'
+import { FC, useRef, useState } from 'react'
 import * as Yup from 'yup'
 import { SignUpDocument } from '~/generated/gql'
 import { mutateLog } from '~/utils/log'
+import { DialogSuccess, DialogSuccessProps } from '~/components/modal/DialogSuccess'
 
 interface Props {
   onChange: (index: number) => void
@@ -113,48 +114,5 @@ export const SignUp: FC<Props> = ({ onChange }) => {
       </Formik>
       <DialogSuccess isOpen={isOpen} onClose={onClose} {...dialogProps} />
     </>
-  )
-}
-
-interface DialogSuccessProps {
-  isOpen: boolean
-  cancelRef: ModalProps['initialFocusRef']
-  onClose: () => void
-  content: {
-    header?: string
-    body?: string | ReactNode
-    confirm?: string
-  }
-}
-
-export const DialogSuccess: FC<DialogSuccessProps> = ({ isOpen, onClose, cancelRef, content }) => {
-  return (
-    <AlertDialog
-      isOpen={isOpen}
-      leastDestructiveRef={cancelRef}
-      onClose={onClose}
-    >
-      <AlertDialogOverlay>
-        <AlertDialogContent>
-          { content.header &&
-            <AlertDialogHeader  fontSize='lg' fontWeight='bold'>
-              {content.header}
-            </AlertDialogHeader>
-          }
-
-          { content.body && 
-            <AlertDialogBody>
-              { content.body}
-            </AlertDialogBody>
-          }
-
-          <AlertDialogFooter>
-            <Button onClick={() => onClose()}>
-              { content.confirm || '确认' }
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialogOverlay>
-    </AlertDialog>
   )
 }

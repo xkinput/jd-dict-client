@@ -2,5 +2,13 @@ mutation CreateOneIssue($data: IssueUserCreateInput!) {
   createOneIssue(data: $data) {
     id
     createAt
+    pullRequests {
+      id
+      word
+      code
+      phraseId
+      index
+      type
+    }
   }
 }

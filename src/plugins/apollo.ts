@@ -32,11 +32,28 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 const additiveLink = from([
   setAuthorizationLink,
   errorLink,
-  new RetryLink(),
   new HttpLink({ uri: import.meta.env.VITE_GQL_URL })
 ])
 
+if (process.env.NODE_ENV !== 'development') {
+  additiveLink.concat(new RetryLink())
+}
+
+const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        findManyPhrase: {
+          merge(existing = [], incoming) {
+            return [ ...existing, ...incoming ]
+          },
+        }
+      }
+    }
+  }
+})
+
 export const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache,
   link: additiveLink,
 })
