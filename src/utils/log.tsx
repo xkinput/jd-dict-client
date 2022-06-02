@@ -64,7 +64,7 @@ function transCodeToMsg(error: GraphQLError, graphQLError?: GraphQLError) {
   let idx = (extensions?.pr as any)?._prIndex
   let args = extensions?.args
 
-  let path = error?.path || graphQLError.path
+  let path = error?.path || graphQLError?.path
 
   let msg = ErrorCodeMap.get(extensions?.code as keyof typeof ErrorCode) || error.message
 

@@ -5,8 +5,8 @@ import { RootState } from '..'
 import { findUserMe, logoutUser, signInUser } from './thunks'
 
 export interface UserState {
-  info?: Pick<User, 'id' | 'name' | 'nickname'>,
-  token?: string,
+  info: Pick<User, 'id' | 'name' | 'nickname'> | null,
+  token: string | null,
   isSingined: boolean,
 }
 
@@ -33,7 +33,7 @@ export const userSlice = createSlice({
         state.token = action.payload
       })
       .addCase(findUserMe.fulfilled, (state, action) => {
-        state.info = action.payload
+        state.info = action.payload || null
         state.isSingined = true
       })
       .addCase(logoutUser.fulfilled, (state,action) => {

@@ -39,5 +39,5 @@ function importLayout<T>(name: T): FC<any> | undefined {
     console.error(`[${APP_NAME}] layout not found:`, name)
   }
 
-  return layout[1] as unknown as FC<any>
+  return layout?.[1] as unknown as FC<any>
 }

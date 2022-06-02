@@ -11,7 +11,7 @@ export async function sleep(ms: number) {
   )
 }
 
-export function getLocalStorageItem<T>(key: string): T | null {
+export function getLocalStorageItem<T>(key: string): T | undefined {
   let item = localStorage.getItem(key)
 
   if (item) {

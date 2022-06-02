@@ -16,14 +16,14 @@ export const signInUser = createAsyncThunk<string, UserSignInInput>(
         }
       })
 
-      let token = tokenData.signIn?.token
+      let token = tokenData?.signIn?.token
 
       if (!token) throw rejectWithValue(errors)
       setAuthKey(token)
 
       return token
     } catch(e) {
-      mutateLog(e, {
+      mutateLog(e as Error, {
         prefixTitle: '登录失败：'
       })
       throw rejectWithValue(e)
@@ -40,7 +40,7 @@ export const findUserMe = createAsyncThunk('user/fineUserMe',
 
       return data.findUserMe
     } catch(e) {
-      mutateLog(e, {
+      mutateLog(e as Error, {
         prefixTitle: '登录失败：'
       })
       store.dispatch(logoutUser())

@@ -1,11 +1,12 @@
 import { Button, FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, InputGroup, InputRightElement, Stack } from '@chakra-ui/react'
 import { FC, ReactNode, useState } from 'react'
 import * as Yup from 'yup'
-import { Field, Form, Formik } from 'formik'
+import { Field, FieldProps, Form, Formik } from 'formik'
 import { mutateLog } from '~/utils/log'
 import { findUserMe, signInUser } from '~/store/user/thunks'
 import { useRootDispatch } from '~/store'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
+import { ApolloError } from '@apollo/client'
 
 interface Props {
   children?: ReactNode
@@ -36,19 +37,19 @@ export const SignIn: FC<Props> = ({ onSigned, onChange }) => {
         if (findMeRes.meta.requestStatus === 'rejected') return
         
         setSubmitting(false)
-        onSigned()
+        onSigned?.()
       } catch(e) {
-        mutateLog(e, {
+        mutateLog(e as Error, {
           prefixTitle: '登录失败：'
         })
       }
     }}
   >
-    {formik => (
+    {({ values, isSubmitting }) => (
       <Form>
         <Field name='name' >
-          {({ field, form }) => (
-            <FormControl isInvalid={form.errors.name && form.touched.name}>
+          {({ field, form }: FieldProps<typeof values.name, typeof values>) => (
+            <FormControl isInvalid={!!(form.errors.name && form.touched.name)}>
               <FormLabel htmlFor='name'>登录名</FormLabel>
               <Input {...field} />
               <FormErrorMessage>{form.errors.name}</FormErrorMessage>
@@ -56,8 +57,8 @@ export const SignIn: FC<Props> = ({ onSigned, onChange }) => {
           )}
         </Field>
         <Field name='password'>
-          {({ field, form }) => (
-            <FormControl isInvalid={form.errors.password && form.touched.password}>
+          {({ field, form }: FieldProps<typeof values.password, typeof values>) => (
+            <FormControl isInvalid={!!(form.errors.password && form.touched.password)}>
               <FormLabel htmlFor='password'>密码</FormLabel>
               <InputGroup>
                 <Input {...field} type={isPasswordShow ? 'text' : 'password'}/>
@@ -74,12 +75,12 @@ export const SignIn: FC<Props> = ({ onSigned, onChange }) => {
         <Stack mt={4}>
           <Button
             colorScheme='teal'
-            isLoading={formik.isSubmitting}
+            isLoading={isSubmitting}
             type='submit'
           >
           登录
           </Button>
-          <Button colorScheme="gray" onClick={() => onChange(1)}>没有账号？去注册</Button>
+          <Button colorScheme="gray" onClick={() => onChange?.(1)}>没有账号？去注册</Button>
         </Stack>
       </Form>
     )}
