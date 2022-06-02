@@ -3,7 +3,7 @@ import { FC, ReactNode } from 'react'
 
 export interface DialogSuccessProps {
   isOpen: boolean
-  cancelRef: ModalProps['initialFocusRef']
+  cancelRef: NonNullable<ModalProps['initialFocusRef']>
   onClose: () => void
   content: {
     header?: string

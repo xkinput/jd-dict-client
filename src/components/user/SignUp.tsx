@@ -1,7 +1,7 @@
-import { useMutation } from '@apollo/client'
+import { ApolloError, useMutation } from '@apollo/client'
 import { CheckCircleIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { Button, FormControl, FormErrorMessage, FormLabel, Input, InputGroup, InputRightElement, Stack, useDisclosure } from '@chakra-ui/react'
-import { Field, Form, Formik } from 'formik'
+import { Field, FieldProps, Form, Formik } from 'formik'
 import { FC, useRef, useState } from 'react'
 import * as Yup from 'yup'
 import { SignUpDocument } from '~/generated/gql'
@@ -18,7 +18,7 @@ export const SignUp: FC<Props> = ({ onChange }) => {
   const [ isPasswordShow, setIsPasswordShow ] = useState(false)
 
   const [ dialogProps, setDialogProps ] = useState<Omit<DialogSuccessProps, 'isOpen' | 'onClose'>>({
-    cancelRef: useRef(),
+    cancelRef: useRef(null),
     content: {
       header: '注册成功',
       body: '',
@@ -39,13 +39,14 @@ export const SignUp: FC<Props> = ({ onChange }) => {
         })}
         onSubmit={async (values, { setSubmitting }) => {
           try {
-            let { data, errors } = await mutate({
+            let res = await mutate({
               variables: {
                 data: values
               }
             })
 
-            if (!data.signUp) throw errors
+            if (!res?.data?.signUp) throw res.errors
+
             setSubmitting(false)
             setDialogProps(v => {
               v.content.body = (
@@ -53,7 +54,7 @@ export const SignUp: FC<Props> = ({ onChange }) => {
                   <Stack alignItems="center">
                     <CheckCircleIcon color="green" fontSize="5xl" />
                     <div>
-                      您的账户名：{data.signUp.name}，请前往登录页面登录
+                      您的账户名：{res?.data?.signUp?.name}，请前往登录页面登录
                     </div>
                   </Stack>
                 </>
@@ -62,18 +63,18 @@ export const SignUp: FC<Props> = ({ onChange }) => {
             })
             onOpen()
           } catch(e) {
-            mutateLog(e, {
+            mutateLog(e as ApolloError | Error, {
               prefixTitle: '注册失败：'
             })
           }
         }}
       >
-        {formik => {
+        {({ values, isSubmitting }) => {
           return (
             <Form>
               <Field name="name">
-                {({ field, form }) => (
-                  <FormControl isInvalid={form.errors.name && form.touched.name}>
+                {({ field, form }: FieldProps<typeof values.name, typeof values>) => (
+                  <FormControl isInvalid={Boolean(form.errors.name && form.touched.name)}>
                     <FormLabel htmlFor='name'>登录名</FormLabel>
                     <Input {...field} />
                     <FormErrorMessage>{form.errors.name}</FormErrorMessage>
@@ -81,8 +82,8 @@ export const SignUp: FC<Props> = ({ onChange }) => {
                 )}
               </Field>
               <Field name="nickname">
-                {({ field, form }) => (
-                  <FormControl isInvalid={form.errors.name && form.touched.name}>
+                {({ field, form, meta }: FieldProps<typeof values.nickname, typeof values>) => (
+                  <FormControl isInvalid={Boolean(form.errors.nickname && form.touched.nickname)}>
                     <FormLabel htmlFor='nickname'>昵称</FormLabel>
                     <Input {...field} />
                     <FormErrorMessage>{form.errors.nickname}</FormErrorMessage>
@@ -90,8 +91,8 @@ export const SignUp: FC<Props> = ({ onChange }) => {
                 )}
               </Field>
               <Field name="password">
-                {({ field, form }) => (
-                  <FormControl isInvalid={form.errors.password && form.touched.password}>
+                {({ field, form }: FieldProps<typeof values.password, typeof values>) => (
+                  <FormControl isInvalid={Boolean(form.errors.password && form.touched.password)}>
                     <FormLabel htmlFor='password'>密码</FormLabel>
                     <InputGroup>
                       <Input {...field} type={isPasswordShow ? 'text' : 'password'}  />
@@ -105,7 +106,7 @@ export const SignUp: FC<Props> = ({ onChange }) => {
                 )}
               </Field>
               <Stack mt={4}>
-                <Button colorScheme="teal" type="submit" isLoading={formik.isSubmitting}>注册</Button>
+                <Button colorScheme="teal" type="submit" isLoading={isSubmitting}>注册</Button>
                 <Button colorScheme="gray" onClick={() => onChange(0)}>已有账号？去登录</Button>
               </Stack>
             </Form>

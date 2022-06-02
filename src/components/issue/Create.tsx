@@ -1,9 +1,9 @@
 import { AddIcon, CheckCircleIcon, DeleteIcon, InfoIcon } from '@chakra-ui/icons'
-import { FormControl, FormErrorMessage, FormLabel, HStack, IconButton, Input, Text, Textarea, Divider, Grid, GridItem, RadioGroup, Radio, useBoolean, Button, Stack, Tooltip, ScaleFade, Box, Flex, useDisclosure } from '@chakra-ui/react'
-import { Field, FieldArray, Form, Formik, FormikHelpers } from 'formik'
+import { FormControl, FormErrorMessage, FormLabel, HStack, IconButton, Input, Text, Textarea, Divider, Grid, GridItem, RadioGroup, Radio, useBoolean, Button, Stack, Tooltip, ScaleFade, Box, Flex, useDisclosure, TextareaProps, FormControlOptions } from '@chakra-ui/react'
+import { Field, FieldArray, FieldProps, Form, Formik, FormikHelpers, FormikProps } from 'formik'
 import { FC, memo, MutableRefObject, useRef, useState } from 'react'
 import { Select } from 'chakra-react-select'
-import { useMutation, useQuery } from '@apollo/client'
+import { ApolloError, useMutation, useQuery } from '@apollo/client'
 import { BsInboxFill } from 'react-icons/bs'
 import { cloneDeep, debounce, set } from 'lodash'
 import * as Yup from 'yup'
@@ -19,7 +19,7 @@ interface Props {
 }
 
 interface IssuePullReqeustUserInputExtendsProps extends IssuePullReqeustUserInput {
-  _props?: {
+  _props: {
     index: number
     checked: boolean
   }
@@ -53,7 +53,7 @@ export const FormIssue: FC<Props> = () => {
   }
 
   const [ dialogProps, setDialogProps ] = useState<Omit<DialogSuccessProps, 'isOpen' | 'onClose'>>({
-    cancelRef: useRef(),
+    cancelRef: useRef(null),
     content: {
       header: '提交成功',
       body: '',
@@ -62,23 +62,27 @@ export const FormIssue: FC<Props> = () => {
 
   async function onSubmit(values: IssueUserCreateInputExtendsProps, { setSubmitting, setFieldError }: FormikHelpers<any>) {
     try {
-      const { data, errors } = await mutate({
+      const data = await mutate({
         variables: {
           data: {
             content: values.content,
-            pullRequests: values.pullRequests.map(({ _props, ...field }) => ({
-              ...field,
-              _prIndex: _props.index
-            }))
+            pullRequests: values.pullRequests.map((props) => {
+              const { _props, ...fields } = props
+
+              return {
+                ...fields,
+                _prIndex: props?._props?.index
+              }
+            })
           }
         }
       })
 
-      if (errors) {
-        for (let err of errors) {
+      if (data.errors) {
+        for (let err of data.errors) {
           console.log('%c 🍿 err: ', 'font-size:20px;background-color: #4b4b4b;color:#fff;', err)
         }
-        throw errors
+        throw data.errors
       }
       setSubmitting(false)
 
@@ -88,7 +92,7 @@ export const FormIssue: FC<Props> = () => {
             <Stack alignItems="center">
               <CheckCircleIcon color="green" fontSize="5xl" />
               <div>
-                您共提交{data.createOneIssue.pullRequests.length}个词条，点击下方列表查看详情
+                您共提交{data.data?.createOneIssue.pullRequests.length}个词条，点击下方列表查看详情
               </div>
             </Stack>
           </>
@@ -97,7 +101,7 @@ export const FormIssue: FC<Props> = () => {
       })
       onOpen()
     } catch (e) {
-      mutateLog(e, {
+      mutateLog(e as ApolloError | Error, {
         prefixTitle: '提交失败：'
       })
       setSubmitting(false)
@@ -120,9 +124,9 @@ export const FormIssue: FC<Props> = () => {
         {({ values, isSubmitting }) => (
           <Form>
             <Field name="content">
-              {({ field, form }) => (
-                <FormControl isInvalid={form.errors.content && form.touched.content}>
-                  {JSON.stringify(form.errors)}
+              {({ field, form }: FieldProps<typeof values.content, typeof values>) => (
+                <FormControl isInvalid={Boolean(form.errors.content && form.touched.content)}>
+                  {JSON.stringify(field)}
                   <FormLabel htmlFor="content">内容</FormLabel>
                   <Textarea {...field} placeholder="请输入内容" resize="vertical" />
                   <FormErrorMessage>{form.errors.content}</FormErrorMessage>
@@ -159,7 +163,12 @@ export const FormIssue: FC<Props> = () => {
   )
 }
 
-function PhrasePullRequestCard ({ pr, idx, selectRef, remove, values }: any) {
+function PhrasePullRequestCard ({ pr, idx, remove, values }: {
+  pr: IssuePullReqeustUserInputExtendsProps
+  idx: number,
+  remove: (idx: number) => void,
+  values: IssueUserCreateInputExtendsProps
+}) {
   const [ isShowMoreOption, setIsShowMoreOption ] = useBoolean()
 
   const UNSELECTED_OPACITY = 0.8
@@ -196,8 +205,8 @@ function PhrasePullRequestCard ({ pr, idx, selectRef, remove, values }: any) {
     <Grid templateColumns="50% 1fr" gap={2}>
       <GridItem colSpan={{ base: 2, md: 1 }}>
         <Field name={`pullRequests[${idx}].pullRequestType`}>
-          {({ field, form }) => (
-            <FormControl isInvalid={form.errors.pullRequests?.[idx]?.pullRequestType && form.errors.pullRequests?.[idx]?.pullRequestType}>
+          {({ field, form }: any) => (
+            <FormControl isInvalid={Boolean((form.errors.pullRequests?.[idx] || form.errors.pullRequests?.[idx]?.pullRequestType) && form.errors.pullRequests?.[idx]?.pullRequestType!)}>
               <FormLabel htmlFor={`pullRequests[${idx}].pullRequestType`}>操作类型</FormLabel>
               <RadioGroup
                 {...field}
@@ -223,7 +232,7 @@ function PhrasePullRequestCard ({ pr, idx, selectRef, remove, values }: any) {
       <FormItemInputWord idx={idx} />
       <GridItem colSpan={{ base: 2, md: 1 }}>
         <Field name={`pullRequests[${idx}].code`}>
-          {({ field, form }) => (
+          {({ field, form }: any) => (
             <FormControl>
               <FormLabel htmlFor={`pullRequests[${idx}].code`}>编码</FormLabel>
               <Input {...field} placeholder="请输入编码" />
@@ -253,7 +262,7 @@ function FormMore({ idx }: PropsIdx) {
     <>
       <GridItem colSpan={{ base: 2, md: 1 }}>
         <Field name={`pullRequests[${idx}].index`}>
-          {({ field, form }) => (
+          {({ field, form }: any) => (
             <FormControl>
               <FormLabel htmlFor={`pullRequests[${idx}].index`}>优先级</FormLabel>
               <Input {...field} type="number" placeholder="值越大，排名越前" />
@@ -286,7 +295,7 @@ function FormItemSelectTag({ idx }: PropsIdx) {
 
   return <GridItem colSpan={{ base: 2, md: 1 }}>
     <Field name={`pullRequests[${idx}].tags`}>
-      {({ field, form }) => (
+      {({ field, form }: any) => (
         <FormControl>
           <FormLabel htmlFor={`pullRequests[${idx}].tags`}>标签</FormLabel>
           <Select
@@ -313,7 +322,7 @@ function FormItemSelectTag({ idx }: PropsIdx) {
 function FormItemInputWord({ idx }: PropsIdx) {
   return <GridItem colSpan={{ base: 2, md: 1 }}>
     <Field name={`pullRequests[${idx}].word`}>
-      {({ field, form }) => (
+      {({ field, form }: any) => (
         <FormControl>
           <FormLabel htmlFor={`pullRequests[${idx}].word`}>词条</FormLabel>
           {
@@ -335,7 +344,7 @@ function FormItemSelectPullRequestType({ idx }: PropsIdx) {
 
   return <GridItem colSpan={{ base: 2, md: 1 }}>
     <Field name={`pullRequests[${idx}].phraseType`}>
-      {({ field, form }) => (
+      {({ field, form }: any) => (
         <FormControl>
           <FormLabel htmlFor={`pullRequests[${idx}].phraseType`}>词条类型</FormLabel>
           <Select
@@ -344,7 +353,9 @@ function FormItemSelectPullRequestType({ idx }: PropsIdx) {
             defaultValue={phraseTypeOptions.find(it => it.value === field.value)}
             options={phraseTypeOptions}
             onChange={
-              (option: typeof phraseTypeOptions[number]) => form.setFieldValue(field.name, option.value)
+              (option: typeof phraseTypeOptions[number] | null) => {
+                form.setFieldValue(field.name, option?.value)
+              }
             }
             className="md:w-48"
           />
@@ -387,7 +398,7 @@ function FormItemSelectPhrase({ idx }: PropsIdx) {
     refetch()
   }
 
-  const formatOptionLabel = ({ value, label, code, index }, meta) => (
+  const formatOptionLabel = ({ value, label, code, index }: any, meta: { context: 'value' | 'menu' }) => (
     <HStack>
       <Tooltip isDisabled={label.length < 15} label={label}>
         <Text
@@ -401,7 +412,7 @@ function FormItemSelectPhrase({ idx }: PropsIdx) {
 
   return <GridItem colSpan={{ base: 2, md: 1 }}>
     <Field name={`pullRequests[${idx}].phraseId`}>
-      {({ field, form }) => (
+      {({ field, form }: any) => (
         <FormControl>
           <FormLabel htmlFor={`pullRequests[${idx}].phraseId`}>
             <HStack alignItems="center">
@@ -421,7 +432,7 @@ function FormItemSelectPhrase({ idx }: PropsIdx) {
             isLoading={loading}
             options={tagOptions}
             onChange={
-              (option: typeof tagOptions[number]) => form.setFieldValue(field.name, option.value)
+              (option: { label: string, value: string } | null) => form.setFieldValue(field.name, option?.value)
             }
             onInputChange={debounce(onInputSearch, 500)}
             placeholder="请选择或搜索"
