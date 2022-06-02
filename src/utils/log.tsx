@@ -1,9 +1,9 @@
 import { ErrorCode } from '../generated/gql'
 import { ApolloError } from '@apollo/client'
-import { createStandaloneToast, UseToastOptions } from '@chakra-ui/toast'
 import { ErrorCodeMap } from '~/enum/error'
 import { ReactNode } from 'react'
 import { GraphQLError } from 'graphql'
+import { createStandaloneToast, UseToastOptions } from '@chakra-ui/react'
 
 export const { ToastContainer, toast } = createStandaloneToast({
   defaultOptions: {

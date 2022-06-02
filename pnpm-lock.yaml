@@ -4,6 +4,7 @@ specifiers:
   '@apollo/client': ^3.6.6
   '@chakra-ui/icons': ^2.0.1
   '@chakra-ui/react': ^2.1.2
+  '@chakra-ui/utils': ^2.0.1
   '@emotion/react': ^11.9.0
   '@emotion/styled': ^11.8.1
   '@graphql-codegen/cli': ^2.6.2
@@ -51,6 +52,7 @@ dependencies:
   '@apollo/client': 3.6.6_7oyq4t3ocdziwagw7zfqg4youi
   '@chakra-ui/icons': 2.0.1_react@18.1.0
   '@chakra-ui/react': 2.1.2_wsj3olggp2g3x3n2yisffacf64
+  '@chakra-ui/utils': 2.0.1
   '@emotion/react': 11.9.0_4mg53anm6bsgggist7tcqrzb4y
   '@emotion/styled': 11.8.1_ys2igmbmyleidw2ceqypd65jey
   '@graphql-codegen/cli': 2.6.2_nxaowyp2jfikcgqae4jem4zida
