@@ -1,7 +1,7 @@
 import { AddIcon, CheckCircleIcon, DeleteIcon, InfoIcon } from '@chakra-ui/icons'
 import { FormControl, FormErrorMessage, FormLabel, HStack, IconButton, Input, Text, Textarea, Divider, Grid, GridItem, RadioGroup, Radio, useBoolean, Button, Stack, Tooltip, ScaleFade, Box, Flex, useDisclosure } from '@chakra-ui/react'
 import { Field, FieldArray, Form, Formik, FormikHelpers } from 'formik'
-import { FC, memo, useRef, useState } from 'react'
+import { FC, memo, MutableRefObject, useRef, useState } from 'react'
 import { Select } from 'chakra-react-select'
 import { useMutation, useQuery } from '@apollo/client'
 import { BsInboxFill } from 'react-icons/bs'
@@ -131,7 +131,7 @@ export const FormIssue: FC<Props> = () => {
             </Field>
             <FieldArray name="pullRequests">
               {({ form, unshift, remove }) => (
-                <div>
+                <Stack position="relative" zIndex={1}>
                   <HStack justifyContent="flex-end" alignItems="center" py={2}>
                     <span>新增一条</span>
                     <IconButton w={15} icon={<AddIcon />} aria-label="Add" onClick={() => {
@@ -143,7 +143,7 @@ export const FormIssue: FC<Props> = () => {
                   {values.pullRequests.map((pr, idx) => (
                     <PhrasePullRequestCard idx={idx} values={values} pr={pr} remove={remove} key={pr._props.index} />
                   ))}
-                </div>
+                </Stack>
               )}
             </FieldArray>
             <Stack mt={4}>
@@ -159,7 +159,7 @@ export const FormIssue: FC<Props> = () => {
   )
 }
 
-function PhrasePullRequestCard ({ pr, idx, remove, values }: any) {
+function PhrasePullRequestCard ({ pr, idx, selectRef, remove, values }: any) {
   const [ isShowMoreOption, setIsShowMoreOption ] = useBoolean()
 
   const UNSELECTED_OPACITY = 0.8
@@ -256,7 +256,7 @@ function FormMore({ idx }: PropsIdx) {
           {({ field, form }) => (
             <FormControl>
               <FormLabel htmlFor={`pullRequests[${idx}].index`}>优先级</FormLabel>
-              <Input {...field} placeholder="值越大，排名越前" />
+              <Input {...field} type="number" placeholder="值越大，排名越前" />
             </FormControl>
           )}
         </Field>
@@ -340,6 +340,7 @@ function FormItemSelectPullRequestType({ idx }: PropsIdx) {
           <FormLabel htmlFor={`pullRequests[${idx}].phraseType`}>词条类型</FormLabel>
           <Select
             name={field.name}
+            hasStickyGroupHeaders={true}
             defaultValue={phraseTypeOptions.find(it => it.value === field.value)}
             options={phraseTypeOptions}
             onChange={

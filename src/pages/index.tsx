@@ -4,13 +4,18 @@ import { UserInfo } from '~/components/home/UserInfo'
 import { FormIssue } from '~/components/issue/Create'
 import { PhraseList } from '~/components/issue/List'
 import { CreatePhraseModal } from '~/components/issue/modal/Create'
-import { FindManyPhraseQueryVariables } from '~/generated/gql'
+import { FindManyPhraseQueryVariables, SortOrder } from '~/generated/gql'
 import { useRootState } from '~/store'
 
 export const Index = () => {
   const findManyPhraseListVariables: FindManyPhraseQueryVariables = {
     take: 5,
-    skip: 0
+    skip: 0,
+    orderBy: [
+      {
+        updateAt: SortOrder.Desc
+      }
+    ]
   }
 
   const isUserSingined = useRootState(s => s.user.isSingined)

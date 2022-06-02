@@ -69,7 +69,7 @@ function transCodeToMsg(error: GraphQLError, graphQLError?: GraphQLError) {
   let msg = ErrorCodeMap.get(extensions?.code as keyof typeof ErrorCode) || error.message
 
   if (path?.[0] === 'createOneIssue') {
-    return `${idx && `词条：${idx}`} ${msg}`
+    return `${idx && `词条${idx}：`} ${msg}`
   }
 
   return msg

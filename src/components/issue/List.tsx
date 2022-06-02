@@ -7,7 +7,7 @@ import dayjs from '~/plugins/dayjs'
 import { FindManyPhraseDocument, FindManyPhraseQuery, FindManyPhraseQueryVariables } from '~/generated/gql'
 import { TooltipRef } from '../chakra/helper'
 import { useInfiniteScroll, useVirtualList } from 'ahooks'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, merge } from 'lodash'
 
 interface Props {
   variables: FindManyPhraseQueryVariables
@@ -15,10 +15,10 @@ interface Props {
 
 export const PhraseList: FC<Props> = ({ variables: initVariables }) => {
   const containerRef = useRef(null)
-  const [ variables, setVariables ] = useState({
+  const [ variables, setVariables ] = useState(merge({
     take: 5,
     skip: 0
-  })
+  }, initVariables))
   let { error, data: initData, refetch, fetchMore } = useQuery<FindManyPhraseQuery, FindManyPhraseQueryVariables>(FindManyPhraseDocument, {
     variables,
   })
