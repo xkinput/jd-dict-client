@@ -13,20 +13,9 @@ query FindManyPhrase(
     skip: $skip
   ) {
     id
-    updateAt
     word
     code
-    type
-    status
     index
-    user {
-      id
-      name
-      nickname
-    }
-    _count {
-      comments
-      pullRequests
-    }
+    type
   }
 }

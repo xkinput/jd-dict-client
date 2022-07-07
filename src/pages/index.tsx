@@ -1,14 +1,24 @@
-import { Box, Container, Flex, Stack } from '@chakra-ui/react'
+import { Box, Container, Flex, Stack, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 import { useState } from 'react'
 import { UserInfo } from '~/components/home/UserInfo'
 import { FormIssue } from '~/components/issue/Create'
-import { PhraseList } from '~/components/issue/List'
+import { IssueList } from '~/components/issue/List'
+import { PhraseList } from '~/components/phrase/List'
 import { CreatePhraseModal } from '~/components/issue/modal/Create'
-import { FindManyPhraseQueryVariables, SortOrder } from '~/generated/gql'
+import { FindManyIssueQueryVariables, FindManyPhraseQueryVariables, SortOrder } from '~/generated/gql'
 import { useRootState } from '~/store'
 
 export const Index = () => {
-  const findManyPhraseListVariables: FindManyPhraseQueryVariables = {
+  const findManyPhraseVariables: FindManyPhraseQueryVariables = {
+    take: 5,
+    skip: 0,
+    orderBy: [
+      {
+        updateAt: SortOrder.Desc
+      }
+    ]
+  }
+  const findManyIssueVariables: FindManyIssueQueryVariables = {
     take: 5,
     skip: 0,
     orderBy: [
@@ -21,10 +31,23 @@ export const Index = () => {
   const isUserSingined = useRootState(s => s.user.isSingined)
 
   return <>
-    <Container maxW='container.lg' py="3" >
+    <Container maxW='container.lg' pt="3" >
       <Flex gap={6} wrap={{ base: 'wrap', md: 'nowrap' }}>
         <Box flexGrow={1} order={{ base: 2, md: 1 }}>
-          <PhraseList variables={findManyPhraseListVariables}/>
+          <Tabs>
+            <TabList>
+              <Tab>议题</Tab>
+              <Tab>词条</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel pb={0}>
+                <IssueList variables={findManyIssueVariables}/>
+              </TabPanel>
+              <TabPanel pb={0}>
+                <PhraseList variables={findManyPhraseVariables}/>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
         </Box>
         {
           isUserSingined

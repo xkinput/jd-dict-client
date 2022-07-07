@@ -1,0 +1,43 @@
+query FindManyIssue(
+  $where: IssueWhereInput
+  $orderBy: [IssueOrderByWithRelationAndSearchRelevanceInput]
+  $cursor: IssueWhereUniqueInput
+  $take: Int
+  $skip: Int
+  $pullRequestsTake: Int
+) {
+  findManyIssue(
+    where: $where
+    orderBy: $orderBy
+    cursor: $cursor
+    take: $take
+    skip: $skip
+  ) {
+    id
+    content
+    status
+    user {
+      nickname
+      name
+    }
+    pullRequests(take: $pullRequestsTake) {
+      id
+      word
+      code
+      type
+      status
+      index
+      phrase {
+        id
+        word
+        code
+      }
+    }
+    createAt
+    updateAt
+    _count {
+      pullRequests
+      comments
+    }
+  }
+}

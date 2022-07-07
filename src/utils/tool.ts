@@ -1,3 +1,4 @@
+import dayjs from '~/plugins/dayjs'
 import { store } from './../store/index'
 import { APP_NAME } from '~/config/global'
 import { setToken, userSlice } from '~/store/user'
@@ -46,4 +47,16 @@ export function checkStateAuthKey() {
 
 export function setAuthKey(key: string) {
   return setLocalStorageItem(AUTH_KEY_NAME, key)
+}
+
+export function formatDateOfFromNow(date: Date): string {
+  let diffY = dayjs(date).diff(new Date(), 'y')
+
+  if (diffY !== 0 && diffY <= -1) return dayjs(date).format('YYYY-MM-DD')
+  
+  let diffD = dayjs(date).diff(new Date(), 'd')
+
+  if (diffD >= -3) return dayjs(date).fromNow()
+
+  return dayjs(date).format('MM-DD')
 }

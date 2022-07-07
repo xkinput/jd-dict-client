@@ -1,7 +1,7 @@
 import { AddIcon, CheckCircleIcon, DeleteIcon, InfoIcon } from '@chakra-ui/icons'
-import { FormControl, FormErrorMessage, FormLabel, HStack, IconButton, Input, Text, Textarea, Divider, Grid, GridItem, RadioGroup, Radio, useBoolean, Button, Stack, Tooltip, ScaleFade, Box, Flex, useDisclosure, TextareaProps, FormControlOptions } from '@chakra-ui/react'
-import { Field, FieldArray, FieldProps, Form, Formik, FormikHelpers, FormikProps } from 'formik'
-import { FC, memo, MutableRefObject, useRef, useState } from 'react'
+import { FormControl, FormErrorMessage, FormLabel, HStack, IconButton, Input, Text, Textarea, Divider, Grid, GridItem, RadioGroup, Radio, useBoolean, Button, Stack, Tooltip, Box, Flex, useDisclosure } from '@chakra-ui/react'
+import { Field, FieldArray, FieldProps, Form, Formik, FormikHelpers } from 'formik'
+import { Dispatch, FC, RefObject, SetStateAction, useRef, useState } from 'react'
 import { Select } from 'chakra-react-select'
 import { ApolloError, useMutation, useQuery } from '@apollo/client'
 import { BsInboxFill } from 'react-icons/bs'
@@ -13,12 +13,16 @@ import { CreateOneIssueDocument, FindManyPhraseDocument, FindManyPhraseQueryVari
 import { mutateLog } from '~/utils/log'
 import { motion, TargetAndTransition } from 'framer-motion'
 import { DialogSuccess, DialogSuccessProps } from '../modal/DialogSuccess'
+import { DialogPhrase } from '../modal/DialogPhrase'
+import { PhraseCard } from '../phrase/Card'
+import { FocusableElement } from '@chakra-ui/utils'
 
 interface Props {
 
 }
 
 interface IssuePullReqeustUserInputExtendsProps extends IssuePullReqeustUserInput {
+  inputWordComp: 'input' | 'textarea'
   _props: {
     index: number
     checked: boolean
@@ -30,7 +34,16 @@ interface IssueUserCreateInputExtendsProps extends IssueUserCreateInput {
 }
 
 export const FormIssue: FC<Props> = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const {
+    isOpen: isOpenDialogSuccess,
+    onOpen: onOpenDialogSuccess,
+    onClose: onCloseDialogSuccess
+  } = useDisclosure()
+  const {
+    isOpen: isOpenDialogPhrase,
+    onOpen: onOpenDialogPhrase,
+    onClose: onCloseDialogPhrase
+  } = useDisclosure()
   const [ mutate ] = useMutation(CreateOneIssueDocument)
 
   const pullRequestTpl: IssuePullReqeustUserInputExtendsProps = {
@@ -40,6 +53,7 @@ export const FormIssue: FC<Props> = () => {
     code: '',
     index: 0,
     phraseId: null,
+    inputWordComp: 'input',
     tags: [],
     _props: {
       index: 1,
@@ -52,7 +66,7 @@ export const FormIssue: FC<Props> = () => {
     pullRequests: [ cloneDeep(pullRequestTpl) ],
   }
 
-  const [ dialogProps, setDialogProps ] = useState<Omit<DialogSuccessProps, 'isOpen' | 'onClose'>>({
+  const [ dialogPropsOfSuccess, setDialogPropsOfSuccess ] = useState<Omit<DialogSuccessProps, 'isOpen' | 'onClose'>>({
     cancelRef: useRef(null),
     content: {
       header: '提交成功',
@@ -60,14 +74,26 @@ export const FormIssue: FC<Props> = () => {
     }
   })
 
+  const [ dialogPropsOfPhrase, setDialogPropsOfPhrase ] = useState<Omit<DialogSuccessProps, 'isOpen' | 'onClose'>>({
+    cancelRef: useRef(null),
+    content: {
+      header: '词条详情',
+      body: '',
+    }
+  })
+
   async function onSubmit(values: IssueUserCreateInputExtendsProps, { setSubmitting, setFieldError }: FormikHelpers<any>) {
     try {
+      if (!values.pullRequests.length) {
+        throw new Error('请添加至少一条内容提交')
+      }
+
       const data = await mutate({
         variables: {
           data: {
             content: values.content,
             pullRequests: values.pullRequests.map((props) => {
-              const { _props, ...fields } = props
+              const { _props, inputWordComp, ...fields } = props
 
               return {
                 ...fields,
@@ -86,7 +112,7 @@ export const FormIssue: FC<Props> = () => {
       }
       setSubmitting(false)
 
-      setDialogProps(v => {
+      setDialogPropsOfSuccess(v => {
         v.content.body = (
           <>
             <Stack alignItems="center">
@@ -94,12 +120,15 @@ export const FormIssue: FC<Props> = () => {
               <div>
                 您共提交{data.data?.createOneIssue.pullRequests.length}个词条，点击下方列表查看详情
               </div>
+              <Stack>
+                
+              </Stack>
             </Stack>
           </>
         )
         return v
       })
-      onOpen()
+      onOpenDialogSuccess()
     } catch (e) {
       mutateLog(e as ApolloError | Error, {
         prefixTitle: '提交失败：'
@@ -145,7 +174,10 @@ export const FormIssue: FC<Props> = () => {
                   </HStack>
                   <Divider m={2} />
                   {values.pullRequests.map((pr, idx) => (
-                    <PhrasePullRequestCard idx={idx} values={values} pr={pr} remove={remove} key={pr._props.index} />
+                    <PhrasePullRequestCard idx={idx} values={values} pr={pr} remove={remove} key={pr._props.index} phraseDialog={{
+                      set: setDialogPropsOfPhrase as Dispatch<SetStateAction<Omit<DialogSuccessProps, 'isOpen' | 'onClose' | 'cancelRef'>>>,
+                      open: onOpenDialogPhrase
+                    }}/>
                   ))}
                 </Stack>
               )}
@@ -158,16 +190,21 @@ export const FormIssue: FC<Props> = () => {
           </Form>
         )}
       </Formik>
-      <DialogSuccess isOpen={isOpen} onClose={onClose} {...dialogProps} />
+      <DialogSuccess isOpen={isOpenDialogSuccess} onClose={onCloseDialogSuccess} {...dialogPropsOfSuccess} />
+      <DialogPhrase isOpen={isOpenDialogPhrase} onClose={onCloseDialogPhrase} {...dialogPropsOfPhrase} />
     </>
   )
 }
 
-function PhrasePullRequestCard ({ pr, idx, remove, values }: {
+function PhrasePullRequestCard ({ pr, idx, remove, values, phraseDialog }: {
   pr: IssuePullReqeustUserInputExtendsProps
   idx: number,
   remove: (idx: number) => void,
   values: IssueUserCreateInputExtendsProps
+  phraseDialog: {
+    set: Dispatch<SetStateAction<Omit<DialogSuccessProps, 'isOpen' | 'onClose' | 'cancelRef'>>>,
+    open: () => void,
+  }
 }) {
   const [ isShowMoreOption, setIsShowMoreOption ] = useBoolean()
 
@@ -227,7 +264,7 @@ function PhrasePullRequestCard ({ pr, idx, remove, values }: {
       {
         values.pullRequests[idx].pullRequestType === PullRequestType.Create
           ? <FormItemSelectPullRequestType idx={idx} />
-          : <FormItemSelectPhrase idx={idx} />
+          : <FormItemSelectPhrase idx={idx} phraseDialog={phraseDialog} />
       }
       <FormItemInputWord idx={idx} />
       <GridItem colSpan={{ base: 2, md: 1 }}>
@@ -257,6 +294,160 @@ interface PropsIdx {
   idx: number
 }
 
+// 词条输入框
+function FormItemInputWord({ idx }: PropsIdx) {
+  return <GridItem colSpan={{ base: 2, md: 1 }}>
+    <Field name={`pullRequests[${idx}].word`}>
+      {({ field, form }: any) => (
+        <FormControl>
+          <FormLabel htmlFor={`pullRequests[${idx}].word`}>词条</FormLabel>
+          {
+            form.values.pullRequests[idx].inputWordComp === 'input'
+              ? <Input {...field} placeholder="请输入词条" />
+              : <Textarea {...field} placeholder="请输入词条" />
+          }
+        </FormControl>
+      )}
+    </Field>
+  </GridItem>
+}
+
+// 选择操作类型
+function FormItemSelectPullRequestType({ idx }: PropsIdx) {
+  const phraseTypeOptions = Object.entries(phraseTypeMap).map(([ k, v ]) => ({
+    label: v,
+    value: k,
+  }))
+
+  return <GridItem colSpan={{ base: 2, md: 1 }}>
+    <Field name={`pullRequests[${idx}].phraseType`}>
+      {({ field, form }: any) => (
+        <FormControl>
+          <FormLabel htmlFor={`pullRequests[${idx}].phraseType`}>词条类型</FormLabel>
+          <Select
+            name={field.name}
+            hasStickyGroupHeaders={true}
+            defaultValue={phraseTypeOptions.find(it => it.value === field.value)}
+            options={phraseTypeOptions}
+            onChange={
+              (option: typeof phraseTypeOptions[number] | null) => {
+                form.setFieldValue(field.name, option?.value)
+                let inputWordComp = option?.value === 'Single' ? 'input' : 'textarea'
+
+                form.setFieldValue(`pullRequests[${idx}].inputWordComp`, inputWordComp)
+              }
+            }
+            className="md:w-48"
+          />
+        </FormControl>
+      )}
+    </Field>
+  </GridItem>
+}
+
+// 选择词条
+function FormItemSelectPhrase({ idx, phraseDialog }: PropsIdx & {
+  phraseDialog: {
+    set: Dispatch<SetStateAction<Omit<DialogSuccessProps, 'isOpen' | 'onClose' | 'cancelRef'>>>,
+    open: () => void,
+  }
+}) {
+  const [ variables, setVariables ] = useState<FindManyPhraseQueryVariables>({
+    where: {
+      status: {
+        equals: PhraseStatus.Finish
+      },
+    }
+  })
+  const { data, loading, refetch, error } = useQuery(FindManyPhraseDocument, {
+    variables
+  })
+
+  if (error) {
+    mutateLog(error, {
+      prefixTitle: '词条列表获取失败：'
+    })
+    return <Text>`词条获取错误: ${error.message}`</Text>
+  }
+  const tagOptions = data?.findManyPhrase.map(it => ({
+    label: it.word,
+    value: it.id,
+    code: it.code,
+    index: it.index,
+    type: it.type,
+  }))
+
+  function onInputSearch(value: string) {
+    setVariables(v => {
+      set(v, 'where.word.contains', value)
+      return v
+    })
+    refetch()
+  }
+
+  const formatOptionLabel = ({ value, label, code, index }: any, meta: { context: 'value' | 'menu' }) => (
+    <HStack>
+      <Tooltip isDisabled={label.length < 15} label={label}>
+        <Text
+          maxWidth={{ value: '16', menu: '28' }[meta.context]}
+          noOfLines={{ value: 0, menu: 4 }[meta.context]}
+        >{label}</Text>
+      </Tooltip>
+      <Text>{code}</Text>
+    </HStack>
+  )
+
+  function setPhraseCard(id: number) {
+    phraseDialog.set({
+      content: {
+        body: <PhraseCard id={id} />
+      }
+    })
+    phraseDialog.open()
+  }
+
+  return <GridItem colSpan={{ base: 2, md: 1 }}>
+    <Field name={`pullRequests[${idx}].phraseId`}>
+      {({ field, form }: any) => (
+        <FormControl>
+          <FormLabel htmlFor={`pullRequests[${idx}].phraseId`}>
+            <HStack alignItems="center">
+              <span>原词条</span>
+              {
+                form.values.pullRequests[idx]?.phraseId
+                && (
+                  <Tooltip label="查看已选择词条信息">
+                    <IconButton size="xs" aria-label='查看词条信息' icon={<InfoIcon />} onClick={() => setPhraseCard(form.values.pullRequests[idx].phraseId)} />
+                  </Tooltip>
+                )
+              }
+            </HStack>
+          </FormLabel>
+          <Select
+            name={field.name}
+            isLoading={loading}
+            options={tagOptions}
+            onChange={
+              (option) => {
+                form.setFieldValue(field.name, option?.value)
+              
+                let inputWordComp = option?.type === 'Single' ? 'input' : 'textarea'
+
+                form.setFieldValue(`pullRequests[${idx}].inputWordComp`, inputWordComp)
+              }
+            }
+            onInputChange={debounce(onInputSearch, 500)}
+            placeholder="请选择或搜索"
+            noOptionsMessage={() => ('没有词条可选')}
+            className="md:w-48"
+            formatOptionLabel={formatOptionLabel}
+          />
+        </FormControl>
+      )}
+    </Field>
+  </GridItem>
+}
+
 function FormMore({ idx }: PropsIdx) {
   return (
     <>
@@ -275,6 +466,7 @@ function FormMore({ idx }: PropsIdx) {
   )
 }
 
+// 选择标签
 function FormItemSelectTag({ idx }: PropsIdx) {
   const [ variables, setVariables ] = useState<FindManyTagQueryVariables>({})
   const { data, loading, error } = useQuery(FindManyTagDocument, {
@@ -312,133 +504,6 @@ function FormItemSelectTag({ idx }: PropsIdx) {
                 <span>没有更多选项了</span>
               </HStack>
             )}
-          />
-        </FormControl>
-      )}
-    </Field>
-  </GridItem>
-}
-
-function FormItemInputWord({ idx }: PropsIdx) {
-  return <GridItem colSpan={{ base: 2, md: 1 }}>
-    <Field name={`pullRequests[${idx}].word`}>
-      {({ field, form }: any) => (
-        <FormControl>
-          <FormLabel htmlFor={`pullRequests[${idx}].word`}>词条</FormLabel>
-          {
-            form.values.pullRequests[idx].phraseType === PhraseType.Single
-              ? <Input {...field} placeholder="请输入词条" />
-              : <Textarea {...field} placeholder="请输入词条" />
-          }
-        </FormControl>
-      )}
-    </Field>
-  </GridItem>
-}
-
-function FormItemSelectPullRequestType({ idx }: PropsIdx) {
-  const phraseTypeOptions = Object.entries(phraseTypeMap).map(([ k, v ]) => ({
-    label: v,
-    value: k,
-  }))
-
-  return <GridItem colSpan={{ base: 2, md: 1 }}>
-    <Field name={`pullRequests[${idx}].phraseType`}>
-      {({ field, form }: any) => (
-        <FormControl>
-          <FormLabel htmlFor={`pullRequests[${idx}].phraseType`}>词条类型</FormLabel>
-          <Select
-            name={field.name}
-            hasStickyGroupHeaders={true}
-            defaultValue={phraseTypeOptions.find(it => it.value === field.value)}
-            options={phraseTypeOptions}
-            onChange={
-              (option: typeof phraseTypeOptions[number] | null) => {
-                form.setFieldValue(field.name, option?.value)
-              }
-            }
-            className="md:w-48"
-          />
-        </FormControl>
-      )}
-    </Field>
-  </GridItem>
-}
-
-function FormItemSelectPhrase({ idx }: PropsIdx) {
-  const [ variables, setVariables ] = useState<FindManyPhraseQueryVariables>({
-    where: {
-      status: {
-        equals: PhraseStatus.Finish
-      },
-    }
-  })
-  const { data, loading, refetch, error } = useQuery(FindManyPhraseDocument, {
-    variables
-  })
-
-  if (error) {
-    mutateLog(error, {
-      prefixTitle: '词条列表获取失败：'
-    })
-    return <Text>`词条获取错误: ${error.message}`</Text>
-  }
-  const tagOptions = data?.findManyPhrase.map(it => ({
-    label: it.word,
-    value: it.id,
-    code: it.code,
-    index: it.index,
-  }))
-
-  function onInputSearch(value: string) {
-    setVariables(v => {
-      set(v, 'where.word.contains', value)
-      return v
-    })
-    refetch()
-  }
-
-  const formatOptionLabel = ({ value, label, code, index }: any, meta: { context: 'value' | 'menu' }) => (
-    <HStack>
-      <Tooltip isDisabled={label.length < 15} label={label}>
-        <Text
-          maxWidth={{ value: '16', menu: '28' }[meta.context]}
-          noOfLines={{ value: 0, menu: 4 }[meta.context]}
-        >{label}</Text>
-      </Tooltip>
-      <Text>{code}</Text>
-    </HStack>
-  )
-
-  return <GridItem colSpan={{ base: 2, md: 1 }}>
-    <Field name={`pullRequests[${idx}].phraseId`}>
-      {({ field, form }: any) => (
-        <FormControl>
-          <FormLabel htmlFor={`pullRequests[${idx}].phraseId`}>
-            <HStack alignItems="center">
-              <span>原词条</span>
-              {
-                form.values.pullRequests[idx]?.phraseId
-                && (
-                  <Tooltip label="查看已选择词条信息">
-                    <IconButton size="xs" aria-label='查看词条信息' icon={<InfoIcon />} />
-                  </Tooltip>
-                )
-              }
-            </HStack>
-          </FormLabel>
-          <Select
-            name={field.name}
-            isLoading={loading}
-            options={tagOptions}
-            onChange={
-              (option: { label: string, value: string } | null) => form.setFieldValue(field.name, option?.value)
-            }
-            onInputChange={debounce(onInputSearch, 500)}
-            placeholder="请选择或搜索"
-            noOptionsMessage={() => ('没有词条可选')}
-            className="md:w-48"
-            formatOptionLabel={formatOptionLabel}
           />
         </FormControl>
       )}

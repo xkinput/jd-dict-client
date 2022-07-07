@@ -1,0 +1,20 @@
+query FindUniquePhrase($where: PhraseWhereUniqueInput!) {
+  findUniquePhrase(where: $where) {
+    id
+    updateAt
+    word
+    code
+    type
+    status
+    index
+    user {
+      id
+      name
+      nickname
+    }
+    _count {
+      comments
+      pullRequests
+    }
+  }
+}
