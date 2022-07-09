@@ -78,5 +78,5 @@ function transCodeToMsg(error: GraphQLError, graphQLError?: GraphQLError) {
     return `${idx ? `词条${idx}：` : ''}${msg} ${meta?.target?.length ? meta.target.join(', ') : ''}`
   }
 
-  return <>1{msg}</>
+  return <>{msg}</>
 }

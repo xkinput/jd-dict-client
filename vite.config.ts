@@ -11,6 +11,10 @@ export default defineConfig({
     },
   },
   plugins: [ unocss(),react() ],
+  esbuild: {
+    pure: [ 'console' ],
+    drop: [ 'debugger' ]
+  },
   server: {
     port: 3005,
     watch: {
