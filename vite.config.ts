@@ -10,11 +10,15 @@ export default defineConfig({
       '~/': `${path.resolve(__dirname, 'src')}/`,
     },
   },
-  plugins: [ unocss(),react() ],
-  esbuild: {
-    pure: [ 'console' ],
-    drop: [ 'debugger' ]
-  },
+  plugins: [
+    unocss(),
+    react(),
+  ],
+  ...(process.env.NODE_ENV === 'production' && {
+    esbuild: {
+      drop: [ 'console', 'debugger' ],
+    }
+  }),
   server: {
     port: 3005,
     watch: {

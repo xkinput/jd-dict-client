@@ -46,6 +46,7 @@ specifiers:
   typescript: ^4.7.2
   unocss: ^0.37.2
   vite: ^2.9.9
+  vite-plugin-remove-console: ^1.0.4
   yup: ^0.32.11
 
 dependencies:
@@ -97,6 +98,7 @@ devDependencies:
   typescript: 4.7.4
   unocss: 0.37.4_vite@2.9.14
   vite: 2.9.14
+  vite-plugin-remove-console: 1.0.4
 
 packages:
 
@@ -6510,6 +6512,10 @@ packages:
     resolution: {integrity: sha512-41BrgH+dIbCFXClcSapVs5M6GkENd3gQOJpEfPDNa71LsUGMXDL0jMWpI/Rh7WhX+Aalfz2TTS3Zt5pUsbnhLg==}
     engines: {node: '>=12'}
     dev: false
+
+  /vite-plugin-remove-console/1.0.4:
+    resolution: {integrity: sha512-enBSWnbXql97cO0QzIvU3MmFSv1wiq4yqMkr3MW+/8fz3x29T+3qV4ux931eSX8zrEdaJ/RBD754xnlqdUSu7A==}
+    dev: true
 
   /vite/2.9.14:
     resolution: {integrity: sha512-P/UCjSpSMcE54r4mPak55hWAZPlyfS369svib/gpmz8/01L822lMPOJ/RYW6tLCe1RPvMvOsJ17erf55bKp4Hw==}
