@@ -9,7 +9,9 @@ export const CreatePhraseModal: FC<Props> = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   useEffect(() => {
-    // onOpen()
+    if (import.meta.env.DEV) {
+      onOpen()
+    }
   }, [])
   
   return <>

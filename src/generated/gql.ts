@@ -11,23 +11,14 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** BigInt custom scalar type */
   BigInt: any;
-  /** A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   Date: any;
-  /** Date custom scalar type */
   DateTime: any;
-  /** Decimal custom scalar type */
   Decimal: any;
-  /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSONObject: any;
-  /** Json custom scalar type */
   Json: any;
-  /** A local time string (i.e., with no associated timezone) in 24-hr `HH:mm[:ss[.SSS]]` format, e.g. `14:25` or `14:25:06` or `14:25:06.123`. */
   LocalTime: any;
-  /** A time string at UTC, such as 10:15:30Z, compliant with the `full-time` format outlined in section 5.6 of the RFC 3339profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   Time: any;
-  /** The `Upload` scalar type represents a file upload. */
   Upload: any;
 };
 
@@ -1348,6 +1339,8 @@ export enum ErrorCode {
   Pr1004 = 'PR1004',
   /** PR内容与原词相同 */
   Pr1005 = 'PR1005',
+  /** PR修改必须填写至少编码或词条或优先级一项 */
+  Pr1006 = 'PR1006',
   /** 用户名已被使用 */
   U1000 = 'U1000',
   /** 邮箱已被使用 */

@@ -64,19 +64,41 @@ export function mutateLog(e: ApolloError | Error, toastOpts: ToastOpts = { prefi
 }
 
 function transCodeToMsg(error: GraphQLError, graphQLError?: GraphQLError) {
-  let extensions = error?.extensions
-  let exception = extensions?.exception as { code?: string, meta?: { [key: string]: any } }
-  let idx = (extensions?.pr as any)?._prIndex
+  let extensions = error?.extensions as {
+    code?: string
+    exception?: { code?: string, meta?: { [key: string]: any } }
+    args?: any
+    pr?: any
+    exist?: any
+  }
+  let exception = extensions?.exception
+  let code = exception?.code || extensions?.code
+  let idx = extensions?.pr?._prIndex
   let args = extensions?.args
 
   let path = error?.path || graphQLError?.path
 
-  let msg = ErrorCodeMap.get((exception?.code || extensions?.code) as keyof typeof ErrorCode) || error.message
+  let msg = ErrorCodeMap.get((code) as keyof typeof ErrorCode) || error.message
   let meta = exception?.meta
 
   if (path?.[0] === 'createOneIssue') {
+    if (code === 'PR1004') {
+      let variables = {
+        id: extensions?.exist?.id
+      }
+
+      msg = transMsgVariables(msg, variables)
+      return `${idx ? `词条${idx}：` : ''}${msg}`
+    }
     return `${idx ? `词条${idx}：` : ''}${msg} ${meta?.target?.length ? meta.target.join(', ') : ''}`
   }
 
   return <>{msg}</>
+}
+
+function transMsgVariables(msg: string, variables: { [k: string]: any}) {
+  for (let [ k, v ] of Object.entries(variables)) {
+    msg = msg.replaceAll(`{${k}}`, v)
+  }
+  return msg
 }
