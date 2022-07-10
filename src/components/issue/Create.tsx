@@ -155,7 +155,6 @@ export const FormIssue: FC<Props> = () => {
             <Field name="content">
               {({ field, form }: FieldProps<typeof values.content, typeof values>) => (
                 <FormControl isInvalid={Boolean(form.errors.content && form.touched.content)}>
-                  {JSON.stringify(field)}
                   <FormLabel htmlFor="content">内容</FormLabel>
                   <Textarea {...field} placeholder="请输入内容" resize="vertical" />
                   <FormErrorMessage>{form.errors.content}</FormErrorMessage>
