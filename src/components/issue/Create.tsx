@@ -1,8 +1,8 @@
 import { AddIcon, CheckCircleIcon, DeleteIcon, InfoIcon } from '@chakra-ui/icons'
 import { FormControl, FormErrorMessage, FormLabel, HStack, IconButton, Input, Text, Textarea, Divider, Grid, GridItem, RadioGroup, Radio, useBoolean, Button, Stack, Tooltip, Box, Flex, useDisclosure } from '@chakra-ui/react'
 import { Field, FieldArray, FieldProps, Form, Formik, FormikHelpers } from 'formik'
-import { Dispatch, FC, RefObject, SetStateAction, useRef, useState } from 'react'
-import { Select } from 'chakra-react-select'
+import { Dispatch, FC, RefObject, SetStateAction, useEffect, useRef, useState } from 'react'
+import { Select, SelectInstance } from 'chakra-react-select'
 import { ApolloError, useMutation, useQuery } from '@apollo/client'
 import { BsInboxFill } from 'react-icons/bs'
 import { cloneDeep, debounce, set } from 'lodash'
@@ -265,23 +265,30 @@ function PhrasePullRequestCard ({ pr, idx, remove, values, phraseDialog }: {
           ? <FormItemSelectPullRequestType idx={idx} />
           : <FormItemSelectPhrase idx={idx} phraseDialog={phraseDialog} />
       }
-      <FormItemInputWord idx={idx} />
-      <GridItem colSpan={{ base: 2, md: 1 }}>
-        <Field name={`pullRequests[${idx}].code`}>
-          {({ field, form }: any) => (
-            <FormControl>
-              <FormLabel htmlFor={`pullRequests[${idx}].code`}>编码</FormLabel>
-              <Input {...field} placeholder="请输入编码" />
-            </FormControl>
-          )}
-        </Field>
-      </GridItem>
       {
-        isShowMoreOption && <FormMore idx={idx} />
+        values.pullRequests[idx].pullRequestType !== PullRequestType.Delete
+         && (
+           <>
+             <FormItemInputWord  idx={idx} />
+             <GridItem colSpan={{ base: 2, md: 1 }}>
+               <Field name={`pullRequests[${idx}].code`}>
+                 {({ field, form }: any) => (
+                   <FormControl>
+                     <FormLabel htmlFor={`pullRequests[${idx}].code`}>编码</FormLabel>
+                     <Input {...field} placeholder="请输入编码" />
+                   </FormControl>
+                 )}
+               </Field>
+             </GridItem>
+             {
+               isShowMoreOption && <FormMore idx={idx} />
+             }
+             <GridItem colSpan={2}>
+               <Button w="full" onClick={setIsShowMoreOption.toggle}>{isShowMoreOption ? '隐藏' : '显示'}高级选项</Button>
+             </GridItem>
+           </>
+         )
       }
-      <GridItem colSpan={2}>
-        <Button w="full" onClick={setIsShowMoreOption.toggle}>{isShowMoreOption ? '隐藏' : '显示'}高级选项</Button>
-      </GridItem>
     </Grid>
     <Box>
       <Divider m={2} display="block" />
@@ -407,8 +414,32 @@ function FormItemSelectPhrase({ idx, phraseDialog }: PropsIdx & {
 
   return <GridItem colSpan={{ base: 2, md: 1 }}>
     <Field name={`pullRequests[${idx}].phraseId`}>
-      {({ field, form }: any) => (
-        <FormControl>
+      {({ field, form }: any) => {
+        let selectRef = useRef<SelectInstance>(null)
+
+        function setFieldValue(option: any) {
+          form.setFieldValue(field.name, option?.value)
+              
+          let inputWordComp = option?.type === 'Single' ? 'input' : 'textarea'
+
+          form.setFieldValue(`pullRequests[${idx}].inputWordComp`, inputWordComp)
+        }
+
+        // 二次进入后再次选择上次的选择词条
+        useEffect(() => {
+          if (field.value) {
+            let option = tagOptions?.find(it => it.value === field.value)
+
+            setFieldValue(option)
+
+            // TODO：如果上次是搜索出的，默认列出选项中没有，则可能查找不出，则需要再次查找，并设置
+            if (selectRef.current && option) {
+              selectRef.current.setValue(option, 'select-option')
+            }
+          }
+        }, [ field.value ])
+
+        return <FormControl>
           <FormLabel htmlFor={`pullRequests[${idx}].phraseId`}>
             <HStack alignItems="center">
               <span>原词条</span>
@@ -423,16 +454,14 @@ function FormItemSelectPhrase({ idx, phraseDialog }: PropsIdx & {
             </HStack>
           </FormLabel>
           <Select
+            ref={selectRef}
             name={field.name}
             isLoading={loading}
             options={tagOptions}
+            defaultValue={null}
             onChange={
               (option) => {
-                form.setFieldValue(field.name, option?.value)
-              
-                let inputWordComp = option?.type === 'Single' ? 'input' : 'textarea'
-
-                form.setFieldValue(`pullRequests[${idx}].inputWordComp`, inputWordComp)
+                setFieldValue(option)
               }
             }
             onInputChange={debounce(onInputSearch, 500)}
@@ -442,7 +471,7 @@ function FormItemSelectPhrase({ idx, phraseDialog }: PropsIdx & {
             formatOptionLabel={formatOptionLabel}
           />
         </FormControl>
-      )}
+      }}
     </Field>
   </GridItem>
 }
