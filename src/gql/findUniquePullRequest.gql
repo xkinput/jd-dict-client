@@ -1,0 +1,25 @@
+query FindUniquePullRequest($where: PullRequestWhereUniqueInput!) {
+  findUniquePullRequest(where: $where) {
+    id
+    phrase {
+      id
+      word
+      code
+      type
+      index
+      status
+      userId
+    }
+    phraseId
+    word
+    code
+    index
+    type
+    status
+    _count {
+      issue
+    }
+    updateAt
+    createAt
+  }
+}

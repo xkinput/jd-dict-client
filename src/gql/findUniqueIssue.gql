@@ -1,0 +1,22 @@
+query FindUniqueIssue($where: IssueWhereUniqueInput!) {
+  findUniqueIssue(where: $where) {
+    id
+    createAt
+    updateAt
+    content
+    userId
+    status
+    pullRequests {
+      id
+    }
+    comments {
+      id
+      content
+      createAt
+      updateAt
+      _count {
+        comments
+      }
+    }
+  }
+}

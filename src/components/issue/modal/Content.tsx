@@ -1,30 +1,30 @@
 import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react'
-import { FC, ReactNode, useEffect } from 'react'
+import { FC, forwardRef, ReactNode, Ref, RefObject, useEffect, useImperativeHandle } from 'react'
 
 interface Props {
   children: ReactNode
 }
 
-export const CreateIssueModal: FC<Props> = ({ children }) => {
+export const IssueContentModal = forwardRef<{ onOpen: any }, Props>(({ children }, ref) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  // useEffect(() => {
-  //   if (import.meta.env.DEV) {
-  //     onOpen()
-  //   }
-  // }, [])
+  useImperativeHandle(ref, () => ({
+    onOpen
+  }))
   
   return <>
-    <Button colorScheme="gray" onClick={onOpen}>创建议题</Button>
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>创建议题</ModalHeader>
+      <ModalContent minW="container.md">
+        <ModalHeader />
         <ModalCloseButton />
         <ModalBody>
           {children}
         </ModalBody>
+        <ModalFooter />
       </ModalContent>
     </Modal>
   </>
-}
+})
+
+IssueContentModal.displayName = 'IssueContentModal'

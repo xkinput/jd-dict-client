@@ -1,0 +1,11 @@
+query FindUniqueUser($where: UserWhereUniqueInput!) {
+  findUniqueUser(where: $where) {
+    id
+    name
+    nickname
+    _count {
+      issues
+      phrases
+    }
+  }
+}

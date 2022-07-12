@@ -4,7 +4,7 @@ import { UserInfo } from '~/components/home/UserInfo'
 import { FormIssue } from '~/components/issue/Create'
 import { IssueList } from '~/components/issue/List'
 import { PhraseList } from '~/components/phrase/List'
-import { CreatePhraseModal } from '~/components/issue/modal/Create'
+import { CreateIssueModal } from '~/components/issue/modal/Create'
 import { FindManyIssueQueryVariables, FindManyPhraseQueryVariables, SortOrder } from '~/generated/gql'
 import { useRootState } from '~/store'
 
@@ -58,9 +58,9 @@ export const Index = () => {
           >
             <Stack bg="blackAlpha.100" rounded="md">
               <UserInfo />
-              <CreatePhraseModal>
+              <CreateIssueModal>
                 <FormIssue />
-              </CreatePhraseModal>
+              </CreateIssueModal>
             </Stack>
           </Box>
         }
