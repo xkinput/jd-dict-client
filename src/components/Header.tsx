@@ -46,12 +46,16 @@ export const Header: FC<Props> = ({ onTrigger }) => {
 
   const { colorMode, toggleColorMode } = useColorMode()
 
-  const isDevBg = import.meta.env.DEV ? '#110000' : null
+  const isDev = import.meta.env.DEV
 
   return (
     <Box>
       <Flex
-        bg={isDevBg || useColorModeValue('white', 'gray.800')}
+        bg={
+          useColorModeValue(
+            isDev ? 'orange.300' : 'white',
+            isDev ? 'orange.500' :'gray.800')
+        }
         color={useColorModeValue('gray.600', 'white')}
         minH={'60px'}
         py={{ base: 2 }}

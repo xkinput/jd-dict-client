@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { Grid, GridItem, Skeleton, Stack, VStack, Text, Tooltip, Button, Badge, HStack, Icon } from '@chakra-ui/react'
+import { Grid, GridItem, Skeleton, Stack, VStack, Text, Tooltip, Button, Badge, HStack, Icon, Box } from '@chakra-ui/react'
 import { createRef, FC, useRef, useState } from 'react'
 import { BiMessageSquareDots, BiMessageSquareEdit } from 'react-icons/bi'
 import dayjs from '~/plugins/dayjs'
@@ -106,23 +106,25 @@ export const IssueList: FC<Props> = ({ variables: initVariables }) => {
                   }
                   <GridItem colSpan={5}>
                     <HStack justifyContent="space-between">
-                      <HStack>
+                      <HStack width="65%" overflow="hidden">
                         <Text>@{issue.user.nickname || issue.user.name}</Text>
-                        {
-                          issue.pullRequests.map(pr => (
-                            <Tooltip label={pr.word || pr.code || pr.phrase?.word} key={pr.id}>
-                              <TooltipRef>
-                                <Badge fontSize="sm" key={pr.id} colorScheme={
-                                  { Create: 'green', Change: 'orange', 'Delete': 'red' }[pr.type]
-                                }>
-                                  {
-                                    (pr.word || pr.code || pr.phrase?.word)?.slice(0, 4)
-                                  }
-                                </Badge>
-                              </TooltipRef>
-                            </Tooltip>
-                          ))
-                        }
+                        <Box width="30%">
+                          {
+                            issue.pullRequests.map(pr => (
+                              <Tooltip label={pr.word || pr.code || pr.phrase?.word} key={pr.id}>
+                                <TooltipRef>
+                                  <Badge fontSize="sm" key={pr.id} colorScheme={
+                                    { Create: 'green', Change: 'orange', 'Delete': 'red' }[pr.type]
+                                  }>
+                                    {
+                                      (pr.word || pr.code || pr.phrase?.word)?.slice(0, 4)
+                                    }
+                                  </Badge>
+                                </TooltipRef>
+                              </Tooltip>
+                            ))
+                          }
+                        </Box>
                         {issue._count.pullRequests >= 3 && (
                           <Badge colorScheme="gray">
                             {issue._count.pullRequests}
