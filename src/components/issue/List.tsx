@@ -106,9 +106,9 @@ export const IssueList: FC<Props> = ({ variables: initVariables }) => {
                   }
                   <GridItem colSpan={5}>
                     <HStack justifyContent="space-between">
-                      <HStack width="65%" overflow="hidden">
+                      <HStack width={[ '65%', '70%', '80%' ]} overflow="hidden">
                         <Text>@{issue.user.nickname || issue.user.name}</Text>
-                        <Box width="30%">
+                        <HStack maxWidth={[ '40%', '90%', '90%' ]} overflowX="auto">
                           {
                             issue.pullRequests.map(pr => (
                               <Tooltip label={pr.word || pr.code || pr.phrase?.word} key={pr.id}>
@@ -124,7 +124,7 @@ export const IssueList: FC<Props> = ({ variables: initVariables }) => {
                               </Tooltip>
                             ))
                           }
-                        </Box>
+                        </HStack>
                         {issue._count.pullRequests >= 3 && (
                           <Badge colorScheme="gray">
                             {issue._count.pullRequests}
