@@ -49,7 +49,9 @@ export const IssueContent: FC<Props> = ({ data: selectedIssue }) => {
   const PullRequests = (
     issue?.pullRequests && (
       <>
-        <Grid templateColumns="repeat(3, 1fr)" gap={2}>
+        <Grid
+          templateColumns={[ 'repeat(2, 1fr)', 'repeat(2, 1fr)', 'repeat(3, 1fr)' ]}
+          gap={2}>
           {issue.pullRequests.map(pr => (
             <GridItem p={1} key={pr.id}>
               <PullRequestCard id={pr.id}/>
@@ -61,12 +63,12 @@ export const IssueContent: FC<Props> = ({ data: selectedIssue }) => {
   )
 
   return <VStack ref={containerRef} spacing={4} align='stretch' overflow="auto" >
-    <HStack alignItems="start">
-      <Box w="70%">
+    <HStack alignItems="start" flexWrap={[ 'wrap', 'wrap', 'nowrap' ]}>
+      <Box w={[ 'full', 'full', '70%' ]}>
         {Content}
         {PullRequests}
       </Box>
-      <Box w="30%">
+      <Box w={[ 'full', 'full', '20%' ]} order={[ -1, -1, 1 ]}>
         {UserSide}
       </Box>
     </HStack>

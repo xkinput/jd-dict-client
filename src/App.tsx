@@ -9,6 +9,7 @@ function App() {
     checkStateAuthKey()
     installErrorCodeMap()
   }, [])
+  
   return (
     <HistoryRouter history={routerHistory}>
       <Routes />

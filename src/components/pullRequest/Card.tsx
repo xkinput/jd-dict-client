@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client'
-import {  Alert, AlertIcon, AlertTitle, Avatar, Box, Spinner, Text, VStack } from '@chakra-ui/react'
+import {  Alert, AlertIcon, AlertTitle, Avatar, Box, HStack, IconButton, Spinner, Text, VStack } from '@chakra-ui/react'
+import { BiCaretUp, BiCaretDown  } from 'react-icons/bi'
 import { FC, ReactNode, useEffect, useState } from 'react'
 import { FindUniquePullRequestDocument, FindUniquePullRequestQuery, FindUniquePullRequestQueryVariables } from '~/generated/gql'
 import { mutateLog } from '~/utils/log'
@@ -36,8 +37,17 @@ export const PullRequestCard: FC<Props> = ({ id }) => {
 
   if (!pr) return <><span>未获取到信息</span></>
 
-  return <Box rounded="md" border="1px" borderColor="whitesmoke" transition="ease-in-out 0.3s" _hover={{ shadow: 'md', transition: 'ease-in-out 0.3s' }}>
+  return <Box rounded="md"
+    border="1px"
+    borderColor="whitesmoke"
+    p={2} 
+    transition="ease-in-out 0.3s" 
+    _hover={{ shadow: 'md', transition: 'ease-in-out 0.3s' }}>
     <Text>{pr.word}</Text>
     <Text>{pr.code}</Text>
+    <HStack justifyContent="end">
+      <IconButton aria-label='支持' icon={<BiCaretUp />} />
+      <IconButton aria-label='拒绝' icon={<BiCaretDown />} />
+    </HStack>
   </Box>
 }

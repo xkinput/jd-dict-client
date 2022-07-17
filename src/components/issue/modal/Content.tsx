@@ -15,7 +15,7 @@ export const IssueContentModal = forwardRef<{ onOpen: any }, Props>(({ children 
   return <>
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent minW="container.md">
+      <ModalContent minWidth={[ 'full', 'full', 'container.md' ]}>
         <ModalHeader />
         <ModalCloseButton />
         <ModalBody>

@@ -14,6 +14,7 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  useColorMode,
 } from '@chakra-ui/react'
 import {
   HamburgerIcon,
@@ -26,6 +27,7 @@ import { NAV_ITEMS } from '~/config/menu'
 import { NavItem } from '~/types/menu'
 import { FC } from 'react'
 import { useRootState } from '~/store'
+import { BiMoon, BiSun } from 'react-icons/bi'
 
 export enum HeaderOnClickType {
   SignIn,
@@ -42,10 +44,14 @@ export const Header: FC<Props> = ({ onTrigger }) => {
 
   const isSingined = useRootState(s => s.user.isSingined)
 
+  const { colorMode, toggleColorMode } = useColorMode()
+
+  const isDevBg = import.meta.env.DEV ? '#110000' : null
+
   return (
     <Box>
       <Flex
-        bg={useColorModeValue('white', 'gray.800')}
+        bg={isDevBg || useColorModeValue('white', 'gray.800')}
         color={useColorModeValue('gray.600', 'white')}
         minH={'60px'}
         py={{ base: 2 }}
@@ -78,6 +84,11 @@ export const Header: FC<Props> = ({ onTrigger }) => {
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
           </Flex>
+        </Flex>
+        <Flex mx={4}>
+          <Button onClick={toggleColorMode}>
+            {colorMode === 'light' ? <BiMoon /> : <BiSun/>}
+          </Button>
         </Flex>
 
         {!isSingined
