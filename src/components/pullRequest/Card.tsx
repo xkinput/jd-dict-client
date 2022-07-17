@@ -1,15 +1,17 @@
-import { useQuery } from '@apollo/client'
+import { ApolloError, useMutation, useQuery } from '@apollo/client'
 import {  Alert, AlertIcon, AlertTitle, Avatar, Box, HStack, IconButton, Spinner, Text, VStack } from '@chakra-ui/react'
-import { BiCaretUp, BiCaretDown  } from 'react-icons/bi'
+import { BiCaretUp, BiCaretDown, BiHeart, BiHeartCircle  } from 'react-icons/bi'
 import { FC, ReactNode, useEffect, useState } from 'react'
-import { FindUniquePullRequestDocument, FindUniquePullRequestQuery, FindUniquePullRequestQueryVariables } from '~/generated/gql'
-import { mutateLog } from '~/utils/log'
+import { FindUniquePullRequestDocument, FindUniquePullRequestQuery, FindUniquePullRequestQueryVariables, ToggleLikePrDocument } from '~/generated/gql'
+import { mutateLog, toast } from '~/utils/log'
+import { useRootState } from '~/store'
 
 interface Props {
   id: number
 }
 
 export const PullRequestCard: FC<Props> = ({ id }) => {
+  const isUserSingined = useRootState(s => s.user.isSingined)
 
   let { error, data, loading, refetch } = useQuery<FindUniquePullRequestQuery, FindUniquePullRequestQueryVariables>(FindUniquePullRequestDocument, {
     variables: {
@@ -18,6 +20,7 @@ export const PullRequestCard: FC<Props> = ({ id }) => {
       }
     },
   })
+  const [ mutate ] = useMutation(ToggleLikePrDocument)
   
   if (loading) return <Spinner />
   
@@ -37,6 +40,27 @@ export const PullRequestCard: FC<Props> = ({ id }) => {
 
   if (!pr) return <><span>未获取到信息</span></>
 
+  async function toggleLike(id: number) {
+    try {
+      let { data, errors } = await mutate({
+        variables: {
+          where: {
+            id
+          }
+        }
+      })
+
+      refetch()
+      toast({
+        title: pr?.liked ? '已取消' : '已点赞',
+        icon: pr?.liked ? <BiHeart size={25} /> : <BiHeartCircle size={25} />,
+        status: pr?.liked ? 'info' : 'success'
+      })
+    } catch (e) {
+      mutateLog(e as ApolloError)
+    }
+  }
+
   return <Box rounded="md"
     border="1px"
     borderColor="whitesmoke"
@@ -46,8 +70,16 @@ export const PullRequestCard: FC<Props> = ({ id }) => {
     <Text>{pr.word}</Text>
     <Text>{pr.code}</Text>
     <HStack justifyContent="end">
-      <IconButton aria-label='支持' icon={<BiCaretUp />} />
-      <IconButton aria-label='拒绝' icon={<BiCaretDown />} />
+      <Text>{pr._count.likes}</Text>
+      {
+        isUserSingined && 
+          <IconButton
+            colorScheme={pr.liked ? 'red' : 'gray'}
+            aria-label='喜欢'
+            icon={pr.liked ? <BiHeartCircle/> : <BiHeart />}
+            onClick={() => toggleLike(pr.id)}
+          />
+      }
     </HStack>
   </Box>
 }

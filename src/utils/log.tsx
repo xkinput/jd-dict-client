@@ -79,6 +79,11 @@ function transCodeToMsg(error: GraphQLError, graphQLError?: GraphQLError) {
   let path = error?.path || graphQLError?.path
 
   let msg = ErrorCodeMap.get((code) as keyof typeof ErrorCode) || error.message
+  
+  if (msg === 'jwt must be provided') {
+    msg = '请先登录！'
+  }
+
   let meta = exception?.meta
 
   if (path?.[0] === 'createOneIssue') {
