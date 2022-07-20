@@ -21,6 +21,7 @@ export const errorCodeData: Partial<Record<ErrorCode | GraphQLErrorCode, string>
   'PR1004': 'PR已存在 议题Id：{id}',
   'PR1005': '修改内容不能与原词条相同',
   'PR1006': '修改至少填写编码或词条或优先级一种',
+  'PR1007': '不能评价自己提交的词条',
 }
 
 export function installErrorCodeMap() {

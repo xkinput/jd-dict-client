@@ -1341,6 +1341,8 @@ export enum ErrorCode {
   Pr1005 = 'PR1005',
   /** PR修改必须填写至少编码或词条或优先级一项 */
   Pr1006 = 'PR1006',
+  /** 不可评价自己的PR */
+  Pr1007 = 'PR1007',
   /** 用户名已被使用 */
   U1000 = 'U1000',
   /** 邮箱已被使用 */
@@ -2063,8 +2065,6 @@ export type Mutation = {
   deletePolicy?: Maybe<Scalars['Boolean']>;
   signIn?: Maybe<UserSignIn>;
   signUp?: Maybe<User>;
-  /** 踩PR */
-  toggleDislikePr?: Maybe<Scalars['Boolean']>;
   /** 赞PR */
   togglePullRequestEvaluation: PullRequest;
   updateManyCasbinRule: BatchPayload;
@@ -2306,11 +2306,6 @@ export type MutationSignInArgs = {
 
 export type MutationSignUpArgs = {
   data: UserSignUpInput;
-};
-
-
-export type MutationToggleDislikePrArgs = {
-  where: PullRequestWhereUniqueInput;
 };
 
 
@@ -4668,7 +4663,7 @@ export type PullRequest = {
   createAt: Scalars['DateTime'];
   dislikes: Array<User>;
   /** 我的评价 */
-  evaluation: PullRequestEvaluationAction;
+  evaluation?: Maybe<PullRequestEvaluationAction>;
   id: Scalars['Int'];
   index?: Maybe<Scalars['Int']>;
   issue: Array<Issue>;
@@ -8746,7 +8741,7 @@ export type FindUniquePullRequestQueryVariables = Exact<{
 }>;
 
 
-export type FindUniquePullRequestQuery = { __typename?: 'Query', findUniquePullRequest?: { __typename?: 'PullRequest', id: number, phraseId?: number | null, word?: string | null, code?: string | null, index?: number | null, type: PullRequestType, status: PullRequestStatus, evaluation: PullRequestEvaluationAction, updateAt: any, createAt: any, phrase?: { __typename?: 'Phrase', id: number, word: string, code: string, type: PhraseType, index: number, status: PhraseStatus, userId: number } | null, _count: { __typename?: 'PullRequestCountOutputType', issue: number, likes: number, dislikes: number } } | null };
+export type FindUniquePullRequestQuery = { __typename?: 'Query', findUniquePullRequest?: { __typename?: 'PullRequest', id: number, phraseId?: number | null, word?: string | null, code?: string | null, index?: number | null, type: PullRequestType, status: PullRequestStatus, evaluation?: PullRequestEvaluationAction | null, updateAt: any, createAt: any, phrase?: { __typename?: 'Phrase', id: number, word: string, code: string, type: PhraseType, index: number, status: PhraseStatus, userId: number } | null, _count: { __typename?: 'PullRequestCountOutputType', issue: number, likes: number, dislikes: number } } | null };
 
 export type FindUniqueUserQueryVariables = Exact<{
   where: UserWhereUniqueInput;
@@ -8780,7 +8775,7 @@ export type TogglePullRequestEvaluationMutationVariables = Exact<{
 }>;
 
 
-export type TogglePullRequestEvaluationMutation = { __typename?: 'Mutation', togglePullRequestEvaluation: { __typename?: 'PullRequest', id: number, evaluation: PullRequestEvaluationAction } };
+export type TogglePullRequestEvaluationMutation = { __typename?: 'Mutation', togglePullRequestEvaluation: { __typename?: 'PullRequest', id: number, evaluation?: PullRequestEvaluationAction | null } };
 
 
 export const CreateOneIssueDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateOneIssue"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"IssueUserCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createOneIssue"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createAt"}},{"kind":"Field","name":{"kind":"Name","value":"pullRequests"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"word"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"phraseId"}},{"kind":"Field","name":{"kind":"Name","value":"index"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]}}]} as unknown as DocumentNode<CreateOneIssueMutation, CreateOneIssueMutationVariables>;
