@@ -28,6 +28,8 @@ import { NavItem } from '~/types/menu'
 import { FC } from 'react'
 import { useRootState } from '~/store'
 import { BiMoon, BiSun } from 'react-icons/bi'
+import { WEBSITE_NAMES } from '~/config/global'
+import { random } from 'lodash'
 
 export enum HeaderOnClickType {
   SignIn,
@@ -47,6 +49,8 @@ export const Header: FC<Props> = ({ onTrigger }) => {
   const { colorMode, toggleColorMode } = useColorMode()
 
   const isDev = import.meta.env.DEV
+
+  const siteName = WEBSITE_NAMES.at(random(0, WEBSITE_NAMES.length - 1)) || 'JDict'
 
   return (
     <Box>
@@ -82,7 +86,7 @@ export const Header: FC<Props> = ({ onTrigger }) => {
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             fontFamily={'heading'}
             color={useColorModeValue('gray.800', 'white')}>
-            JDict
+            {siteName}
           </Text>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>

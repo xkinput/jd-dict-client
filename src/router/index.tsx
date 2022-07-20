@@ -6,6 +6,7 @@ import { Index } from '~/pages'
 import { DictAdd } from '~/pages/dict/add'
 import { DictEdit } from '~/pages/dict/edit'
 import * as Layouts from '~/layouts'
+import { AboutIndex } from '~/pages/about'
 
 const routes: RouteObjectExt<keyof typeof Layouts>[] = [
   {
@@ -13,18 +14,8 @@ const routes: RouteObjectExt<keyof typeof Layouts>[] = [
     element: <Index />,
   },
   {
-    path: 'learn',
-    element: <UseTransition />,
-  },
-  {
-    path: 'dict/add',
-    element: <DictAdd />,
-    layout: 'Default2Layout',
-  },
-  {
-    path: 'dict/edit',
-    element: <DictEdit />,
-    layout: 'LoginLayout',
+    path: 'about',
+    element: <AboutIndex />,
   },
 ]
 
