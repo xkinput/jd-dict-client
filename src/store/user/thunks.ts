@@ -35,7 +35,8 @@ export const findUserMe = createAsyncThunk('user/fineUserMe',
   async (_, { rejectWithValue, fulfillWithValue  }) => {
     try {
       let { data } = await client.query<FindUserMeQuery>({
-        query: FindUserMeDocument
+        query: FindUserMeDocument,
+        fetchPolicy: 'no-cache',
       })
 
       return data.findUserMe
