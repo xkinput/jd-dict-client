@@ -1,3 +1,0 @@
-mutation ToggleLikePr($where: PullRequestWhereUniqueInput!) {
-  toggleLikePr(where: $where)
-}

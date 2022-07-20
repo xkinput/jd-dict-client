@@ -1,0 +1,9 @@
+mutation TogglePullRequestEvaluation(
+  $where: PullRequestWhereUniqueInput!
+  $data: PullRequestEvaluationData!
+) {
+  togglePullRequestEvaluation(where: $where, data: $data) {
+    id
+    evaluation
+  }
+}

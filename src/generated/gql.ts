@@ -2063,8 +2063,10 @@ export type Mutation = {
   deletePolicy?: Maybe<Scalars['Boolean']>;
   signIn?: Maybe<UserSignIn>;
   signUp?: Maybe<User>;
-  /** 切换支持PR */
-  toggleLikePr?: Maybe<Scalars['Boolean']>;
+  /** 踩PR */
+  toggleDislikePr?: Maybe<Scalars['Boolean']>;
+  /** 赞PR */
+  togglePullRequestEvaluation: PullRequest;
   updateManyCasbinRule: BatchPayload;
   updateManyComment: BatchPayload;
   updateManyIssue: BatchPayload;
@@ -2307,7 +2309,13 @@ export type MutationSignUpArgs = {
 };
 
 
-export type MutationToggleLikePrArgs = {
+export type MutationToggleDislikePrArgs = {
+  where: PullRequestWhereUniqueInput;
+};
+
+
+export type MutationTogglePullRequestEvaluationArgs = {
+  data: PullRequestEvaluationData;
   where: PullRequestWhereUniqueInput;
 };
 
@@ -4658,11 +4666,12 @@ export type PullRequest = {
   _count: PullRequestCountOutputType;
   code?: Maybe<Scalars['String']>;
   createAt: Scalars['DateTime'];
+  dislikes: Array<User>;
+  /** 我的评价 */
+  evaluation: PullRequestEvaluationAction;
   id: Scalars['Int'];
   index?: Maybe<Scalars['Int']>;
   issue: Array<Issue>;
-  /** 已喜欢 */
-  liked: Scalars['Boolean'];
   likes: Array<User>;
   phrase?: Maybe<Phrase>;
   phraseId?: Maybe<Scalars['Int']>;
@@ -4670,6 +4679,20 @@ export type PullRequest = {
   type: PullRequestType;
   updateAt: Scalars['DateTime'];
   word?: Maybe<Scalars['String']>;
+};
+
+
+/**
+ * 词条-拉取请求
+ * 记录如何去调整一个词条
+ */
+export type PullRequestDislikesArgs = {
+  cursor?: InputMaybe<UserWhereUniqueInput>;
+  distinct?: InputMaybe<UserScalarFieldEnum>;
+  orderBy?: InputMaybe<UserOrderByWithRelationAndSearchRelevanceInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<UserWhereInput>;
 };
 
 
@@ -4741,6 +4764,7 @@ export type PullRequestCountOrderByAggregateInput = {
 
 export type PullRequestCountOutputType = {
   __typename?: 'PullRequestCountOutputType';
+  dislikes: Scalars['Int'];
   issue: Scalars['Int'];
   likes: Scalars['Int'];
 };
@@ -4748,6 +4772,7 @@ export type PullRequestCountOutputType = {
 export type PullRequestCreateInput = {
   code?: InputMaybe<Scalars['String']>;
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikes?: InputMaybe<UserCreateNestedManyWithoutDislikePullReqeustsInput>;
   index?: InputMaybe<Scalars['Int']>;
   issue?: InputMaybe<IssueCreateNestedManyWithoutPullRequestsInput>;
   likes?: InputMaybe<UserCreateNestedManyWithoutLikePullReqeustsInput>;
@@ -4786,6 +4811,12 @@ export type PullRequestCreateManyPhraseInputEnvelope = {
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
+export type PullRequestCreateNestedManyWithoutDislikesInput = {
+  connect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutDislikesInput>>>;
+  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutDislikesInput>>>;
+};
+
 export type PullRequestCreateNestedManyWithoutIssueInput = {
   connect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
   connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutIssueInput>>>;
@@ -4805,6 +4836,11 @@ export type PullRequestCreateNestedManyWithoutPhraseInput = {
   createMany?: InputMaybe<PullRequestCreateManyPhraseInputEnvelope>;
 };
 
+export type PullRequestCreateOrConnectWithoutDislikesInput = {
+  create: PullRequestUncheckedCreateWithoutDislikesInput;
+  where: PullRequestWhereUniqueInput;
+};
+
 export type PullRequestCreateOrConnectWithoutIssueInput = {
   create: PullRequestUncheckedCreateWithoutIssueInput;
   where: PullRequestWhereUniqueInput;
@@ -4820,9 +4856,23 @@ export type PullRequestCreateOrConnectWithoutPhraseInput = {
   where: PullRequestWhereUniqueInput;
 };
 
+export type PullRequestCreateWithoutDislikesInput = {
+  code?: InputMaybe<Scalars['String']>;
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  index?: InputMaybe<Scalars['Int']>;
+  issue?: InputMaybe<IssueCreateNestedManyWithoutPullRequestsInput>;
+  likes?: InputMaybe<UserCreateNestedManyWithoutLikePullReqeustsInput>;
+  phrase?: InputMaybe<PhraseCreateNestedOneWithoutPullRequestsInput>;
+  status?: InputMaybe<PullRequestStatus>;
+  type: PullRequestType;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+  word?: InputMaybe<Scalars['String']>;
+};
+
 export type PullRequestCreateWithoutIssueInput = {
   code?: InputMaybe<Scalars['String']>;
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikes?: InputMaybe<UserCreateNestedManyWithoutDislikePullReqeustsInput>;
   index?: InputMaybe<Scalars['Int']>;
   likes?: InputMaybe<UserCreateNestedManyWithoutLikePullReqeustsInput>;
   phrase?: InputMaybe<PhraseCreateNestedOneWithoutPullRequestsInput>;
@@ -4835,6 +4885,7 @@ export type PullRequestCreateWithoutIssueInput = {
 export type PullRequestCreateWithoutLikesInput = {
   code?: InputMaybe<Scalars['String']>;
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikes?: InputMaybe<UserCreateNestedManyWithoutDislikePullReqeustsInput>;
   index?: InputMaybe<Scalars['Int']>;
   issue?: InputMaybe<IssueCreateNestedManyWithoutPullRequestsInput>;
   phrase?: InputMaybe<PhraseCreateNestedOneWithoutPullRequestsInput>;
@@ -4847,6 +4898,7 @@ export type PullRequestCreateWithoutLikesInput = {
 export type PullRequestCreateWithoutPhraseInput = {
   code?: InputMaybe<Scalars['String']>;
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikes?: InputMaybe<UserCreateNestedManyWithoutDislikePullReqeustsInput>;
   index?: InputMaybe<Scalars['Int']>;
   issue?: InputMaybe<IssueCreateNestedManyWithoutPullRequestsInput>;
   likes?: InputMaybe<UserCreateNestedManyWithoutLikePullReqeustsInput>;
@@ -4854,6 +4906,17 @@ export type PullRequestCreateWithoutPhraseInput = {
   type: PullRequestType;
   updateAt?: InputMaybe<Scalars['DateTime']>;
   word?: InputMaybe<Scalars['String']>;
+};
+
+export enum PullRequestEvaluationAction {
+  /** 踩 */
+  Dislike = 'Dislike',
+  /** 赞 */
+  Like = 'Like'
+}
+
+export type PullRequestEvaluationData = {
+  action: PullRequestEvaluationAction;
 };
 
 export type PullRequestListRelationFilter = {
@@ -4948,6 +5011,7 @@ export type PullRequestOrderByWithRelationAndSearchRelevanceInput = {
   _relevance?: InputMaybe<PullRequestOrderByRelevanceInput>;
   code?: InputMaybe<SortOrder>;
   createAt?: InputMaybe<SortOrder>;
+  dislikes?: InputMaybe<UserOrderByRelationAggregateInput>;
   id?: InputMaybe<SortOrder>;
   index?: InputMaybe<SortOrder>;
   issue?: InputMaybe<IssueOrderByRelationAggregateInput>;
@@ -5030,6 +5094,7 @@ export enum PullRequestType {
 export type PullRequestUncheckedCreateInput = {
   code?: InputMaybe<Scalars['String']>;
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikes?: InputMaybe<UserUncheckedCreateNestedManyWithoutDislikePullReqeustsInput>;
   id?: InputMaybe<Scalars['Int']>;
   index?: InputMaybe<Scalars['Int']>;
   issue?: InputMaybe<IssueUncheckedCreateNestedManyWithoutPullRequestsInput>;
@@ -5039,6 +5104,12 @@ export type PullRequestUncheckedCreateInput = {
   type: PullRequestType;
   updateAt?: InputMaybe<Scalars['DateTime']>;
   word?: InputMaybe<Scalars['String']>;
+};
+
+export type PullRequestUncheckedCreateNestedManyWithoutDislikesInput = {
+  connect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutDislikesInput>>>;
+  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutDislikesInput>>>;
 };
 
 export type PullRequestUncheckedCreateNestedManyWithoutIssueInput = {
@@ -5060,9 +5131,24 @@ export type PullRequestUncheckedCreateNestedManyWithoutPhraseInput = {
   createMany?: InputMaybe<PullRequestCreateManyPhraseInputEnvelope>;
 };
 
+export type PullRequestUncheckedCreateWithoutDislikesInput = {
+  code?: InputMaybe<Scalars['String']>;
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['Int']>;
+  index?: InputMaybe<Scalars['Int']>;
+  issue?: InputMaybe<IssueUncheckedCreateNestedManyWithoutPullRequestsInput>;
+  likes?: InputMaybe<UserUncheckedCreateNestedManyWithoutLikePullReqeustsInput>;
+  phraseId?: InputMaybe<Scalars['Int']>;
+  status?: InputMaybe<PullRequestStatus>;
+  type: PullRequestType;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+  word?: InputMaybe<Scalars['String']>;
+};
+
 export type PullRequestUncheckedCreateWithoutIssueInput = {
   code?: InputMaybe<Scalars['String']>;
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikes?: InputMaybe<UserUncheckedCreateNestedManyWithoutDislikePullReqeustsInput>;
   id?: InputMaybe<Scalars['Int']>;
   index?: InputMaybe<Scalars['Int']>;
   likes?: InputMaybe<UserUncheckedCreateNestedManyWithoutLikePullReqeustsInput>;
@@ -5076,6 +5162,7 @@ export type PullRequestUncheckedCreateWithoutIssueInput = {
 export type PullRequestUncheckedCreateWithoutLikesInput = {
   code?: InputMaybe<Scalars['String']>;
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikes?: InputMaybe<UserUncheckedCreateNestedManyWithoutDislikePullReqeustsInput>;
   id?: InputMaybe<Scalars['Int']>;
   index?: InputMaybe<Scalars['Int']>;
   issue?: InputMaybe<IssueUncheckedCreateNestedManyWithoutPullRequestsInput>;
@@ -5089,6 +5176,7 @@ export type PullRequestUncheckedCreateWithoutLikesInput = {
 export type PullRequestUncheckedCreateWithoutPhraseInput = {
   code?: InputMaybe<Scalars['String']>;
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikes?: InputMaybe<UserUncheckedCreateNestedManyWithoutDislikePullReqeustsInput>;
   id?: InputMaybe<Scalars['Int']>;
   index?: InputMaybe<Scalars['Int']>;
   issue?: InputMaybe<IssueUncheckedCreateNestedManyWithoutPullRequestsInput>;
@@ -5102,6 +5190,7 @@ export type PullRequestUncheckedCreateWithoutPhraseInput = {
 export type PullRequestUncheckedUpdateInput = {
   code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikes?: InputMaybe<UserUncheckedUpdateManyWithoutDislikePullReqeustsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   issue?: InputMaybe<IssueUncheckedUpdateManyWithoutPullRequestsInput>;
@@ -5123,6 +5212,31 @@ export type PullRequestUncheckedUpdateManyInput = {
   type?: InputMaybe<EnumPullRequestTypeFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   word?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+};
+
+export type PullRequestUncheckedUpdateManyWithoutDislikePullReqeustsInput = {
+  code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  phraseId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  status?: InputMaybe<EnumPullRequestStatusFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumPullRequestTypeFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  word?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+};
+
+export type PullRequestUncheckedUpdateManyWithoutDislikesInput = {
+  connect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutDislikesInput>>>;
+  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutDislikesInput>>>;
+  delete?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
+  deleteMany?: InputMaybe<Array<InputMaybe<PullRequestScalarWhereInput>>>;
+  disconnect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
+  set?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
+  update?: InputMaybe<Array<InputMaybe<PullRequestUpdateWithWhereUniqueWithoutDislikesInput>>>;
+  updateMany?: InputMaybe<Array<InputMaybe<PullRequestUpdateManyWithWhereWithoutDislikesInput>>>;
+  upsert?: InputMaybe<Array<InputMaybe<PullRequestUpsertWithWhereUniqueWithoutDislikesInput>>>;
 };
 
 export type PullRequestUncheckedUpdateManyWithoutIssueInput = {
@@ -5188,9 +5302,24 @@ export type PullRequestUncheckedUpdateManyWithoutPullRequestsInput = {
   word?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
 };
 
+export type PullRequestUncheckedUpdateWithoutDislikesInput = {
+  code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  issue?: InputMaybe<IssueUncheckedUpdateManyWithoutPullRequestsInput>;
+  likes?: InputMaybe<UserUncheckedUpdateManyWithoutLikePullReqeustsInput>;
+  phraseId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  status?: InputMaybe<EnumPullRequestStatusFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumPullRequestTypeFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  word?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+};
+
 export type PullRequestUncheckedUpdateWithoutIssueInput = {
   code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikes?: InputMaybe<UserUncheckedUpdateManyWithoutDislikePullReqeustsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   likes?: InputMaybe<UserUncheckedUpdateManyWithoutLikePullReqeustsInput>;
@@ -5204,6 +5333,7 @@ export type PullRequestUncheckedUpdateWithoutIssueInput = {
 export type PullRequestUncheckedUpdateWithoutLikesInput = {
   code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikes?: InputMaybe<UserUncheckedUpdateManyWithoutDislikePullReqeustsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   issue?: InputMaybe<IssueUncheckedUpdateManyWithoutPullRequestsInput>;
@@ -5217,6 +5347,7 @@ export type PullRequestUncheckedUpdateWithoutLikesInput = {
 export type PullRequestUncheckedUpdateWithoutPhraseInput = {
   code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikes?: InputMaybe<UserUncheckedUpdateManyWithoutDislikePullReqeustsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   issue?: InputMaybe<IssueUncheckedUpdateManyWithoutPullRequestsInput>;
@@ -5230,6 +5361,7 @@ export type PullRequestUncheckedUpdateWithoutPhraseInput = {
 export type PullRequestUpdateInput = {
   code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikes?: InputMaybe<UserUpdateManyWithoutDislikePullReqeustsInput>;
   index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   issue?: InputMaybe<IssueUpdateManyWithoutPullRequestsInput>;
   likes?: InputMaybe<UserUpdateManyWithoutLikePullReqeustsInput>;
@@ -5250,6 +5382,11 @@ export type PullRequestUpdateManyMutationInput = {
   word?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
 };
 
+export type PullRequestUpdateManyWithWhereWithoutDislikesInput = {
+  data: PullRequestUncheckedUpdateManyWithoutDislikePullReqeustsInput;
+  where: PullRequestScalarWhereInput;
+};
+
 export type PullRequestUpdateManyWithWhereWithoutIssueInput = {
   data: PullRequestUncheckedUpdateManyWithoutPullRequestsInput;
   where: PullRequestScalarWhereInput;
@@ -5263,6 +5400,19 @@ export type PullRequestUpdateManyWithWhereWithoutLikesInput = {
 export type PullRequestUpdateManyWithWhereWithoutPhraseInput = {
   data: PullRequestUncheckedUpdateManyWithoutPullRequestsInput;
   where: PullRequestScalarWhereInput;
+};
+
+export type PullRequestUpdateManyWithoutDislikesInput = {
+  connect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<PullRequestCreateOrConnectWithoutDislikesInput>>>;
+  create?: InputMaybe<Array<InputMaybe<PullRequestCreateWithoutDislikesInput>>>;
+  delete?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
+  deleteMany?: InputMaybe<Array<InputMaybe<PullRequestScalarWhereInput>>>;
+  disconnect?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
+  set?: InputMaybe<Array<InputMaybe<PullRequestWhereUniqueInput>>>;
+  update?: InputMaybe<Array<InputMaybe<PullRequestUpdateWithWhereUniqueWithoutDislikesInput>>>;
+  updateMany?: InputMaybe<Array<InputMaybe<PullRequestUpdateManyWithWhereWithoutDislikesInput>>>;
+  upsert?: InputMaybe<Array<InputMaybe<PullRequestUpsertWithWhereUniqueWithoutDislikesInput>>>;
 };
 
 export type PullRequestUpdateManyWithoutIssueInput = {
@@ -5305,6 +5455,11 @@ export type PullRequestUpdateManyWithoutPhraseInput = {
   upsert?: InputMaybe<Array<InputMaybe<PullRequestUpsertWithWhereUniqueWithoutPhraseInput>>>;
 };
 
+export type PullRequestUpdateWithWhereUniqueWithoutDislikesInput = {
+  data: PullRequestUncheckedUpdateWithoutDislikesInput;
+  where: PullRequestWhereUniqueInput;
+};
+
 export type PullRequestUpdateWithWhereUniqueWithoutIssueInput = {
   data: PullRequestUncheckedUpdateWithoutIssueInput;
   where: PullRequestWhereUniqueInput;
@@ -5320,9 +5475,23 @@ export type PullRequestUpdateWithWhereUniqueWithoutPhraseInput = {
   where: PullRequestWhereUniqueInput;
 };
 
+export type PullRequestUpdateWithoutDislikesInput = {
+  code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  issue?: InputMaybe<IssueUpdateManyWithoutPullRequestsInput>;
+  likes?: InputMaybe<UserUpdateManyWithoutLikePullReqeustsInput>;
+  phrase?: InputMaybe<PhraseUpdateOneWithoutPullRequestsInput>;
+  status?: InputMaybe<EnumPullRequestStatusFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumPullRequestTypeFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  word?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+};
+
 export type PullRequestUpdateWithoutIssueInput = {
   code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikes?: InputMaybe<UserUpdateManyWithoutDislikePullReqeustsInput>;
   index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   likes?: InputMaybe<UserUpdateManyWithoutLikePullReqeustsInput>;
   phrase?: InputMaybe<PhraseUpdateOneWithoutPullRequestsInput>;
@@ -5335,6 +5504,7 @@ export type PullRequestUpdateWithoutIssueInput = {
 export type PullRequestUpdateWithoutLikesInput = {
   code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikes?: InputMaybe<UserUpdateManyWithoutDislikePullReqeustsInput>;
   index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   issue?: InputMaybe<IssueUpdateManyWithoutPullRequestsInput>;
   phrase?: InputMaybe<PhraseUpdateOneWithoutPullRequestsInput>;
@@ -5347,6 +5517,7 @@ export type PullRequestUpdateWithoutLikesInput = {
 export type PullRequestUpdateWithoutPhraseInput = {
   code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikes?: InputMaybe<UserUpdateManyWithoutDislikePullReqeustsInput>;
   index?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   issue?: InputMaybe<IssueUpdateManyWithoutPullRequestsInput>;
   likes?: InputMaybe<UserUpdateManyWithoutLikePullReqeustsInput>;
@@ -5354,6 +5525,12 @@ export type PullRequestUpdateWithoutPhraseInput = {
   type?: InputMaybe<EnumPullRequestTypeFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   word?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+};
+
+export type PullRequestUpsertWithWhereUniqueWithoutDislikesInput = {
+  create: PullRequestUncheckedCreateWithoutDislikesInput;
+  update: PullRequestUncheckedUpdateWithoutDislikesInput;
+  where: PullRequestWhereUniqueInput;
 };
 
 export type PullRequestUpsertWithWhereUniqueWithoutIssueInput = {
@@ -5380,6 +5557,7 @@ export type PullRequestWhereInput = {
   OR?: InputMaybe<Array<InputMaybe<PullRequestWhereInput>>>;
   code?: InputMaybe<StringNullableFilter>;
   createAt?: InputMaybe<DateTimeFilter>;
+  dislikes?: InputMaybe<UserListRelationFilter>;
   id?: InputMaybe<IntFilter>;
   index?: InputMaybe<IntNullableFilter>;
   issue?: InputMaybe<IssueListRelationFilter>;
@@ -6762,6 +6940,7 @@ export type User = {
   __typename?: 'User';
   _count: UserCountOutputType;
   createAt: Scalars['DateTime'];
+  dislikePullReqeusts: Array<PullRequest>;
   id: Scalars['Int'];
   issues: Array<Issue>;
   likePullReqeusts: Array<PullRequest>;
@@ -6776,6 +6955,17 @@ export type User = {
   updateAt: Scalars['DateTime'];
   wechat?: Maybe<Wechat>;
   wechatId?: Maybe<Scalars['Int']>;
+};
+
+
+/** 用户 */
+export type UserDislikePullReqeustsArgs = {
+  cursor?: InputMaybe<PullRequestWhereUniqueInput>;
+  distinct?: InputMaybe<PullRequestScalarFieldEnum>;
+  orderBy?: InputMaybe<PullRequestOrderByWithRelationAndSearchRelevanceInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<PullRequestWhereInput>;
 };
 
 
@@ -6874,6 +7064,7 @@ export type UserCountOrderByAggregateInput = {
 
 export type UserCountOutputType = {
   __typename?: 'UserCountOutputType';
+  dislikePullReqeusts: Scalars['Int'];
   issues: Scalars['Int'];
   likePullReqeusts: Scalars['Int'];
   notices: Scalars['Int'];
@@ -6883,6 +7074,7 @@ export type UserCountOutputType = {
 
 export type UserCreateInput = {
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikePullReqeusts?: InputMaybe<PullRequestCreateNestedManyWithoutDislikesInput>;
   issues?: InputMaybe<IssueCreateNestedManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestCreateNestedManyWithoutLikesInput>;
   name?: InputMaybe<Scalars['String']>;
@@ -6909,6 +7101,12 @@ export type UserCreateManyInput = {
   status?: InputMaybe<UserStatus>;
   updateAt?: InputMaybe<Scalars['DateTime']>;
   wechatId?: InputMaybe<Scalars['Int']>;
+};
+
+export type UserCreateNestedManyWithoutDislikePullReqeustsInput = {
+  connect?: InputMaybe<Array<InputMaybe<UserWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<UserCreateOrConnectWithoutDislikePullReqeustsInput>>>;
+  create?: InputMaybe<Array<InputMaybe<UserCreateWithoutDislikePullReqeustsInput>>>;
 };
 
 export type UserCreateNestedManyWithoutLikePullReqeustsInput = {
@@ -6947,6 +7145,11 @@ export type UserCreateNestedOneWithoutWechatInput = {
   create?: InputMaybe<UserUncheckedCreateWithoutWechatInput>;
 };
 
+export type UserCreateOrConnectWithoutDislikePullReqeustsInput = {
+  create: UserUncheckedCreateWithoutDislikePullReqeustsInput;
+  where: UserWhereUniqueInput;
+};
+
 export type UserCreateOrConnectWithoutIssuesInput = {
   create: UserUncheckedCreateWithoutIssuesInput;
   where: UserWhereUniqueInput;
@@ -6977,8 +7180,26 @@ export type UserCreateOrConnectWithoutWechatInput = {
   where: UserWhereUniqueInput;
 };
 
+export type UserCreateWithoutDislikePullReqeustsInput = {
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  issues?: InputMaybe<IssueCreateNestedManyWithoutUserInput>;
+  likePullReqeusts?: InputMaybe<PullRequestCreateNestedManyWithoutLikesInput>;
+  name?: InputMaybe<Scalars['String']>;
+  nickname?: InputMaybe<Scalars['String']>;
+  notices?: InputMaybe<NoticeCreateNestedManyWithoutUserInput>;
+  password?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
+  phrases?: InputMaybe<PhraseCreateNestedManyWithoutUserInput>;
+  roles?: InputMaybe<RoleCreateNestedManyWithoutUsersInput>;
+  signUpType?: InputMaybe<SignUpType>;
+  status?: InputMaybe<UserStatus>;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+  wechat?: InputMaybe<WechatCreateNestedOneWithoutUserInput>;
+};
+
 export type UserCreateWithoutIssuesInput = {
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikePullReqeusts?: InputMaybe<PullRequestCreateNestedManyWithoutDislikesInput>;
   likePullReqeusts?: InputMaybe<PullRequestCreateNestedManyWithoutLikesInput>;
   name?: InputMaybe<Scalars['String']>;
   nickname?: InputMaybe<Scalars['String']>;
@@ -6995,6 +7216,7 @@ export type UserCreateWithoutIssuesInput = {
 
 export type UserCreateWithoutLikePullReqeustsInput = {
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikePullReqeusts?: InputMaybe<PullRequestCreateNestedManyWithoutDislikesInput>;
   issues?: InputMaybe<IssueCreateNestedManyWithoutUserInput>;
   name?: InputMaybe<Scalars['String']>;
   nickname?: InputMaybe<Scalars['String']>;
@@ -7011,6 +7233,7 @@ export type UserCreateWithoutLikePullReqeustsInput = {
 
 export type UserCreateWithoutNoticesInput = {
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikePullReqeusts?: InputMaybe<PullRequestCreateNestedManyWithoutDislikesInput>;
   issues?: InputMaybe<IssueCreateNestedManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestCreateNestedManyWithoutLikesInput>;
   name?: InputMaybe<Scalars['String']>;
@@ -7027,6 +7250,7 @@ export type UserCreateWithoutNoticesInput = {
 
 export type UserCreateWithoutPhrasesInput = {
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikePullReqeusts?: InputMaybe<PullRequestCreateNestedManyWithoutDislikesInput>;
   issues?: InputMaybe<IssueCreateNestedManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestCreateNestedManyWithoutLikesInput>;
   name?: InputMaybe<Scalars['String']>;
@@ -7043,6 +7267,7 @@ export type UserCreateWithoutPhrasesInput = {
 
 export type UserCreateWithoutRolesInput = {
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikePullReqeusts?: InputMaybe<PullRequestCreateNestedManyWithoutDislikesInput>;
   issues?: InputMaybe<IssueCreateNestedManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestCreateNestedManyWithoutLikesInput>;
   name?: InputMaybe<Scalars['String']>;
@@ -7059,6 +7284,7 @@ export type UserCreateWithoutRolesInput = {
 
 export type UserCreateWithoutWechatInput = {
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikePullReqeusts?: InputMaybe<PullRequestCreateNestedManyWithoutDislikesInput>;
   issues?: InputMaybe<IssueCreateNestedManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestCreateNestedManyWithoutLikesInput>;
   name?: InputMaybe<Scalars['String']>;
@@ -7178,6 +7404,7 @@ export type UserOrderByWithAggregationInput = {
 export type UserOrderByWithRelationAndSearchRelevanceInput = {
   _relevance?: InputMaybe<UserOrderByRelevanceInput>;
   createAt?: InputMaybe<SortOrder>;
+  dislikePullReqeusts?: InputMaybe<PullRequestOrderByRelationAggregateInput>;
   id?: InputMaybe<SortOrder>;
   issues?: InputMaybe<IssueOrderByRelationAggregateInput>;
   likePullReqeusts?: InputMaybe<PullRequestOrderByRelationAggregateInput>;
@@ -7279,6 +7506,7 @@ export type UserSumOrderByAggregateInput = {
 
 export type UserUncheckedCreateInput = {
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutDislikesInput>;
   id?: InputMaybe<Scalars['Int']>;
   issues?: InputMaybe<IssueUncheckedCreateNestedManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutLikesInput>;
@@ -7293,6 +7521,12 @@ export type UserUncheckedCreateInput = {
   status?: InputMaybe<UserStatus>;
   updateAt?: InputMaybe<Scalars['DateTime']>;
   wechatId?: InputMaybe<Scalars['Int']>;
+};
+
+export type UserUncheckedCreateNestedManyWithoutDislikePullReqeustsInput = {
+  connect?: InputMaybe<Array<InputMaybe<UserWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<UserCreateOrConnectWithoutDislikePullReqeustsInput>>>;
+  create?: InputMaybe<Array<InputMaybe<UserCreateWithoutDislikePullReqeustsInput>>>;
 };
 
 export type UserUncheckedCreateNestedManyWithoutLikePullReqeustsInput = {
@@ -7313,8 +7547,27 @@ export type UserUncheckedCreateNestedOneWithoutWechatInput = {
   create?: InputMaybe<UserUncheckedCreateWithoutWechatInput>;
 };
 
+export type UserUncheckedCreateWithoutDislikePullReqeustsInput = {
+  createAt?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['Int']>;
+  issues?: InputMaybe<IssueUncheckedCreateNestedManyWithoutUserInput>;
+  likePullReqeusts?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutLikesInput>;
+  name?: InputMaybe<Scalars['String']>;
+  nickname?: InputMaybe<Scalars['String']>;
+  notices?: InputMaybe<NoticeUncheckedCreateNestedManyWithoutUserInput>;
+  password?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
+  phrases?: InputMaybe<PhraseUncheckedCreateNestedManyWithoutUserInput>;
+  roles?: InputMaybe<RoleUncheckedCreateNestedManyWithoutUsersInput>;
+  signUpType?: InputMaybe<SignUpType>;
+  status?: InputMaybe<UserStatus>;
+  updateAt?: InputMaybe<Scalars['DateTime']>;
+  wechatId?: InputMaybe<Scalars['Int']>;
+};
+
 export type UserUncheckedCreateWithoutIssuesInput = {
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutDislikesInput>;
   id?: InputMaybe<Scalars['Int']>;
   likePullReqeusts?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutLikesInput>;
   name?: InputMaybe<Scalars['String']>;
@@ -7332,6 +7585,7 @@ export type UserUncheckedCreateWithoutIssuesInput = {
 
 export type UserUncheckedCreateWithoutLikePullReqeustsInput = {
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutDislikesInput>;
   id?: InputMaybe<Scalars['Int']>;
   issues?: InputMaybe<IssueUncheckedCreateNestedManyWithoutUserInput>;
   name?: InputMaybe<Scalars['String']>;
@@ -7349,6 +7603,7 @@ export type UserUncheckedCreateWithoutLikePullReqeustsInput = {
 
 export type UserUncheckedCreateWithoutNoticesInput = {
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutDislikesInput>;
   id?: InputMaybe<Scalars['Int']>;
   issues?: InputMaybe<IssueUncheckedCreateNestedManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutLikesInput>;
@@ -7366,6 +7621,7 @@ export type UserUncheckedCreateWithoutNoticesInput = {
 
 export type UserUncheckedCreateWithoutPhrasesInput = {
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutDislikesInput>;
   id?: InputMaybe<Scalars['Int']>;
   issues?: InputMaybe<IssueUncheckedCreateNestedManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutLikesInput>;
@@ -7383,6 +7639,7 @@ export type UserUncheckedCreateWithoutPhrasesInput = {
 
 export type UserUncheckedCreateWithoutRolesInput = {
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutDislikesInput>;
   id?: InputMaybe<Scalars['Int']>;
   issues?: InputMaybe<IssueUncheckedCreateNestedManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutLikesInput>;
@@ -7400,6 +7657,7 @@ export type UserUncheckedCreateWithoutRolesInput = {
 
 export type UserUncheckedCreateWithoutWechatInput = {
   createAt?: InputMaybe<Scalars['DateTime']>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutDislikesInput>;
   id?: InputMaybe<Scalars['Int']>;
   issues?: InputMaybe<IssueUncheckedCreateNestedManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestUncheckedCreateNestedManyWithoutLikesInput>;
@@ -7417,6 +7675,7 @@ export type UserUncheckedCreateWithoutWechatInput = {
 
 export type UserUncheckedUpdateInput = {
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUncheckedUpdateManyWithoutDislikesInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   issues?: InputMaybe<IssueUncheckedUpdateManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestUncheckedUpdateManyWithoutLikesInput>;
@@ -7434,6 +7693,32 @@ export type UserUncheckedUpdateInput = {
 };
 
 export type UserUncheckedUpdateManyInput = {
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  phone?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
+  status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  wechatId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+};
+
+export type UserUncheckedUpdateManyWithoutDislikePullReqeustsInput = {
+  connect?: InputMaybe<Array<InputMaybe<UserWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<UserCreateOrConnectWithoutDislikePullReqeustsInput>>>;
+  create?: InputMaybe<Array<InputMaybe<UserCreateWithoutDislikePullReqeustsInput>>>;
+  delete?: InputMaybe<Array<InputMaybe<UserWhereUniqueInput>>>;
+  deleteMany?: InputMaybe<Array<InputMaybe<UserScalarWhereInput>>>;
+  disconnect?: InputMaybe<Array<InputMaybe<UserWhereUniqueInput>>>;
+  set?: InputMaybe<Array<InputMaybe<UserWhereUniqueInput>>>;
+  update?: InputMaybe<Array<InputMaybe<UserUpdateWithWhereUniqueWithoutDislikePullReqeustsInput>>>;
+  updateMany?: InputMaybe<Array<InputMaybe<UserUpdateManyWithWhereWithoutDislikePullReqeustsInput>>>;
+  upsert?: InputMaybe<Array<InputMaybe<UserUpsertWithWhereUniqueWithoutDislikePullReqeustsInput>>>;
+};
+
+export type UserUncheckedUpdateManyWithoutDislikesInput = {
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7508,8 +7793,27 @@ export type UserUncheckedUpdateOneWithoutWechatInput = {
   upsert?: InputMaybe<UserUpsertWithoutWechatInput>;
 };
 
+export type UserUncheckedUpdateWithoutDislikePullReqeustsInput = {
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<IntFieldUpdateOperationsInput>;
+  issues?: InputMaybe<IssueUncheckedUpdateManyWithoutUserInput>;
+  likePullReqeusts?: InputMaybe<PullRequestUncheckedUpdateManyWithoutLikesInput>;
+  name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  notices?: InputMaybe<NoticeUncheckedUpdateManyWithoutUserInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  phone?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  phrases?: InputMaybe<PhraseUncheckedUpdateManyWithoutUserInput>;
+  roles?: InputMaybe<RoleUncheckedUpdateManyWithoutUsersInput>;
+  signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
+  status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  wechatId?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+};
+
 export type UserUncheckedUpdateWithoutIssuesInput = {
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUncheckedUpdateManyWithoutDislikesInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   likePullReqeusts?: InputMaybe<PullRequestUncheckedUpdateManyWithoutLikesInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7527,6 +7831,7 @@ export type UserUncheckedUpdateWithoutIssuesInput = {
 
 export type UserUncheckedUpdateWithoutLikePullReqeustsInput = {
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUncheckedUpdateManyWithoutDislikesInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   issues?: InputMaybe<IssueUncheckedUpdateManyWithoutUserInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7544,6 +7849,7 @@ export type UserUncheckedUpdateWithoutLikePullReqeustsInput = {
 
 export type UserUncheckedUpdateWithoutNoticesInput = {
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUncheckedUpdateManyWithoutDislikesInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   issues?: InputMaybe<IssueUncheckedUpdateManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestUncheckedUpdateManyWithoutLikesInput>;
@@ -7561,6 +7867,7 @@ export type UserUncheckedUpdateWithoutNoticesInput = {
 
 export type UserUncheckedUpdateWithoutPhrasesInput = {
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUncheckedUpdateManyWithoutDislikesInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   issues?: InputMaybe<IssueUncheckedUpdateManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestUncheckedUpdateManyWithoutLikesInput>;
@@ -7578,6 +7885,7 @@ export type UserUncheckedUpdateWithoutPhrasesInput = {
 
 export type UserUncheckedUpdateWithoutRolesInput = {
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUncheckedUpdateManyWithoutDislikesInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   issues?: InputMaybe<IssueUncheckedUpdateManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestUncheckedUpdateManyWithoutLikesInput>;
@@ -7595,6 +7903,7 @@ export type UserUncheckedUpdateWithoutRolesInput = {
 
 export type UserUncheckedUpdateWithoutWechatInput = {
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUncheckedUpdateManyWithoutDislikesInput>;
   id?: InputMaybe<IntFieldUpdateOperationsInput>;
   issues?: InputMaybe<IssueUncheckedUpdateManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestUncheckedUpdateManyWithoutLikesInput>;
@@ -7612,6 +7921,7 @@ export type UserUncheckedUpdateWithoutWechatInput = {
 
 export type UserUpdateInput = {
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUpdateManyWithoutDislikesInput>;
   issues?: InputMaybe<IssueUpdateManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestUpdateManyWithoutLikesInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7638,6 +7948,11 @@ export type UserUpdateManyMutationInput = {
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
+export type UserUpdateManyWithWhereWithoutDislikePullReqeustsInput = {
+  data: UserUncheckedUpdateManyWithoutDislikesInput;
+  where: UserScalarWhereInput;
+};
+
 export type UserUpdateManyWithWhereWithoutLikePullReqeustsInput = {
   data: UserUncheckedUpdateManyWithoutLikesInput;
   where: UserScalarWhereInput;
@@ -7646,6 +7961,19 @@ export type UserUpdateManyWithWhereWithoutLikePullReqeustsInput = {
 export type UserUpdateManyWithWhereWithoutRolesInput = {
   data: UserUncheckedUpdateManyWithoutUsersInput;
   where: UserScalarWhereInput;
+};
+
+export type UserUpdateManyWithoutDislikePullReqeustsInput = {
+  connect?: InputMaybe<Array<InputMaybe<UserWhereUniqueInput>>>;
+  connectOrCreate?: InputMaybe<Array<InputMaybe<UserCreateOrConnectWithoutDislikePullReqeustsInput>>>;
+  create?: InputMaybe<Array<InputMaybe<UserCreateWithoutDislikePullReqeustsInput>>>;
+  delete?: InputMaybe<Array<InputMaybe<UserWhereUniqueInput>>>;
+  deleteMany?: InputMaybe<Array<InputMaybe<UserScalarWhereInput>>>;
+  disconnect?: InputMaybe<Array<InputMaybe<UserWhereUniqueInput>>>;
+  set?: InputMaybe<Array<InputMaybe<UserWhereUniqueInput>>>;
+  update?: InputMaybe<Array<InputMaybe<UserUpdateWithWhereUniqueWithoutDislikePullReqeustsInput>>>;
+  updateMany?: InputMaybe<Array<InputMaybe<UserUpdateManyWithWhereWithoutDislikePullReqeustsInput>>>;
+  upsert?: InputMaybe<Array<InputMaybe<UserUpsertWithWhereUniqueWithoutDislikePullReqeustsInput>>>;
 };
 
 export type UserUpdateManyWithoutLikePullReqeustsInput = {
@@ -7717,6 +8045,11 @@ export type UserUpdateOneWithoutWechatInput = {
   upsert?: InputMaybe<UserUpsertWithoutWechatInput>;
 };
 
+export type UserUpdateWithWhereUniqueWithoutDislikePullReqeustsInput = {
+  data: UserUncheckedUpdateWithoutDislikePullReqeustsInput;
+  where: UserWhereUniqueInput;
+};
+
 export type UserUpdateWithWhereUniqueWithoutLikePullReqeustsInput = {
   data: UserUncheckedUpdateWithoutLikePullReqeustsInput;
   where: UserWhereUniqueInput;
@@ -7727,8 +8060,26 @@ export type UserUpdateWithWhereUniqueWithoutRolesInput = {
   where: UserWhereUniqueInput;
 };
 
+export type UserUpdateWithoutDislikePullReqeustsInput = {
+  createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  issues?: InputMaybe<IssueUpdateManyWithoutUserInput>;
+  likePullReqeusts?: InputMaybe<PullRequestUpdateManyWithoutLikesInput>;
+  name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  notices?: InputMaybe<NoticeUpdateManyWithoutUserInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  phone?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  phrases?: InputMaybe<PhraseUpdateManyWithoutUserInput>;
+  roles?: InputMaybe<RoleUpdateManyWithoutUsersInput>;
+  signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
+  status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
+  updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  wechat?: InputMaybe<WechatUpdateOneWithoutUserInput>;
+};
+
 export type UserUpdateWithoutIssuesInput = {
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUpdateManyWithoutDislikesInput>;
   likePullReqeusts?: InputMaybe<PullRequestUpdateManyWithoutLikesInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7745,6 +8096,7 @@ export type UserUpdateWithoutIssuesInput = {
 
 export type UserUpdateWithoutLikePullReqeustsInput = {
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUpdateManyWithoutDislikesInput>;
   issues?: InputMaybe<IssueUpdateManyWithoutUserInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7761,6 +8113,7 @@ export type UserUpdateWithoutLikePullReqeustsInput = {
 
 export type UserUpdateWithoutNoticesInput = {
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUpdateManyWithoutDislikesInput>;
   issues?: InputMaybe<IssueUpdateManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestUpdateManyWithoutLikesInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7777,6 +8130,7 @@ export type UserUpdateWithoutNoticesInput = {
 
 export type UserUpdateWithoutPhrasesInput = {
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUpdateManyWithoutDislikesInput>;
   issues?: InputMaybe<IssueUpdateManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestUpdateManyWithoutLikesInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7793,6 +8147,7 @@ export type UserUpdateWithoutPhrasesInput = {
 
 export type UserUpdateWithoutRolesInput = {
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUpdateManyWithoutDislikesInput>;
   issues?: InputMaybe<IssueUpdateManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestUpdateManyWithoutLikesInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7809,6 +8164,7 @@ export type UserUpdateWithoutRolesInput = {
 
 export type UserUpdateWithoutWechatInput = {
   createAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  dislikePullReqeusts?: InputMaybe<PullRequestUpdateManyWithoutDislikesInput>;
   issues?: InputMaybe<IssueUpdateManyWithoutUserInput>;
   likePullReqeusts?: InputMaybe<PullRequestUpdateManyWithoutLikesInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -7821,6 +8177,12 @@ export type UserUpdateWithoutWechatInput = {
   signUpType?: InputMaybe<EnumSignUpTypeFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumUserStatusFieldUpdateOperationsInput>;
   updateAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type UserUpsertWithWhereUniqueWithoutDislikePullReqeustsInput = {
+  create: UserUncheckedCreateWithoutDislikePullReqeustsInput;
+  update: UserUncheckedUpdateWithoutDislikePullReqeustsInput;
+  where: UserWhereUniqueInput;
 };
 
 export type UserUpsertWithWhereUniqueWithoutLikePullReqeustsInput = {
@@ -7860,6 +8222,7 @@ export type UserWhereInput = {
   NOT?: InputMaybe<Array<InputMaybe<UserWhereInput>>>;
   OR?: InputMaybe<Array<InputMaybe<UserWhereInput>>>;
   createAt?: InputMaybe<DateTimeFilter>;
+  dislikePullReqeusts?: InputMaybe<PullRequestListRelationFilter>;
   id?: InputMaybe<IntFilter>;
   issues?: InputMaybe<IssueListRelationFilter>;
   likePullReqeusts?: InputMaybe<PullRequestListRelationFilter>;
@@ -8383,7 +8746,7 @@ export type FindUniquePullRequestQueryVariables = Exact<{
 }>;
 
 
-export type FindUniquePullRequestQuery = { __typename?: 'Query', findUniquePullRequest?: { __typename?: 'PullRequest', id: number, phraseId?: number | null, word?: string | null, code?: string | null, index?: number | null, type: PullRequestType, status: PullRequestStatus, liked: boolean, updateAt: any, createAt: any, phrase?: { __typename?: 'Phrase', id: number, word: string, code: string, type: PhraseType, index: number, status: PhraseStatus, userId: number } | null, _count: { __typename?: 'PullRequestCountOutputType', issue: number, likes: number } } | null };
+export type FindUniquePullRequestQuery = { __typename?: 'Query', findUniquePullRequest?: { __typename?: 'PullRequest', id: number, phraseId?: number | null, word?: string | null, code?: string | null, index?: number | null, type: PullRequestType, status: PullRequestStatus, evaluation: PullRequestEvaluationAction, updateAt: any, createAt: any, phrase?: { __typename?: 'Phrase', id: number, word: string, code: string, type: PhraseType, index: number, status: PhraseStatus, userId: number } | null, _count: { __typename?: 'PullRequestCountOutputType', issue: number, likes: number, dislikes: number } } | null };
 
 export type FindUniqueUserQueryVariables = Exact<{
   where: UserWhereUniqueInput;
@@ -8411,12 +8774,13 @@ export type SignUpMutationVariables = Exact<{
 
 export type SignUpMutation = { __typename?: 'Mutation', signUp?: { __typename?: 'User', id: number, name?: string | null } | null };
 
-export type ToggleLikePrMutationVariables = Exact<{
+export type TogglePullRequestEvaluationMutationVariables = Exact<{
   where: PullRequestWhereUniqueInput;
+  data: PullRequestEvaluationData;
 }>;
 
 
-export type ToggleLikePrMutation = { __typename?: 'Mutation', toggleLikePr?: boolean | null };
+export type TogglePullRequestEvaluationMutation = { __typename?: 'Mutation', togglePullRequestEvaluation: { __typename?: 'PullRequest', id: number, evaluation: PullRequestEvaluationAction } };
 
 
 export const CreateOneIssueDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateOneIssue"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"IssueUserCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createOneIssue"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createAt"}},{"kind":"Field","name":{"kind":"Name","value":"pullRequests"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"word"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"phraseId"}},{"kind":"Field","name":{"kind":"Name","value":"index"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]}}]} as unknown as DocumentNode<CreateOneIssueMutation, CreateOneIssueMutationVariables>;
@@ -8425,9 +8789,9 @@ export const FindManyPhraseDocument = {"kind":"Document","definitions":[{"kind":
 export const FindManyTagDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindManyTag"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"TagWhereInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"TagOrderByWithRelationAndSearchRelevanceInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"take"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skip"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findManyTag"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"take"},"value":{"kind":"Variable","name":{"kind":"Name","value":"take"}}},{"kind":"Argument","name":{"kind":"Name","value":"skip"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skip"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"_count"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"phrases"}}]}}]}}]}}]} as unknown as DocumentNode<FindManyTagQuery, FindManyTagQueryVariables>;
 export const FindUniqueIssueDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindUniqueIssue"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"IssueWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findUniqueIssue"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createAt"}},{"kind":"Field","name":{"kind":"Name","value":"updateAt"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"pullRequests"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"comments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"createAt"}},{"kind":"Field","name":{"kind":"Name","value":"updateAt"}},{"kind":"Field","name":{"kind":"Name","value":"_count"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comments"}}]}}]}}]}}]}}]} as unknown as DocumentNode<FindUniqueIssueQuery, FindUniqueIssueQueryVariables>;
 export const FindUniquePhraseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindUniquePhrase"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PhraseWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findUniquePhrase"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"updateAt"}},{"kind":"Field","name":{"kind":"Name","value":"word"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"index"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"nickname"}}]}},{"kind":"Field","name":{"kind":"Name","value":"_count"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comments"}},{"kind":"Field","name":{"kind":"Name","value":"pullRequests"}}]}}]}}]}}]} as unknown as DocumentNode<FindUniquePhraseQuery, FindUniquePhraseQueryVariables>;
-export const FindUniquePullRequestDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindUniquePullRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PullRequestWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findUniquePullRequest"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"phrase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"word"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"index"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"phraseId"}},{"kind":"Field","name":{"kind":"Name","value":"word"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"index"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"liked"}},{"kind":"Field","name":{"kind":"Name","value":"_count"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"issue"}},{"kind":"Field","name":{"kind":"Name","value":"likes"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updateAt"}},{"kind":"Field","name":{"kind":"Name","value":"createAt"}}]}}]}}]} as unknown as DocumentNode<FindUniquePullRequestQuery, FindUniquePullRequestQueryVariables>;
+export const FindUniquePullRequestDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindUniquePullRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PullRequestWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findUniquePullRequest"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"phrase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"word"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"index"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"phraseId"}},{"kind":"Field","name":{"kind":"Name","value":"word"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"index"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"evaluation"}},{"kind":"Field","name":{"kind":"Name","value":"_count"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"issue"}},{"kind":"Field","name":{"kind":"Name","value":"likes"}},{"kind":"Field","name":{"kind":"Name","value":"dislikes"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updateAt"}},{"kind":"Field","name":{"kind":"Name","value":"createAt"}}]}}]}}]} as unknown as DocumentNode<FindUniquePullRequestQuery, FindUniquePullRequestQueryVariables>;
 export const FindUniqueUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindUniqueUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findUniqueUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"nickname"}},{"kind":"Field","name":{"kind":"Name","value":"_count"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"issues"}},{"kind":"Field","name":{"kind":"Name","value":"phrases"}}]}}]}}]}}]} as unknown as DocumentNode<FindUniqueUserQuery, FindUniqueUserQueryVariables>;
 export const FindUserMeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindUserMe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findUserMe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"nickname"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<FindUserMeQuery, FindUserMeQueryVariables>;
 export const SignInDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SignIn"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserSignInInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signIn"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<SignInMutation, SignInMutationVariables>;
 export const SignUpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SignUp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserSignUpInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signUp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<SignUpMutation, SignUpMutationVariables>;
-export const ToggleLikePrDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ToggleLikePr"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PullRequestWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"toggleLikePr"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}]}]}}]} as unknown as DocumentNode<ToggleLikePrMutation, ToggleLikePrMutationVariables>;
+export const TogglePullRequestEvaluationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"TogglePullRequestEvaluation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PullRequestWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PullRequestEvaluationData"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"togglePullRequestEvaluation"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"evaluation"}}]}}]}}]} as unknown as DocumentNode<TogglePullRequestEvaluationMutation, TogglePullRequestEvaluationMutationVariables>;

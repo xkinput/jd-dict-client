@@ -16,10 +16,11 @@ query FindUniquePullRequest($where: PullRequestWhereUniqueInput!) {
     index
     type
     status
-    liked
+    evaluation
     _count {
       issue
       likes
+      dislikes
     }
     updateAt
     createAt

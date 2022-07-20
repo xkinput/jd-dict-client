@@ -1,8 +1,8 @@
 import { ApolloError, useMutation, useQuery } from '@apollo/client'
-import {  Alert, AlertIcon, AlertTitle, Avatar, Box, HStack, IconButton, Spinner, Text, VStack } from '@chakra-ui/react'
-import { BiCaretUp, BiCaretDown, BiHeart, BiHeartCircle  } from 'react-icons/bi'
+import {  Alert, AlertIcon, AlertTitle, Avatar, Box, Button, ButtonGroup, HStack, IconButton, Spinner, Text, VStack } from '@chakra-ui/react'
+import { BiDislike, BiInfoCircle, BiLike  } from 'react-icons/bi'
 import { FC, ReactNode, useEffect, useState } from 'react'
-import { FindUniquePullRequestDocument, FindUniquePullRequestQuery, FindUniquePullRequestQueryVariables, ToggleLikePrDocument } from '~/generated/gql'
+import { FindUniquePullRequestDocument, FindUniquePullRequestQuery, FindUniquePullRequestQueryVariables, PullRequestEvaluationAction, PullRequestType, TogglePullRequestEvaluationDocument } from '~/generated/gql'
 import { mutateLog, toast } from '~/utils/log'
 import { useRootState } from '~/store'
 
@@ -20,7 +20,7 @@ export const PullRequestCard: FC<Props> = ({ id }) => {
       }
     },
   })
-  const [ mutate ] = useMutation(ToggleLikePrDocument)
+  const [ mutate ] = useMutation(TogglePullRequestEvaluationDocument)
   
   if (loading) return <Spinner />
   
@@ -40,21 +40,32 @@ export const PullRequestCard: FC<Props> = ({ id }) => {
 
   if (!pr) return <><span>未获取到信息</span></>
 
-  async function toggleLike(id: number) {
+  async function toggleLike(id: number, action: PullRequestEvaluationAction) {
     try {
-      let { data, errors } = await mutate({
+      const { data, errors } = await mutate({
         variables: {
           where: {
             id
+          },
+          data: {
+            action
           }
         }
       })
 
+      const res = data?.togglePullRequestEvaluation
+
       refetch()
       toast({
-        title: pr?.liked ? '已取消' : '已点赞',
-        icon: pr?.liked ? <BiHeart size={25} /> : <BiHeartCircle size={25} />,
-        status: pr?.liked ? 'info' : 'success'
+        title: res?.evaluation ? `已${{ 
+          [PullRequestEvaluationAction.Like]: '点赞',
+          [PullRequestEvaluationAction.Dislike]: '点踩',
+        }[res.evaluation]}` : '已取消',
+        icon: res?.evaluation ? { 
+          [PullRequestEvaluationAction.Like]: <BiLike size={25}/>,
+          [PullRequestEvaluationAction.Dislike]: <BiDislike size={25}/>,
+        }[res.evaluation] : undefined,
+        status: res?.evaluation ? 'success' : 'info'
       })
     } catch (e) {
       mutateLog(e as ApolloError)
@@ -70,15 +81,28 @@ export const PullRequestCard: FC<Props> = ({ id }) => {
     <Text>{pr.word}</Text>
     <Text>{pr.code}</Text>
     <HStack justifyContent="end">
-      <Text>{pr._count.likes}</Text>
+      <IconButton aria-label='信息' icon={<BiInfoCircle/>} size="sm"></IconButton>
       {
-        isUserSingined && 
-          <IconButton
-            colorScheme={pr.liked ? 'red' : 'gray'}
-            aria-label='喜欢'
-            icon={pr.liked ? <BiHeartCircle/> : <BiHeart />}
-            onClick={() => toggleLike(pr.id)}
-          />
+        isUserSingined && (
+          <ButtonGroup isAttached size="sm">
+            <Button
+              colorScheme={pr.evaluation === PullRequestEvaluationAction.Dislike ? 'purple' : 'gray'}
+              aria-label='踩'
+              rightIcon={<BiDislike/>}
+              onClick={() => toggleLike(pr.id, PullRequestEvaluationAction.Dislike)}
+            >
+              {pr._count.dislikes}
+            </Button>
+            <Button
+              colorScheme={pr.evaluation === PullRequestEvaluationAction.Like ? 'red' : 'gray'}
+              aria-label='赞'
+              rightIcon={<BiLike enableBackground={1} color={ pr.evaluation === PullRequestEvaluationAction.Like ? 'white' : undefined}/>}
+              onClick={() => toggleLike(pr.id, PullRequestEvaluationAction.Like)}
+            >
+              {pr._count.likes}
+            </Button>
+          </ButtonGroup>
+        )
       }
     </HStack>
   </Box>
