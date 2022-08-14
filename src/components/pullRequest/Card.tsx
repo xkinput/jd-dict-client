@@ -82,28 +82,25 @@ export const PullRequestCard: FC<Props> = ({ id }) => {
     <Text>{pr.code}</Text>
     <HStack justifyContent="end">
       <IconButton aria-label='信息' icon={<BiInfoCircle/>} size="sm"></IconButton>
-      {
-        isUserSingined && (
-          <ButtonGroup isAttached size="sm">
-            <Button
-              colorScheme={pr.evaluation === PullRequestEvaluationAction.Dislike ? 'purple' : 'gray'}
-              aria-label='踩'
-              rightIcon={<BiDislike/>}
-              onClick={() => toggleLike(pr.id, PullRequestEvaluationAction.Dislike)}
-            >
-              {pr._count.dislikes}
-            </Button>
-            <Button
-              colorScheme={pr.evaluation === PullRequestEvaluationAction.Like ? 'red' : 'gray'}
-              aria-label='赞'
-              rightIcon={<BiLike enableBackground={1} color={ pr.evaluation === PullRequestEvaluationAction.Like ? 'white' : undefined}/>}
-              onClick={() => toggleLike(pr.id, PullRequestEvaluationAction.Like)}
-            >
-              {pr._count.likes}
-            </Button>
-          </ButtonGroup>
-        )
-      }
+      <ButtonGroup isAttached size="sm">
+        <Button
+          colorScheme={pr.evaluation === PullRequestEvaluationAction.Dislike ? 'purple' : 'gray'}
+          aria-label='踩'
+          rightIcon={<BiDislike/>}
+          onClick={() => toggleLike(pr.id, PullRequestEvaluationAction.Dislike)}
+        >
+          {pr._count.dislikes}
+        </Button>
+        <Button
+          colorScheme={pr.evaluation === PullRequestEvaluationAction.Like ? 'red' : 'gray'}
+          aria-label='赞'
+          rightIcon={<BiLike enableBackground={1} color={ pr.evaluation === PullRequestEvaluationAction.Like ? 'white' : undefined}/>}
+          onClick={() => toggleLike(pr.id, PullRequestEvaluationAction.Like)}
+        >
+          {pr._count.likes}
+        </Button>
+      </ButtonGroup>
+       
     </HStack>
   </Box>
 }
