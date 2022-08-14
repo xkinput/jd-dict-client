@@ -83,6 +83,9 @@ function transCodeToMsg(error: GraphQLError, graphQLError?: GraphQLError) {
   if (msg === 'jwt must be provided') {
     msg = '请先登录！'
   }
+  if (msg === 'jwt expired') {
+    msg = '登录已过期，请重新登录！'
+  }
 
   let meta = exception?.meta
 
