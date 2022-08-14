@@ -5,6 +5,11 @@ export const NAV_ITEMS: Array<NavItem> = [
     label: '首页',
     to: '/',
   },
+  {
+    label: '用户',
+    to: '/user',
+    policy: [ 'user', 'add' ]
+  },
   // {
   //   label: '词组',
   //   children: [

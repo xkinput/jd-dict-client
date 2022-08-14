@@ -1,5 +1,4 @@
 import { Box, Container, Flex, Stack, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
-import { useState } from 'react'
 import { UserInfo } from '~/components/home/UserInfo'
 import { FormIssue } from '~/components/issue/Create'
 import { IssueList } from '~/components/issue/List'

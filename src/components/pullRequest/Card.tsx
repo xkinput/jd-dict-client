@@ -19,6 +19,7 @@ export const PullRequestCard: FC<Props> = ({ id }) => {
         id
       }
     },
+    fetchPolicy: 'cache-and-network'
   })
   const [ mutate ] = useMutation(TogglePullRequestEvaluationDocument)
   
