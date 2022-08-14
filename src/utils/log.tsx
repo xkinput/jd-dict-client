@@ -80,6 +80,9 @@ function transCodeToMsg(error: GraphQLError, graphQLError?: GraphQLError) {
 
   let msg = ErrorCodeMap.get((code) as keyof typeof ErrorCode) || error.message
   
+  if (msg === 'Not Authorised!') {
+    msg = '没有权限！'
+  }
   if (msg === 'jwt must be provided') {
     msg = '请先登录！'
   }

@@ -11,8 +11,6 @@ interface Props {
 }
 
 export const PullRequestCard: FC<Props> = ({ id }) => {
-  const isUserSingined = useRootState(s => s.user.isSingined)
-
   let { error, data, loading, refetch } = useQuery<FindUniquePullRequestQuery, FindUniquePullRequestQueryVariables>(FindUniquePullRequestDocument, {
     variables: {
       where: {
@@ -82,7 +80,9 @@ export const PullRequestCard: FC<Props> = ({ id }) => {
     <Text>{pr.word}</Text>
     <Text>{pr.code}</Text>
     <HStack justifyContent="end">
-      <IconButton aria-label='信息' icon={<BiInfoCircle/>} size="sm"></IconButton>
+      { pr.type !== PullRequestType.Create
+        && <IconButton  aria-label='信息' icon={<BiInfoCircle/>} size="sm" />
+      }
       <ButtonGroup isAttached size="sm">
         <Button
           colorScheme={pr.evaluation === PullRequestEvaluationAction.Dislike ? 'purple' : 'gray'}

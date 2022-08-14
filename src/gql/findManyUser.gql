@@ -1,0 +1,18 @@
+query FindManyUser($where: UserWhereInput, $take: Int, $skip: Int) {
+  findManyUser(where: $where, take: $take, skip: $skip) {
+    id
+    name
+    nickname
+    status
+    roles {
+      id
+      name
+      value
+    }
+    signUpType
+    createAt
+    _count {
+      issues
+    }
+  }
+}
